@@ -1,0 +1,11 @@
+id	character	move	command	startup	block	hit	stance
+paul_jab	Paul	Jab	1	10	-1	+8	Default
+paul_deathfist	Paul	Deathfist	qcf+2	15	-17	KD	Default
+paul_phoenix_smasher	Paul	Phoenix Smasher	qcf+1	15	-3	+9	Default
+king_jab	King	Jab	1	10	-1	+8	Default
+king_ali_kicks	King	Ali Kicks	d+3+4	16	-13	KD	Default
+king_elbow	King	Elbow	f+1+2	18	-8	+3	Default
+law_jab	Law	Jab	1	10	-1	+8	Default
+law_dragon_tail	Law	Dragon Tail	db+4	25	-23	KD	Default
+law_slide	Law	Slide	df+1	16	-8	+3	Default
+hwo_rff_f44	Hwoarang	RFF f4~4	RFF f4~4	14	-13	KD	RFF

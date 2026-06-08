@@ -1,0 +1,12 @@
+move_id	countered_by_id	comment
+paul_deathfist	paul_jab
+paul_deathfist	king_jab
+paul_deathfist	law_jab
+paul_deathfist	law_slide
+king_ali_kicks	paul_jab
+king_ali_kicks	paul_phoenix_smasher
+king_ali_kicks	law_jab
+law_dragon_tail	paul_jab
+law_dragon_tail	paul_deathfist	vain lähietäisyydeltä
+law_dragon_tail	king_jab
+law_dragon_tail	king_elbow
