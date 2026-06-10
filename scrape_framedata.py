@@ -150,8 +150,8 @@ def normalize_cmd(cmd):
     return cmd
 
 
-TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Move Name', 'Stance', 'Damage', 'Hit Range',
-                'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
+TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Alt Commands', 'Move Name', 'Stance', 'Damage',
+                'Hit Range', 'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
 
 
 def expand_continuations(row_dicts):
@@ -176,9 +176,10 @@ def expand_continuations(row_dicts):
             level = 1 if leading_spaces <= 1 else 2
             parent_level = level - 1
             parent_cmd = commands_by_level.get(parent_level, '')
-            separator = '' if suffix.startswith('~') else ','
+            separator = '' if suffix.startswith(('~', '<')) else ','
             full_cmd = parent_cmd + separator + suffix
             row['Command'] = full_cmd
+            row['_is_followup'] = True
             commands_by_level[level] = full_cmd
 
             own_name = name.lstrip('= ') if name.startswith('= ') else name
@@ -195,7 +196,88 @@ def expand_continuations(row_dicts):
             commands_by_level = {0: cmd}
             names_by_level = {0: name}
             row['Command'] = cmd
+    for row in row_dicts:
+        row['Command'] = re.sub(r'\s*-?\s*\[~5\]', '', row['Command']).strip()
+    split_alternatives(row_dicts)
     return row_dicts
+
+
+PREFERRED_COMMAND = {
+    'julia': {
+        'WR+1': 'd,d/f+1',
+    },
+}
+
+
+def split_alternatives(row_dicts):
+    """Split (A_B) alternative notation into primary command and alternatives.
+
+    E.g. '(WS+2_3~2),4' → Command='WS+2,4', Alt Commands='3~2,4'
+    - Button 5 (TTT tag button) is removed from alternatives.
+    - Follow-up moves don't get Alt Commands (only parent moves do).
+    - PREFERRED_COMMAND overrides which alternative becomes the primary.
+    """
+    from itertools import product
+
+    preferred_opts = {}
+    for row in row_dicts:
+        cmd = row['Command']
+        is_followup = row.get('_is_followup', False)
+        alt_groups = re.findall(r'\(([^)]*_[^)]*)\)', cmd)
+        if not alt_groups:
+            row['Alt Commands'] = ''
+            continue
+
+        parts = re.split(r'\([^)]*_[^)]*\)', cmd)
+        groups = [[opt for opt in g.split('_') if opt != '5'] for g in alt_groups]
+
+        chosen = []
+        for group in groups:
+            group_key = '_'.join(group)
+            if group_key in preferred_opts:
+                chosen.append(preferred_opts[group_key])
+            else:
+                chosen.append(group[0])
+
+        primary = parts[0]
+        for i, opt in enumerate(chosen):
+            primary += opt + parts[i + 1]
+        row['Command'] = primary
+
+        if is_followup or all(len(g) == 1 for g in groups):
+            row['Alt Commands'] = ''
+            continue
+
+        alts = []
+        for combo in product(*groups):
+            if list(combo) == chosen:
+                continue
+            alt = parts[0]
+            for i, opt in enumerate(combo):
+                alt += opt + parts[i + 1]
+            alts.append(alt)
+
+        char_prefs = PREFERRED_COMMAND.get(row.get('Character', '').lower(), {})
+        if primary in char_prefs:
+            preferred = char_prefs[primary]
+            if preferred in alts:
+                alts.remove(preferred)
+                alts.insert(0, primary)
+                primary = preferred
+                row['Command'] = primary
+                for i, group in enumerate(groups):
+                    group_key = '_'.join(group)
+                    for opt in group:
+                        if opt in preferred and opt != chosen[i]:
+                            preferred_opts[group_key] = opt
+                            break
+        else:
+            for i, group in enumerate(groups):
+                group_key = '_'.join(group)
+                if group_key not in preferred_opts:
+                    preferred_opts[group_key] = chosen[i]
+
+        row['Alt Commands'] = '; '.join(alts)
 
 
 def group_moves(rows):
@@ -343,8 +425,9 @@ def merge_special_arts(fd_rows, ml_rows, footnotes):
     return merged, matched_count
 
 
-UNIFIED_HEADERS = ['UUID', 'Character', 'Stance', 'Command', 'Move Name', 'Damage', 'Hit Range',
-                    'Properties', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes', 'Unmatched']
+UNIFIED_HEADERS = ['UUID', 'Character', 'Stance', 'Command', 'Alt Commands', 'Move Name', 'Damage',
+                    'Hit Range', 'Properties', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes',
+                    'Unmatched']
 
 
 def write_section_header(ws, row_num, heading):
