@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Combine all *_framedata.xlsx files in the current directory into a single framedata.tsv."""
+"""Combine all *_framedata_v2.xlsx files in the current directory into a single framedata.tsv."""
 
 import glob
 import os
@@ -10,9 +10,9 @@ OUTPUT = 'framedata.tsv'
 
 
 def main():
-    files = sorted(f for f in glob.glob('*_framedata.xlsx') if not os.path.basename(f).startswith('~$'))
+    files = sorted(f for f in glob.glob('*_framedata_v2.xlsx') if not os.path.basename(f).startswith('~$'))
     if not files:
-        print("No *_framedata.xlsx files found in current directory.")
+        print("No *_framedata_v2.xlsx files found in current directory.")
         return
 
     header_written = False

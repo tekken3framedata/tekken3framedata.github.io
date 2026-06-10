@@ -10,7 +10,7 @@ Example:
     python3 scrape_framedata.py \
         "https://web.archive.org/web/20201206043428/http://www.tekkenzaibatsu.com/tekkentag/framedata.php?id=julia" \
         "https://web.archive.org/web/20201206042940/http://www.tekkenzaibatsu.com/tekken3/movelist.php?id=julia" \
-        julia_framedata.xlsx
+        julia_framedata_v2.xlsx
 """
 
 import re
@@ -32,7 +32,11 @@ def fetch_url(url):
 
 
 def parse_table(html_content):
-    """Parse HTML table rows into list of lists."""
+    """Parse HTML table rows into list of lists.
+
+    Preserves leading &nbsp; count in the first cell as spaces,
+    which encodes continuation depth (1 space = level 1, 3 spaces = level 2).
+    """
     rows = []
     tr_pattern = re.compile(r'<tr[^>]*>(.*?)</tr>', re.DOTALL)
     td_pattern = re.compile(r'<td[^>]*>(.*?)</td>', re.DOTALL)
@@ -40,15 +44,27 @@ def parse_table(html_content):
     for tr_match in tr_pattern.finditer(html_content):
         tr_content = tr_match.group(1)
         cells = []
-        for td_match in td_pattern.finditer(tr_content):
+        for col_idx, td_match in enumerate(td_pattern.finditer(tr_content)):
             cell_text = td_match.group(1)
-            cell_text = cell_text.replace('&nbsp;', ' ')
-            cell_text = cell_text.replace('&lt;', '<')
-            cell_text = cell_text.replace('&gt;', '>')
-            cell_text = cell_text.replace('&amp;', '&')
-            cell_text = cell_text.replace('&quot;', '"')
-            cell_text = re.sub(r'<[^>]+>', '', cell_text)
-            cell_text = cell_text.strip()
+            if col_idx == 0:
+                leading_nbsps = len(re.findall(r'&nbsp;', cell_text.split('=')[0])) if '=' in cell_text else 0
+                cell_text = cell_text.replace('&nbsp;', ' ')
+                cell_text = cell_text.replace('&lt;', '<')
+                cell_text = cell_text.replace('&gt;', '>')
+                cell_text = cell_text.replace('&amp;', '&')
+                cell_text = cell_text.replace('&quot;', '"')
+                cell_text = re.sub(r'<[^>]+>', '', cell_text)
+                cell_text = cell_text.strip()
+                if leading_nbsps > 0 and cell_text.startswith('='):
+                    cell_text = (' ' * leading_nbsps) + cell_text
+            else:
+                cell_text = cell_text.replace('&nbsp;', ' ')
+                cell_text = cell_text.replace('&lt;', '<')
+                cell_text = cell_text.replace('&gt;', '>')
+                cell_text = cell_text.replace('&amp;', '&')
+                cell_text = cell_text.replace('&quot;', '"')
+                cell_text = re.sub(r'<[^>]+>', '', cell_text)
+                cell_text = cell_text.strip()
             cells.append(cell_text)
         if cells:
             rows.append(cells)
@@ -124,9 +140,11 @@ def expand_properties(props, footnotes):
 def normalize_cmd(cmd):
     """Normalize command for matching.
 
+    - Strip leading whitespace (indentation for continuation depth)
     - Strip [~5] tag (with optional leading ' - ')
     - Replace < with , (TTT uses < for delays, T3 uses ,)
     """
+    cmd = cmd.lstrip(' ')
     cmd = re.sub(r'\s*-?\s*\[~5\]', '', cmd).strip()
     cmd = cmd.replace('<', ',')
     return cmd
@@ -136,16 +154,60 @@ TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Move Name', 'Stance', 'Damage',
                 'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
 
 
+def expand_continuations(row_dicts):
+    """Expand '= X' continuation commands and move names into full forms.
+
+    Handles indentation levels:
+    - ' = X' (1 leading space) = level 1, continues from parent (level 0)
+    - '   = X' (3 leading spaces) = level 2, continues from preceding level 1
+
+    Commands: '(WS+2_3~2)' → '(WS+2_3~2),4' → '(WS+2_3~2),4,4'
+    Names: 'Tequila Sunrise' → 'Tequila Sunrise > Razor Sweep' → 'Tequila Sunrise > Razor Sweep > High Kick'
+    """
+    commands_by_level = {}
+    names_by_level = {}
+    for row in row_dicts:
+        cmd = row['Command']
+        name = row.get('Move Name', '')
+        stripped = cmd.lstrip(' ')
+        leading_spaces = len(cmd) - len(stripped)
+        if stripped.startswith('= '):
+            suffix = stripped[2:]
+            level = 1 if leading_spaces <= 1 else 2
+            parent_level = level - 1
+            parent_cmd = commands_by_level.get(parent_level, '')
+            separator = '' if suffix.startswith('~') else ','
+            full_cmd = parent_cmd + separator + suffix
+            row['Command'] = full_cmd
+            commands_by_level[level] = full_cmd
+
+            own_name = name.lstrip('= ') if name.startswith('= ') else name
+            parent_name = names_by_level.get(parent_level, '')
+            if parent_name and own_name:
+                full_name = parent_name + ' > ' + own_name
+            elif own_name:
+                full_name = own_name
+            else:
+                full_name = parent_name
+            row['Move Name'] = full_name
+            names_by_level[level] = full_name
+        else:
+            commands_by_level = {0: cmd}
+            names_by_level = {0: name}
+            row['Command'] = cmd
+    return row_dicts
+
+
 def group_moves(rows):
     """Group moves into parent + follow-ups.
 
-    Follow-up rows start with '=' (e.g. '= 4', '= ~1+4,2').
+    Follow-up rows start with '=' (possibly with leading spaces for depth).
     Each parent starts a new group; follow-ups attach to the preceding parent.
     """
     groups = []
     for row in rows:
-        cmd = row[0]
-        if cmd.startswith('=') or cmd.startswith('= '):
+        cmd = row[0].lstrip(' ')
+        if cmd.startswith('='):
             if groups:
                 groups[-1].append(row)
         else:
@@ -321,8 +383,9 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
     if not rows:
         return row_num + 1
     row_num = write_column_headers(ws, row_num)
+    row_dicts = []
     for row in rows[1:]:  # skip source header
-        row_dict = {
+        row_dicts.append({
             'Character': character,
             'Command': row[0] if len(row) > 0 else '',
             'Stance': stance,
@@ -330,7 +393,9 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
             'Block Adv': row[2] if len(row) > 2 else '',
             'Hit Adv': row[3] if len(row) > 3 else '',
             'CH Adv': row[4] if len(row) > 4 else '',
-        }
+        })
+    expand_continuations(row_dicts)
+    for row_dict in row_dicts:
         row_num = write_unified_row_xlsx(ws, row_num, row_dict)
     return row_num + 1  # blank row
 
@@ -411,8 +476,9 @@ def main():
 
         row_num = write_section_header(ws, row_num, 'SPECIAL ARTS')
         row_num = write_column_headers(ws, row_num)
+        special_rows = []
         for r in merged:
-            row_dict = {
+            special_rows.append({
                 'Character': character_name,
                 'Command': r['command'],
                 'Move Name': r['move_name'],
@@ -426,7 +492,9 @@ def main():
                 'CH Adv': r['ch_adv'],
                 'Notes': r['notes'],
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
-            }
+            })
+        expand_continuations(special_rows)
+        for row_dict in special_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
         row_num += 1  # blank row
 
@@ -449,8 +517,9 @@ def main():
 
         row_num = write_section_header(ws, row_num, 'UNBLOCKABLE ARTS')
         row_num = write_column_headers(ws, row_num)
+        ub_rows = []
         for r in merged_ub:
-            row_dict = {
+            ub_rows.append({
                 'Character': character_name,
                 'Command': r['command'],
                 'Move Name': r['move_name'],
@@ -464,7 +533,9 @@ def main():
                 'CH Adv': r['ch_adv'],
                 'Notes': r['notes'],
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
-            }
+            })
+        expand_continuations(ub_rows)
+        for row_dict in ub_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
         row_num += 1
     elif 'Unblockable Arts' in ml_tables:
