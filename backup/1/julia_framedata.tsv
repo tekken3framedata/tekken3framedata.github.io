@@ -1,0 +1,105 @@
+BASIC ARTS
+Command	Hit	Block Adv	Hit Adv	Counter Hit Adv
+1	8	0	+6	+6
+2	10	-2	+9	+9
+3	14	-16	KD	KD
+4	10	-7	-7	KD
+F,1	8	0	+6	+6
+F,2	10	-2	+9	+9
+F,3	16	-16	KD	KD
+F,4	10	-7	-7	KD
+d+1	8	-2	+9	+9
+d+2	10	-2	+9	+9
+d+3	16	-17	-3	-3
+d+4	20	-9	-10	-10
+FC+1	8	-2	+9	+9
+FC+2	10	-2	+9	+9
+FC+3	16	-17	-3	-3
+FC+4	12	-8	+4	+4
+WS+1	10	-3	+8	+8
+WS+2	18	-11	0	0
+WS+3	16	-16	KD	KD
+WS+4	11	-17	KD	KD
+d/f+1	20	-15	-4	-4
+d/f+2	16	-6	+5	+5
+d/f+3	14	-10	+1	+1
+d/f+4	12	-7	+4	+4
+
+SPECIAL ARTS
+Command	Move Name	Damage	Hit Range	Properties	Notes	Speed	Block Adv	Hit Adv	Counter Hit Adv
+1+2	Twin Arrow	25	m	GB		21	+3	KD	KD
+f+1 [~5]	Flash Uppercut	15	m	JG		19	-15	KD	KD
+(WR_d,d/f)+1	Flash Punch	14	m			11	-8	-2	+3
+'= <2	'= Flash Elbow	21	m	FSc			-7	KD	KD
+1~1	G-Clef - Club Fist	10,5	hm			8	0 -15	+6 -4	+6 -4
+'= 1 [~5]	'= Flash Uppercut	21	m	JG			-14	KD	KD
+'= 4,3	'= Bow & Arrow	12,15	Lm				-13 -12	-2 KD	-2 KD
+d/f+1	Club Fist	8	m			20	-15	-4	-4
+'= 1 [~5]	'= Flash Uppercut	21	m	JG			-14	KD	KD
+'= 4,3	'= Bow & Arrow	12,15	Lm				-13 -12	-2 KD	-2 KD
+1~2	G-Clef - Gut Punch	5,8	hm		If the 1st hit is a counter hit, the damage of the 2nd hit will be 16. If the string is complete (1~2~1) the damage is 15.	8	0 -15	+6 +5	+6 +5
+'= ~1 [~5]	'= Skyscraper Cannon	21	m	CH	The 3rd only occurs if the 1st hit was a counter hit or the 2nd hit connected on the opponents side.				
+'= 3	'= Low Kick	10	L	RC			-17	-3	-3
+'= 4	'= High Kick	20	h				-7	-7	KD
+f,f+1	Party Crasher	10	m			11	-2	KD	KD
+'= <4	'= Skyscraper Kick	15	m	JG			-11	KD	KD
+f+1~2	Palm Explosion	21	m	FSc		30	-13	KD	KD
+f+1+2 [~5]					[UNMATCHED]	19	-3	-1	KD
+1+4,3	Club Fist - Bow & Arrow	12,12,15	mLm			20	x -13 12	x -2 KD	x -2 KD
+d/f+2	Gut Punch	10	m			16	-6	+5	+5
+'= 1 [~5]	'= Skyscraper Cannon	21	m	JG	Has to hit from the front to work.				
+'= 3	'= Low Kick	10	L	RC			-17	-3	-3
+'= 4					[UNMATCHED]		-7	-7	KD
+(d+2~N+3_2+3),1 [~5]	Ultimate Cannon	10,9,25	smm	JG		10	x -11 -8	x 0 KD	x 0 KD
+(WR_FC,d/f)+2	Flash Elbow	20	m	FSc		12	-20	KD	KD
+SS+2					[UNMATCHED]	18	-6	+1	+6
+(b+2_2~b)	Arm Whip	12	h	OB	The Arm Whip needs to hit for Julia to spin around the opponent.	10	0	-1	-1
+'= (1+2_5)					[UNMATCHED]		+2	+2	+2
+(WS+2_3~2)	Tequila Sunrise	15	m			18	-11	0	-6
+'= 2	'= Flash Elbow	22	m				-20	KD	KD
+'= 1,1 [~5]	'= Club Fist - Flash Uppercut	5,21	mm	JG			-15 -14	-4 KD	-4 KD
+'= 1,4,3	'= Club Fist - Bow & Arrow	5,12,15	mLm				-15 -13 -12	-4 -2 KD	-4 -2 KD
+'= 4	'= Razor Sweep	12	L	RC			-10	+1	+1
+'= 4	'= High Kick	23	h				-19	-3	-3
+'= d+4	'= Low Kick	10	L	RC			-14	-8	-8
+'= 1	'= Razor's Edge	21	m	JG			-18	KD	KD
+b+3					[UNMATCHED]	27	-33	+2	KD
+u/f+3+4	Earthquale Stomp	35	M			48	-32	KD	KD
+3+4	Counter Clockwise Spin	-	-		Chains into Spinning Razor Kick Variations. First kick will do 20 damage.				
+d+4	Razor Sweep	10	L	RC		20	-9	-10	-10
+'= N+4	'= High Kick	23	h				-19	-3	-3
+'= d+4	'= Low Kick	10	L	RC			-14	-8	-8
+'= 1	'= Razor's Edge	21	m	JG			-18	KD	KD
+4,4	Spinning Razor Kicks	20,12	hL	RC		10	-7 -7	-7 +4	KD +4
+'= 4	'= High Kick	23	h				-19	-3	-3
+'= d+4	'= Low Kick	10	L	RC			-14	-8	-8
+'= 1	'= Razor's Edge	21	m	JG			-18	KD	KD
+b+4					[UNMATCHED]	14	-7	+4	KD
+d/f+4<2<b,f+1					[UNMATCHED]	14	-7 -9 -15	+4 -2 KD	+4 -2 KD
+WS+4	Skyscraper Kick	15	m			11	-17	KD	KD
+FC,d/f+4,3	Bow & Arrow	12,15	Lm			16	-14 -14	-3 KD	-3 KD
+(FC_d)+(1+3_2+4)	Low Parry	-	-						
+2+3+4	Wave Taunt	-	-						
+
+UNBLOCKABLE ARTS
+Command	Move Name	Damage	Hit Range	Properties	Notes	Speed	Block Adv	Hit Adv	Counter Hit Adv
+f+1+4	Heaven Cannon	50	!	JG		67		KD	KD
+
+GRAPPLING ARTS
+Command	Throw Name	Type	Damage	Escape	Properties	Notes	Speed
+1+3	Death Valley Bomb	Front	35	1			12
+2+4	Fisherman Suplex	Front	30	2			12
+d/f+1+2	Arm Lock Suplex	Front	37	1+2			11
+d,D/B+1+3	Waist Suplex	Front	30	1			11
+FC,d/b,d,d/b+1+2	Cross Arm Lock	Front	45	1+2			12
+qcb,f+2	Mad Axes	Front	14,14,14	1+2			10
+(1+3_2+4)	Running Bulldog	Left	40	1			
+(1+3_2+4)	Twisted Sister	Right	45	2			
+(1+3_2+4)	German Suplex	Back	50	None			
+
+STRING HIT ARTS
+Command	Hits	Damage	Hit Range
+2,1,1,2,3,3,3,4,4,1	10	8,6,6,6,6,6,6,7,8,25	h"mm"hLm"hh"Lm
+2,1,1,2,3,3,2,3,2,1	10	8,6,6,6,6,6,7,5,5,30	h"mm"hLm"mL"m!
+2,1,1,2,3,3,2,1,4,3	10	8,6,6,6,6,67,7,10,25	h"mm"hLm"mm"Lm
+

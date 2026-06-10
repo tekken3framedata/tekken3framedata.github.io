@@ -1,0 +1,6 @@
+python3 scrape_framedata.py \
+      "https://web.archive.org/web/20201206043428/http://www.tekkenzaibatsu.com/tekkentag/framedata.php?id=julia" \
+      "https://web.archive.org/web/20201206042940/http://www.tekkenzaibatsu.com/tekken3/movelist.php?id=julia" \
+      julia_framedata_v2.xlsx
+
+  python3 xlsx_to_tsv.py
