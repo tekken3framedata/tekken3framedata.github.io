@@ -150,6 +150,37 @@ def normalize_cmd(cmd):
     return cmd
 
 
+MULTI_CHAR_RANGES = {'Front', 'Back', 'Left', 'Right'}
+
+
+def expand_hit_range(hr):
+    """Expand compact hit range notation into comma-separated tokens.
+
+    Single characters (m, h, L, M, s, !) become individual tokens.
+    Multi-character words (Front, Back, Left, Right) stay intact.
+    Already comma-separated values pass through unchanged.
+    """
+    if not hr or ',' in hr or hr in MULTI_CHAR_RANGES:
+        return hr
+    if '"' in hr:
+        return hr
+    tokens = []
+    i = 0
+    while i < len(hr):
+        matched_word = None
+        for word in MULTI_CHAR_RANGES:
+            if hr[i:i+len(word)] == word:
+                matched_word = word
+                break
+        if matched_word:
+            tokens.append(matched_word)
+            i += len(matched_word)
+        else:
+            tokens.append(hr[i])
+            i += 1
+    return ','.join(tokens)
+
+
 TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Alt Commands', 'Move Name', 'Stance', 'Damage',
                 'Hit Range', 'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
 
@@ -279,9 +310,13 @@ def expand_continuations(row_dicts, prior_commands=None):
     """
     commands_by_level = {}
     names_by_level = {}
+    damage_by_level = {}
+    hitrange_by_level = {}
     for row in row_dicts:
         cmd = row['Command']
         name = row.get('Move Name', '')
+        damage = row.get('Damage', '')
+        hit_range = expand_hit_range(row.get('Hit Range', ''))
         stripped = cmd.lstrip(' ')
         leading_spaces = len(cmd) - len(stripped)
         if stripped.startswith('= '):
@@ -306,9 +341,31 @@ def expand_continuations(row_dicts, prior_commands=None):
             row['Move Name'] = full_name
             row['_own_name'] = own_name
             names_by_level[level] = full_name
+
+            parent_damage = damage_by_level.get(parent_level, '')
+            if parent_damage and damage:
+                full_damage = parent_damage + ',' + damage
+            elif damage:
+                full_damage = damage
+            else:
+                full_damage = parent_damage
+            row['Damage'] = full_damage
+            damage_by_level[level] = full_damage
+
+            parent_hr = hitrange_by_level.get(parent_level, '')
+            if parent_hr and hit_range:
+                full_hr = parent_hr + ',' + hit_range
+            elif hit_range:
+                full_hr = hit_range
+            else:
+                full_hr = parent_hr
+            row['Hit Range'] = full_hr
+            hitrange_by_level[level] = full_hr
         else:
             commands_by_level = {0: cmd}
             names_by_level = {0: name}
+            damage_by_level = {0: damage}
+            hitrange_by_level = {0: hit_range}
             row['Command'] = cmd
     for row in row_dicts:
         row['Command'] = re.sub(r'\s*-?\s*\[~5\]', '', row['Command']).strip()
@@ -325,7 +382,7 @@ def expand_continuations(row_dicts, prior_commands=None):
 
 PREFERRED_COMMAND = {
     'julia': {
-        'WR+1': 'd,df+1',
+        'WR+1': 'd,d/f+1',
     },
 }
 
@@ -638,6 +695,8 @@ def write_unified_row_xlsx(ws, row_num, row_dict):
     for key in ('Command', 'Alt Commands'):
         if row_dict.get(key):
             row_dict[key] = row_dict[key].replace('/', '')
+    if row_dict.get('Hit Range'):
+        row_dict['Hit Range'] = expand_hit_range(row_dict['Hit Range'])
     for col, h in enumerate(UNIFIED_HEADERS, 1):
         value = row_dict.get(h, '')
         cell = ws.cell(row=row_num, column=col, value=value)
