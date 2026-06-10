@@ -204,8 +204,18 @@ def expand_continuations(row_dicts):
 
 PREFERRED_COMMAND = {
     'julia': {
-        'WR+1': 'd,d/f+1',
+        'WR+1': 'd,df+1',
     },
+}
+
+# Commands that are duplicates of each other. The value is the preferred primary;
+# the other becomes an Alt Command and its row is removed.
+MERGE_DUPLICATES = {
+    'julia': [
+        (['d+1', 'FC+1'], 'd+1'),
+        (['d+2', 'FC+2'], 'd+2'),
+        (['d+3', 'FC+3'], 'd+3'),
+    ],
 }
 
 
@@ -425,9 +435,32 @@ def merge_special_arts(fd_rows, ml_rows, footnotes):
     return merged, matched_count
 
 
-UNIFIED_HEADERS = ['UUID', 'Character', 'Stance', 'Command', 'Alt Commands', 'Move Name', 'Damage',
-                    'Hit Range', 'Properties', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes',
-                    'Unmatched']
+UNIFIED_HEADERS = ['UUID', 'Character', 'Stance', 'Command', 'Move Name', 'Damage',
+                    'Hit Range', 'Properties', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv',
+                    'Alt Commands', 'Notes', 'Unmatched']
+
+
+def merge_duplicate_commands(row_dicts, character):
+    """Merge rows listed in MERGE_DUPLICATES: keep the preferred, add others as Alt Commands."""
+    merges = MERGE_DUPLICATES.get(character.lower(), [])
+    if not merges:
+        return row_dicts
+    for commands, primary in merges:
+        alts = [c for c in commands if c != primary]
+        primary_row = None
+        alt_indices = []
+        for i, row in enumerate(row_dicts):
+            if row['Command'] == primary:
+                primary_row = i
+            elif row['Command'] in alts:
+                alt_indices.append(i)
+        if primary_row is not None and alt_indices:
+            existing_alt = row_dicts[primary_row].get('Alt Commands', '')
+            new_alts = '; '.join(row_dicts[i]['Command'] for i in alt_indices)
+            row_dicts[primary_row]['Alt Commands'] = '; '.join(filter(None, [existing_alt, new_alts]))
+            for i in sorted(alt_indices, reverse=True):
+                row_dicts.pop(i)
+    return row_dicts
 
 
 def write_section_header(ws, row_num, heading):
@@ -448,6 +481,9 @@ def write_column_headers(ws, row_num):
 def write_unified_row_xlsx(ws, row_num, row_dict):
     """Write a single data row. Text columns get explicit text format and data_type='s'."""
     row_dict['UUID'] = str(uuid.uuid4())
+    for key in ('Command', 'Alt Commands'):
+        if row_dict.get(key):
+            row_dict[key] = row_dict[key].replace('/', '')
     for col, h in enumerate(UNIFIED_HEADERS, 1):
         value = row_dict.get(h, '')
         cell = ws.cell(row=row_num, column=col, value=value)
@@ -478,6 +514,7 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
             'CH Adv': row[4] if len(row) > 4 else '',
         })
     expand_continuations(row_dicts)
+    row_dicts = merge_duplicate_commands(row_dicts, character)
     for row_dict in row_dicts:
         row_num = write_unified_row_xlsx(ws, row_num, row_dict)
     return row_num + 1  # blank row
