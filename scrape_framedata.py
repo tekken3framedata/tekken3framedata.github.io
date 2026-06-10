@@ -10,7 +10,7 @@ Example:
     python3 scrape_framedata.py \
         "https://web.archive.org/web/20201206043428/http://www.tekkenzaibatsu.com/tekkentag/framedata.php?id=julia" \
         "https://web.archive.org/web/20201206042940/http://www.tekkenzaibatsu.com/tekken3/movelist.php?id=julia" \
-        julia_framedata_v2.xlsx
+        julia_framedata_v3.xlsx
 """
 
 import re
@@ -154,7 +154,120 @@ TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Alt Commands', 'Move Name', 'St
                 'Hit Range', 'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
 
 
-def expand_continuations(row_dicts):
+def find_top_level_separators(cmd):
+    """Find positions of top-level , and ~ separators (not inside parens)."""
+    positions = []
+    depth = 0
+    for i, ch in enumerate(cmd):
+        if ch == '(':
+            depth += 1
+        elif ch == ')':
+            depth -= 1
+        elif ch in (',', '~') and depth == 0:
+            positions.append(i)
+    return positions
+
+
+def split_multi_hit_moves(row_dicts, prior_commands=None):
+    """Split moves with multiple frame values into separate rows.
+
+    Logic:
+    1. Strip leading 'x' values (unblockable/unmeasurable first hit)
+    2. If 1 value remains: no split, use as-is
+    3. If 2+ values remain: split command at last N-1 top-level separators
+    4. If parent command already exists in prior_commands or current section, skip it
+
+    E.g. '1+4,3' with Block='x -13 12':
+      - Strip x → [-13, 12]
+      - Split at last separator: '1+4' gets -13, '1+4,3' gets 12
+    E.g. '1~1' with Block='0 -15' (and '1' already in table):
+      - No x → [0, -15], 2 values, 1 separator
+      - Parent '1' already exists → only keep '1~1' with -15
+    """
+    existing_commands = set(row.get('Command', '').lstrip(' ') for row in row_dicts)
+    if prior_commands:
+        existing_commands.update(prior_commands)
+
+    result = []
+    for row in row_dicts:
+        frame_cols = {}
+        max_hits = 1
+        for key in ('Block Adv', 'Hit Adv', 'CH Adv'):
+            val = row.get(key, '')
+            parts = val.strip().split() if val and ' ' in val.strip() else [val]
+            frame_cols[key] = parts
+            max_hits = max(max_hits, len(parts))
+
+        if max_hits <= 1:
+            result.append(row)
+            continue
+
+        for key in ('Block Adv', 'Hit Adv', 'CH Adv'):
+            parts = frame_cols[key]
+            while parts and parts[0].lower() == 'x':
+                parts.pop(0)
+            frame_cols[key] = parts
+
+        effective_hits = max(len(v) for v in frame_cols.values())
+
+        if effective_hits <= 1:
+            for key in ('Block Adv', 'Hit Adv', 'CH Adv'):
+                vals = frame_cols[key]
+                row[key] = vals[0] if vals else ''
+            result.append(row)
+            continue
+
+        cmd = row['Command']
+        separators = find_top_level_separators(cmd)
+
+        if len(separators) < effective_hits - 1:
+            for key in ('Block Adv', 'Hit Adv', 'CH Adv'):
+                row[key] = frame_cols[key][-1] if frame_cols[key] else ''
+            result.append(row)
+            continue
+
+        split_positions = separators[-(effective_hits - 1):]
+
+        prefixes = [cmd[:split_positions[0]]]
+        for i in range(1, len(split_positions)):
+            prefixes.append(cmd[:split_positions[i]])
+        prefixes.append(cmd)
+
+        full_name = row.get('Move Name', '')
+        own_name = row.get('_own_name', full_name)
+        own_parts = own_name.split(' > ') if own_name else []
+        parent_prefix = full_name[:-(len(own_name))] if own_name and full_name.endswith(own_name) and len(full_name) > len(own_name) else ''
+
+        for i, prefix in enumerate(prefixes):
+            if i == 0 and prefix in existing_commands:
+                continue
+            new_row = dict(row)
+            new_row['Command'] = prefix
+            for key in ('Block Adv', 'Hit Adv', 'CH Adv'):
+                vals = frame_cols[key]
+                new_row[key] = vals[i] if i < len(vals) else ''
+            if i > 0:
+                new_row['Speed'] = ''
+                new_row['_is_followup'] = True
+            if own_parts:
+                if len(own_parts) == effective_hits:
+                    new_row['Move Name'] = parent_prefix + ' > '.join(own_parts[:i + 1])
+                elif len(own_parts) < effective_hits:
+                    name_idx = min(i, len(own_parts) - 1)
+                    base = parent_prefix + ' > '.join(own_parts[:name_idx + 1])
+                    hits_for_this_name = effective_hits - len(own_parts) + 1 if name_idx == len(own_parts) - 1 else 1
+                    if hits_for_this_name > 1:
+                        ordinal = i - (effective_hits - hits_for_this_name)
+                        ordinals = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
+                        if 0 <= ordinal < len(ordinals):
+                            base += f' ({ordinals[ordinal]})'
+                    new_row['Move Name'] = base
+            result.append(new_row)
+
+    return result
+
+
+def expand_continuations(row_dicts, prior_commands=None):
     """Expand '= X' continuation commands and move names into full forms.
 
     Handles indentation levels:
@@ -191,6 +304,7 @@ def expand_continuations(row_dicts):
             else:
                 full_name = parent_name
             row['Move Name'] = full_name
+            row['_own_name'] = own_name
             names_by_level[level] = full_name
         else:
             commands_by_level = {0: cmd}
@@ -198,6 +312,13 @@ def expand_continuations(row_dicts):
             row['Command'] = cmd
     for row in row_dicts:
         row['Command'] = re.sub(r'\s*-?\s*\[~5\]', '', row['Command']).strip()
+        name = row.get('Move Name', '')
+        if ' - ' in name:
+            row['Move Name'] = name.replace(' - ', ' > ')
+        own = row.get('_own_name', '')
+        if ' - ' in own:
+            row['_own_name'] = own.replace(' - ', ' > ')
+    row_dicts = split_multi_hit_moves(row_dicts, prior_commands)
     split_alternatives(row_dicts)
     return row_dicts
 
@@ -526,7 +647,8 @@ def write_unified_row_xlsx(ws, row_num, row_dict):
     return row_num + 1
 
 
-def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', character=''):
+def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', character='',
+                               prior_commands=None):
     """Write a frame-data-only section.
 
     FD columns are: Command, Hit (=Speed), Block Adv, Hit Adv, CH Adv.
@@ -546,7 +668,7 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
             'Hit Adv': row[3] if len(row) > 3 else '',
             'CH Adv': row[4] if len(row) > 4 else '',
         })
-    expand_continuations(row_dicts)
+    row_dicts = expand_continuations(row_dicts, prior_commands)
     row_dicts = merge_duplicate_commands(row_dicts, character)
     row_dicts = filter_tag_moves(row_dicts, character, section=heading.title())
     for row_dict in row_dicts:
@@ -610,10 +732,16 @@ def main():
     ws.title = "Frame Data"
     row_num = 1
 
+    # Collect commands from Basic Arts to pass as prior_commands to later sections
+    all_prior_commands = set()
+
     # 1. Basic Arts (FD only, no merge needed)
     if 'Basic Arts' in fd_tables:
         row_num = write_fd_only_section_xlsx(ws, row_num, 'BASIC ARTS', fd_tables['Basic Arts'],
                                              character=character_name)
+        for row in fd_tables['Basic Arts'][1:]:
+            if row:
+                all_prior_commands.add(row[0])
 
     # 2. Special Arts (merged FD + ML)
     if 'Special Arts' in fd_tables:
@@ -647,7 +775,7 @@ def main():
                 'Notes': r['notes'],
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
             })
-        expand_continuations(special_rows)
+        special_rows = expand_continuations(special_rows, all_prior_commands)
         special_rows = filter_tag_moves(special_rows, character_name, section='Special Arts')
         for row_dict in special_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
@@ -659,7 +787,8 @@ def main():
     for section in fd_only_sections:
         stance = STANCE_MAP.get(section, section.replace(' Arts', ''))
         row_num = write_fd_only_section_xlsx(ws, row_num, section.upper(), fd_tables[section],
-                                             stance=stance, character=character_name)
+                                             stance=stance, character=character_name,
+                                             prior_commands=all_prior_commands)
 
     # 4. Unblockable Arts
     if 'Unblockable Arts' in fd_tables and 'Unblockable Arts' in ml_tables:
@@ -689,7 +818,7 @@ def main():
                 'Notes': r['notes'],
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
             })
-        expand_continuations(ub_rows)
+        ub_rows = expand_continuations(ub_rows, all_prior_commands)
         ub_rows = filter_tag_moves(ub_rows, character_name, section='Unblockable Arts')
         for row_dict in ub_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)

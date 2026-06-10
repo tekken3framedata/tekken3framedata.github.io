@@ -20,10 +20,10 @@ Kaksi erillistä sivua per hahmo:
 ## Scripti
 
 ```bash
-python3 scrape_framedata.py <framedata_url> <movelist_url> <output.tsv>
+python3 scrape_framedata.py <framedata_url> <movelist_url> <output.xlsx>
 ```
 
-Scripti löytää kaikki osiot dynaamisesti molemmista sivuista ja yhdistää ne.
+Scripti löytää kaikki osiot dynaamisesti molemmista sivuista ja yhdistää ne. Output on XLSX (openpyxl).
 
 ### Esimerkki
 
@@ -31,7 +31,7 @@ Scripti löytää kaikki osiot dynaamisesti molemmista sivuista ja yhdistää ne
 python3 scrape_framedata.py \
     "https://web.archive.org/web/20201206043428/http://www.tekkenzaibatsu.com/tekkentag/framedata.php?id=julia" \
     "https://web.archive.org/web/20201206042940/http://www.tekkenzaibatsu.com/tekken3/movelist.php?id=julia" \
-    julia_framedata.tsv
+    julia_framedata_v3.xlsx
 ```
 
 ## Matchaus (yhdistäminen)
@@ -53,13 +53,13 @@ Yksinkertainen flat LCS ei toimi koska geneerisiä follow-up-komentoja (kuten `=
 
 ### Unmatchatut rivit
 
-Rivit jotka eivät matchaa saavat `[UNMATCHED]` Notes-sarakkeeseen. Nämä vaativat manuaalista tarkistusta. Syitä:
+Rivit jotka eivät matchaa saavat `TRUE` Unmatched-sarakkeeseen. Nämä vaativat manuaalista tarkistusta. Syitä:
 
 - **TTT-only liike**: Liike on lisätty TTT:hen eikä sitä ole T3 movelististä (esim. `SS+2`, `b+3`, `d/b+1`)
 - **Notaatioero**: Sama liike on merkitty eri tavalla (esim. `f~N,d~d/f+2` vs `f,N,d~d/f+2`, tai `(d/f+1,2_f+1+2,2_WR+1+2,2)` vs `(d/f+1,2_f+1+2,2)` kun TTT lisää WR-variantin)
 - **Yhdistämisero**: T3 movelist yhdistää kaksi komentoa samalle riville (esim. `(f,N,d,d/f,f_WS)+4,4`) mutta TTT frame data listaa ne erikseen
 
-Manuaalinen tarkistus: avaa TSV, etsi `[UNMATCHED]`, vertaa movelisti-sivuun ja päätä onko kyseessä TTT-only liike vai pitääkö täydentää nimi käsin.
+Manuaalinen tarkistus: avaa XLSX, suodata Unmatched-sarake (`TRUE`), vertaa movelisti-sivuun ja päätä onko kyseessä TTT-only liike vai pitääkö täydentää nimi käsin.
 
 ## Footnote-viittaukset
 
@@ -67,48 +67,92 @@ Properties-sarakkeessa olevat `#1`, `#2` jne. korvataan sivun Foot Notes -selity
 
 Footnote-divit ovat osiokohtaisia: ne sijaitsevat `</table>` ja seuraavan `<h2>` välissä. Regex: `(#\d+)\s+(.*?)(?:<br|[\n\r]|</fieldset)`.
 
-## TSV-escaping Google Sheetsiä varten
+## Continuation expansion
 
-Google Sheets tulkitsee solun kaavaksi jos se alkaa `=`-merkillä. Tässä datassa ongelma on:
-- Command-sarake: `= Flash Elbow`, `= 4` jne. (follow-up-liikkeet)
-- Move Name -sarake: `= Flash Elbow` jne.
+Follow-up-liikkeet (jotka alkavat `= ...`) laajennetaan täysiksi komennoiksi:
+- `(WS+2_3~2)` → `(WS+2_3~2),4` → `(WS+2_3~2),4,4`
+- Indentaatiotaso (1 välilyönti = level 1, 3 = level 2) määrittää minkä parentin jatko
 
-**Ratkaisu:** Prefixoi `'` (heittomerkki) solun alkuun. Sheets näyttää tekstin ilman heittomerkkiä.
+Move Name laajennetaan vastaavasti `>`:lla erotettuna:
+- `Tequila Sunrise` → `Tequila Sunrise > Razor Sweep`
 
-`+6` ja `-2` toimivat sellaisinaan — Sheets tulkitsee ne numeroiksi, mikä on ok.
+## Multi-hit split
 
-## Tuotettu TSV-rakenne
+Liikkeet joiden Block/Hit/CH -sarakkeissa on useita välilyönnillä erotettuja arvoja jaetaan erillisiksi riveiksi. Logiikka:
 
-Tiedostossa osiot erotettu tyhjällä rivillä, jokaisen alussa otsikkorivi:
+1. Alkuun `x`-arvot poistetaan (tarkoittaa ettei arvoa voida mitata)
+2. Jos jää 1 arvo → ei jakoa
+3. Jos jää 2+ arvoa → komento pilkotaan viimeisten top-level-separaattoreiden (`,`/`~`) kohdalta
+4. Jos parent-komento on jo taulukossa (esim. `1` Basic Artsissa), sille ei luoda omaa riviä
+
+Esimerkki: `1~1` jossa Block=`0 -15` (ja `1` on jo Basic Artsissa):
+- Vain yksi rivi: Command=`1~1`, Block=`-15`, Hit=`-4`, CH=`-4`
+
+Esimerkki: `1+4,3` jossa Block=`x -13 12`:
+- `x` poistetaan → [-13, 12], 2 arvoa
+- Rivi 1: Command=`1+4`, Speed=`20`, Block=`-13`
+- Rivi 2: Command=`1+4,3`, Speed=(tyhjä), Block=`12`
+
+Speed-arvo jää vain ensimmäiselle riville (startup). Sulkujen sisällä olevat separaattorit eivät laukaise jakoa.
+
+### Move Name -jakaminen
+
+Move Namessa ` - ` korvataan aina ` > `:lla (tarkoittaa eri osumien nimiä samassa stringissä).
+
+Kun rivi jaetaan ja nimiä on yhtä monta kuin hittejä, nimet jaetaan 1:1:
+- `Club Fist > Flash Uppercut` (2 osaa, 2 hittiä) → `WS+2,1`="Club Fist", `WS+2,1,1`="Flash Uppercut"
+
+Kun nimiä on vähemmän kuin hittejä, lisätään ordinaalit:
+- `Club Fist > Bow & Arrow` (2 osaa, 3 hittiä) → `WS+2,1`="Club Fist", `WS+2,1,4`="Bow & Arrow (First)", `WS+2,1,4,3`="Bow & Arrow (Second)"
+
+## Alternative-komennot
+
+`(A_B)` -notaatio puretaan: ensimmäinen vaihtoehto tulee Command-sarakkeeseen, loput Alt Commands -sarakkeeseen.
+- Button 5 (TTT tag) poistetaan vaihtoehdoista
+- `PREFERRED_COMMAND`-dict ohjaa kumpi vaihtoehto on ensisijainen (hahmokohtainen)
+- Follow-up-rivit eivät saa omia Alt Commands -arvoja
+
+## TTT-only-liikkeiden filtteröinti
+
+`TAG_ONLY_MOVES`-dict listaa hahmokohtaisesti liikkeet jotka ovat puhtaasti TTT tag-mekaniikkaa. Nämä poistetaan kokonaan outputista (eivät päädy tiedostoon lainkaan). Myös poistettujen parent-liikkeiden jatkot suodattuvat pois.
+
+## Duplicate-yhdistäminen
+
+`MERGE_DUPLICATES`-dict määrittelee komentoparit jotka ovat sama liike eri notaatiolla (esim. `d+1` / `FC+1`). Ensisijainen jää, toisesta tulee Alt Command.
+
+## `/`-merkin poisto
+
+Command- ja Alt Commands -sarakkeista poistetaan kaikki `/`-merkit kirjoitusvaiheessa (esim. `d/f+1` → `df+1`).
+
+## Tuotettu XLSX-rakenne
+
+Yksi yhtenäinen sarakejärjestys kaikille osioille:
 
 ```
-BASIC ARTS
-Command  Speed  Block Adv  Hit Adv  Counter Hit Adv
-
-SPECIAL ARTS
-Command  Move Name  Damage  Hit Range  Properties  Notes  Speed  Block Adv  Hit Adv  Counter Hit Adv
-
-[MAHDOLLINEN YLIMÄÄRÄINEN FD-OSIO, esim. DEVIL JIN POSSESSION ARTS]
-Command  Hit  Block Adv  Hit Adv  Counter Hit Adv
-
-UNBLOCKABLE ARTS
-Command  Move Name  Damage  Hit Range  Properties  Notes  Speed  Block Adv  Hit Adv  Counter Hit Adv
-
-GRAPPLING ARTS
-Command  Throw Name  Type  Damage  Escape  Properties  Notes  Speed
-
-STRING HIT ARTS
-Command  Hits  Damage  Hit Range
+UUID | Character | Stance | Command | Move Name | Damage | Hit Range | Properties | Speed | Block Adv | Hit Adv | CH Adv | Alt Commands | Notes | Unmatched
 ```
+
+Osiot erotetaan tyhjällä rivillä ja otsikkorivillä (bold). Sarakeheaderit toistuvat jokaisen osion alussa.
+
+### Osiot järjestyksessä:
+
+1. **BASIC ARTS** — FD only (Speed, Block/Hit/CH Adv)
+2. **SPECIAL ARTS** — yhdistetty FD + ML (kaikki sarakkeet)
+3. **[Hahmokohtaiset FD-osiot]** — esim. DEVIL JIN POSSESSION ARTS (Stance-sarake kertoo kontekstin)
+4. **UNBLOCKABLE ARTS** — yhdistetty FD + ML
+5. **GRAPPLING ARTS** — ML primary, FD:stä Speed. Escape-tieto Properties-sarakkeessa.
+6. **STRING HIT ARTS** — ML only (Damage, Hit Range, hits-lukumäärä Notes-sarakkeessa)
 
 ## Huomioita
 
-- TTT-spesifiset liikkeet (joita ei ole T3 movelististä) saavat `[UNMATCHED]` Notes-kenttään
-- `[~5]` TTT frame datassa tarkoittaa tag-bufferia (voi tehdä liikkeen jälkeen tag outin painamalla 5)
+- TTT-spesifiset liikkeet suodatetaan pois `TAG_ONLY_MOVES`-dictin perusteella
+- `[~5]` TTT frame datassa tarkoittaa tag-bufferia — poistetaan komennoista continuation expansionissa
 - Unblockable Arts voi olla sekä FD:ssä (frame data) että ML:ssä (nimi) — scripti yhdistää nämä
 - Grappling Arts FD:ssä on vain Speed-sarake, se liitetään ML:n riveihin
 - FD-sivun "Grappling Arts" ei sisällä frame advantage -dataa, vain startupin
-- Hahmokohtaiset ylimääräiset FD-osiot (kuten Devil Jin Possession Arts) kirjoitetaan sellaisenaan ilman merge-logiikkaa
+- Hahmokohtaiset ylimääräiset FD-osiot (kuten Devil Jin Possession Arts) kirjoitetaan sellaisenaan ilman merge-logiikkaa, Stance-sarake ilmaisee kontekstin
+- UUID generoidaan jokaiselle riville (`uuid4`)
+- Character-sarake populoidaan automaattisesti URL:n `id`-parametrista
 
 ## Wayback Machine URL:t
 
