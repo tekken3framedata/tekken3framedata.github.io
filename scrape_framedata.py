@@ -132,8 +132,8 @@ def normalize_cmd(cmd):
     return cmd
 
 
-TEXT_COLUMNS = {'UUID', 'Command', 'Move Name', 'Stance', 'Damage', 'Hit Range', 'Properties',
-                'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
+TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Move Name', 'Stance', 'Damage', 'Hit Range',
+                'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
 
 
 def group_moves(rows):
@@ -281,8 +281,8 @@ def merge_special_arts(fd_rows, ml_rows, footnotes):
     return merged, matched_count
 
 
-UNIFIED_HEADERS = ['UUID', 'Stance', 'Command', 'Move Name', 'Damage', 'Hit Range', 'Properties',
-                    'Speed', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes', 'Unmatched']
+UNIFIED_HEADERS = ['UUID', 'Character', 'Stance', 'Command', 'Move Name', 'Damage', 'Hit Range',
+                    'Properties', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes', 'Unmatched']
 
 
 def write_section_header(ws, row_num, heading):
@@ -312,7 +312,7 @@ def write_unified_row_xlsx(ws, row_num, row_dict):
     return row_num + 1
 
 
-def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default'):
+def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', character=''):
     """Write a frame-data-only section.
 
     FD columns are: Command, Hit (=Speed), Block Adv, Hit Adv, CH Adv.
@@ -323,6 +323,7 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default'):
     row_num = write_column_headers(ws, row_num)
     for row in rows[1:]:  # skip source header
         row_dict = {
+            'Character': character,
             'Command': row[0] if len(row) > 0 else '',
             'Stance': stance,
             'Speed': row[1] if len(row) > 1 else '',
@@ -342,6 +343,10 @@ def main():
     framedata_url = sys.argv[1]
     movelist_url = sys.argv[2]
     output_path = sys.argv[3]
+
+    # Extract character name from URL id parameter
+    id_match = re.search(r'[?&]id=(\w+)', framedata_url)
+    character_name = id_match.group(1).capitalize() if id_match else 'Unknown'
 
     print("Fetching frame data page...")
     framedata_content = fetch_url(framedata_url)
@@ -388,7 +393,8 @@ def main():
 
     # 1. Basic Arts (FD only, no merge needed)
     if 'Basic Arts' in fd_tables:
-        row_num = write_fd_only_section_xlsx(ws, row_num, 'BASIC ARTS', fd_tables['Basic Arts'])
+        row_num = write_fd_only_section_xlsx(ws, row_num, 'BASIC ARTS', fd_tables['Basic Arts'],
+                                             character=character_name)
 
     # 2. Special Arts (merged FD + ML)
     if 'Special Arts' in fd_tables:
@@ -407,6 +413,7 @@ def main():
         row_num = write_column_headers(ws, row_num)
         for r in merged:
             row_dict = {
+                'Character': character_name,
                 'Command': r['command'],
                 'Move Name': r['move_name'],
                 'Stance': 'Default',
@@ -428,7 +435,8 @@ def main():
                        if s not in ('Basic Arts', 'Special Arts', 'Grappling Arts', 'Unblockable Arts')]
     for section in fd_only_sections:
         stance = STANCE_MAP.get(section, section.replace(' Arts', ''))
-        row_num = write_fd_only_section_xlsx(ws, row_num, section.upper(), fd_tables[section], stance=stance)
+        row_num = write_fd_only_section_xlsx(ws, row_num, section.upper(), fd_tables[section],
+                                             stance=stance, character=character_name)
 
     # 4. Unblockable Arts
     if 'Unblockable Arts' in fd_tables and 'Unblockable Arts' in ml_tables:
@@ -443,6 +451,7 @@ def main():
         row_num = write_column_headers(ws, row_num)
         for r in merged_ub:
             row_dict = {
+                'Character': character_name,
                 'Command': r['command'],
                 'Move Name': r['move_name'],
                 'Stance': 'Default',
@@ -466,6 +475,7 @@ def main():
             raw_props = row[5] if len(row) > 5 else ''
             props, notes = expand_properties(raw_props, fn_unblock)
             row_dict = {
+                'Character': character_name,
                 'Command': row[0] if len(row) > 0 else '',
                 'Move Name': row[1] if len(row) > 1 else '',
                 'Stance': 'Default',
@@ -477,7 +487,8 @@ def main():
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
         row_num += 1
     elif 'Unblockable Arts' in fd_tables:
-        row_num = write_fd_only_section_xlsx(ws, row_num, 'UNBLOCKABLE ARTS', fd_tables['Unblockable Arts'])
+        row_num = write_fd_only_section_xlsx(ws, row_num, 'UNBLOCKABLE ARTS', fd_tables['Unblockable Arts'],
+                                             character=character_name)
 
     # 5. Grappling Arts (ML is primary source, merge FD speed if available)
     if 'Grappling Arts' in ml_tables:
@@ -496,6 +507,7 @@ def main():
             props, notes = expand_properties(raw_props, fn_grappling)
             escape_cmd = row[4] if len(row) > 4 else ''
             row_dict = {
+                'Character': character_name,
                 'Command': row[0] if len(row) > 0 else '',
                 'Move Name': row[1] if len(row) > 1 else '',
                 'Stance': 'Default',
@@ -514,6 +526,7 @@ def main():
         row_num = write_column_headers(ws, row_num)
         for row in ml_tables['String Hit Arts'][1:]:
             row_dict = {
+                'Character': character_name,
                 'Command': row[0] if len(row) > 0 else '',
                 'Stance': 'Default',
                 'Damage': row[2] if len(row) > 2 else '',
