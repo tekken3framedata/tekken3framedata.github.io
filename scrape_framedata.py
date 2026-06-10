@@ -218,6 +218,39 @@ MERGE_DUPLICATES = {
     ],
 }
 
+# Moves that only exist in Tekken Tag Tournament (tag button mechanics, partner moves, etc.)
+# These are completely ignored and not written to the output file.
+TAG_ONLY_MOVES = {
+    'julia': {
+        'Special Arts': ['SS+2', 'f+1+2', 'df+4', 'b+4', 'b+3'],
+    },
+}
+
+
+def filter_tag_moves(row_dicts, character, section=''):
+    """Remove moves that are TTT tag-only from the row list.
+
+    Also removes continuations of tag-only parents (commands starting with
+    a tag-only command followed by a separator).
+    Compares with '/' stripped since slash removal happens later in the pipeline.
+    """
+    char_moves = TAG_ONLY_MOVES.get(character.lower(), {})
+    tag_moves = char_moves.get(section, [])
+    if not tag_moves:
+        return row_dicts
+    tag_set = set(tag_moves)
+
+    def is_tag_move(cmd):
+        normalized = cmd.replace('/', '')
+        if normalized in tag_set:
+            return True
+        for parent in tag_set:
+            if normalized.startswith(parent) and len(normalized) > len(parent) and normalized[len(parent)] in ',<~':
+                return True
+        return False
+
+    return [r for r in row_dicts if not is_tag_move(r.get('Command', ''))]
+
 
 def split_alternatives(row_dicts):
     """Split (A_B) alternative notation into primary command and alternatives.
@@ -515,6 +548,7 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
         })
     expand_continuations(row_dicts)
     row_dicts = merge_duplicate_commands(row_dicts, character)
+    row_dicts = filter_tag_moves(row_dicts, character, section=heading.title())
     for row_dict in row_dicts:
         row_num = write_unified_row_xlsx(ws, row_num, row_dict)
     return row_num + 1  # blank row
@@ -614,6 +648,7 @@ def main():
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
             })
         expand_continuations(special_rows)
+        special_rows = filter_tag_moves(special_rows, character_name, section='Special Arts')
         for row_dict in special_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
         row_num += 1  # blank row
@@ -655,6 +690,7 @@ def main():
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
             })
         expand_continuations(ub_rows)
+        ub_rows = filter_tag_moves(ub_rows, character_name, section='Unblockable Arts')
         for row_dict in ub_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
         row_num += 1
