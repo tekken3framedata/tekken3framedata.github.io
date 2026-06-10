@@ -37,8 +37,7 @@
             font-size: 0.875rem;
         }
         .filter-btn.active { background: #334155; color: #e2e8f0; border-color: #60a5fa; }
-        table { border-collapse: collapse; width: 100%; max-width: 800px; table-layout: fixed; }
-        td:nth-child(2), th:nth-child(2) { width: 55%; }
+        table { border-collapse: collapse; width: 100%; }
         td:nth-child(4), th:nth-child(4),
         td:nth-child(5), th:nth-child(5),
         td:nth-child(6), th:nth-child(6) { white-space: nowrap; }
@@ -94,6 +93,9 @@
     <h1>T3FD — Tekken 3 Frame Data</h1>
 
     <input type="text" id="search" placeholder="Etsi liikettä (esim. deathfist, dragon tail)">
+    <label style="display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:1rem;font-size:0.875rem;color:#94a3b8;cursor:pointer">
+        <input type="checkbox" id="toggle-move-name"> Näytä liikkeen nimi
+    </label>
 
     <table id="move-results"></table>
 
@@ -155,7 +157,14 @@
         const potentialTable = document.getElementById('potential-table');
         const togglePotential = document.getElementById('toggle-potential');
 
+        const toggleMoveName = document.getElementById('toggle-move-name');
+        let showMoveName = false;
         let currentMoveId = null;
+
+        toggleMoveName.addEventListener('change', () => {
+            showMoveName = toggleMoveName.checked;
+            renderMoveList();
+        });
 
         function renderMoveList() {
             const q = search.value.toLowerCase().trim();
@@ -167,10 +176,11 @@
                     m.character.toLowerCase().includes(q))
                 : moves;
 
+            const moveCol = showMoveName ? '<th>Liike</th>' : '';
             moveResults.innerHTML =
-                '<thead><tr><th>Hahmo</th><th>Liike</th><th>Stance</th><th>Komento</th><th>Startup</th><th>Block</th></tr></thead>' +
+                `<thead><tr><th>Hahmo</th>${moveCol}<th>Stance</th><th>Komento</th><th>Startup</th><th>Block</th></tr></thead>` +
                 '<tbody>' + matched.map(m =>
-                    `<tr class="move-list" data-id="${m.id}"><td>${m.character}</td><td>${m.move}</td><td>${m.stance === 'Default' ? '–' : m.stance}</td><td>${m.command}</td><td>${m.startup}</td><td>${m.block}</td></tr>`
+                    `<tr class="move-list" data-id="${m.id}"><td>${m.character}</td>${showMoveName ? `<td>${m.move}</td>` : ''}<td>${m.stance === 'Default' ? '–' : m.stance}</td><td>${m.command}</td><td>${m.startup}</td><td>${m.block}</td></tr>`
                 ).join('') + '</tbody>';
         }
 
