@@ -1,34 +1,28 @@
 #!/usr/bin/env python3
 """
-Scrape Tekken frame data and movelist from Tekken Zaibatsu (via Wayback Machine)
-and merge them into an XLSX file.
+Scrape Tekken frame data from local HTML sources and produce an XLSX file.
+
+Sources must be fetched first with fetch_sources.py, which adds data-uuid
+attributes to table rows for stable identification.
 
 Usage:
-    python3 scrape_framedata.py <framedata_url> <movelist_url> <output.xlsx>
+    python3 scrape_framedata.py <character> <output.xlsx>
 
 Example:
-    python3 scrape_framedata.py \
-        "https://web.archive.org/web/20201206043428/http://www.tekkenzaibatsu.com/tekkentag/framedata.php?id=julia" \
-        "https://web.archive.org/web/20201206042940/http://www.tekkenzaibatsu.com/tekken3/movelist.php?id=julia" \
-        julia_framedata_v3.xlsx
+    python3 scrape_framedata.py julia julia_framedata_v3.xlsx
 """
 
 import re
 import sys
-import subprocess
-import uuid
 
 from openpyxl import Workbook
 from openpyxl.styles import Font, numbers
 
 
-def fetch_url(url):
-    """Fetch URL content using curl (WebFetch doesn't work with web.archive.org)."""
-    result = subprocess.run(
-        ['curl', '-s', '-L', url],
-        capture_output=True, text=True, timeout=60
-    )
-    return result.stdout
+def read_local_html(path):
+    """Read a local HTML file."""
+    with open(path, 'r', encoding='utf-8') as f:
+        return f.read()
 
 
 def parse_table(html_content):
@@ -36,13 +30,20 @@ def parse_table(html_content):
 
     Preserves leading &nbsp; count in the first cell as spaces,
     which encodes continuation depth (1 space = level 1, 3 spaces = level 2).
+    Each row list has the UUID appended as the last element (from data-uuid attr).
     """
     rows = []
-    tr_pattern = re.compile(r'<tr[^>]*>(.*?)</tr>', re.DOTALL)
+    tr_pattern = re.compile(r'<tr([^>]*)>(.*?)</tr>', re.DOTALL)
     td_pattern = re.compile(r'<td[^>]*>(.*?)</td>', re.DOTALL)
+    uuid_pattern = re.compile(r'data-uuid="([^"]+)"')
 
     for tr_match in tr_pattern.finditer(html_content):
-        tr_content = tr_match.group(1)
+        tr_attrs = tr_match.group(1)
+        tr_content = tr_match.group(2)
+
+        uuid_match = uuid_pattern.search(tr_attrs)
+        row_uuid = uuid_match.group(1) if uuid_match else ''
+
         cells = []
         for col_idx, td_match in enumerate(td_pattern.finditer(tr_content)):
             cell_text = td_match.group(1)
@@ -67,6 +68,7 @@ def parse_table(html_content):
                 cell_text = cell_text.strip()
             cells.append(cell_text)
         if cells:
+            cells.append(row_uuid)
             rows.append(cells)
     return rows
 
@@ -612,11 +614,13 @@ def merge_special_arts(fd_rows, ml_rows, footnotes):
 
     merged = []
     for fd_idx, fd_row in enumerate(fd_rows):
+        row_uuid = fd_row[-1] if fd_row else ''
         if fd_idx in fd_to_ml:
             ml_row = ml_rows[fd_to_ml[fd_idx]]
             raw_props = ml_row[5] if len(ml_row) > 5 else ''
             props, notes = expand_properties(raw_props, footnotes)
             merged.append({
+                'uuid': row_uuid,
                 'command': fd_row[0],
                 'move_name': ml_row[1] if len(ml_row) > 1 else '',
                 'damage': ml_row[3] if len(ml_row) > 3 else '',
@@ -630,6 +634,7 @@ def merge_special_arts(fd_rows, ml_rows, footnotes):
             })
         else:
             merged.append({
+                'uuid': row_uuid,
                 'command': fd_row[0],
                 'move_name': '',
                 'damage': '',
@@ -691,7 +696,8 @@ def write_column_headers(ws, row_num):
 
 def write_unified_row_xlsx(ws, row_num, row_dict):
     """Write a single data row. Text columns get explicit text format and data_type='s'."""
-    row_dict['UUID'] = str(uuid.uuid4())
+    if not row_dict.get('UUID'):
+        row_dict['UUID'] = ''
     for key in ('Command', 'Alt Commands'):
         if row_dict.get(key):
             row_dict[key] = row_dict[key].replace('/', '')
@@ -719,6 +725,7 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
     row_dicts = []
     for row in rows[1:]:  # skip source header
         row_dicts.append({
+            'UUID': row[-1] if row else '',
             'Character': character,
             'Command': row[0] if len(row) > 0 else '',
             'Stance': stance,
@@ -736,23 +743,22 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
 
 
 def main():
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 3:
         print(__doc__)
         sys.exit(1)
 
-    framedata_url = sys.argv[1]
-    movelist_url = sys.argv[2]
-    output_path = sys.argv[3]
+    character = sys.argv[1].lower()
+    output_path = sys.argv[2]
+    character_name = character.capitalize()
 
-    # Extract character name from URL id parameter
-    id_match = re.search(r'[?&]id=(\w+)', framedata_url)
-    character_name = id_match.group(1).capitalize() if id_match else 'Unknown'
+    fd_path = f"sources/{character}_framedata.html"
+    ml_path = f"sources/{character}_movelist.html"
 
-    print("Fetching frame data page...")
-    framedata_content = fetch_url(framedata_url)
+    print(f"Reading {fd_path}...")
+    framedata_content = read_local_html(fd_path)
 
-    print("Fetching movelist page...")
-    movelist_content = fetch_url(movelist_url)
+    print(f"Reading {ml_path}...")
+    movelist_content = read_local_html(ml_path)
 
     # Discover sections in both sources
     fd_sections = find_all_sections(framedata_content)
@@ -820,6 +826,7 @@ def main():
         special_rows = []
         for r in merged:
             special_rows.append({
+                'UUID': r['uuid'],
                 'Character': character_name,
                 'Command': r['command'],
                 'Move Name': r['move_name'],
@@ -863,6 +870,7 @@ def main():
         ub_rows = []
         for r in merged_ub:
             ub_rows.append({
+                'UUID': r['uuid'],
                 'Character': character_name,
                 'Command': r['command'],
                 'Move Name': r['move_name'],
@@ -890,6 +898,7 @@ def main():
             raw_props = row[5] if len(row) > 5 else ''
             props, notes = expand_properties(raw_props, fn_unblock)
             row_dict = {
+                'UUID': row[-1] if row else '',
                 'Character': character_name,
                 'Command': row[0] if len(row) > 0 else '',
                 'Move Name': row[1] if len(row) > 1 else '',
@@ -922,6 +931,7 @@ def main():
             props, notes = expand_properties(raw_props, fn_grappling)
             escape_cmd = row[4] if len(row) > 4 else ''
             row_dict = {
+                'UUID': row[-1] if row else '',
                 'Character': character_name,
                 'Command': row[0] if len(row) > 0 else '',
                 'Move Name': row[1] if len(row) > 1 else '',
@@ -941,6 +951,7 @@ def main():
         row_num = write_column_headers(ws, row_num)
         for row in ml_tables['String Hit Arts'][1:]:
             row_dict = {
+                'UUID': row[-1] if row else '',
                 'Character': character_name,
                 'Command': row[0] if len(row) > 0 else '',
                 'Stance': 'Default',
@@ -960,6 +971,9 @@ def main():
             if val:
                 max_len = max(max_len, len(str(val)))
         ws.column_dimensions[col_letter].width = max_len + 2
+
+    # Hide UUID column by default
+    ws.column_dimensions['A'].hidden = True
 
     wb.save(output_path)
     print(f"\nWritten to {output_path}")
