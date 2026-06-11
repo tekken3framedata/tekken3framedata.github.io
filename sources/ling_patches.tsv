@@ -32,3 +32,7 @@ set	ml	Special Arts	FC df+2,1	Hit Range	ss
 replace	ml	Special Arts	FC,d/f+4	FC d/f+4
 replace	ml	Special Arts	FC,d/f+4,4	FC d/f+4,4
 replace	ml	Special Arts	FC,d/b+3+4	FC d/b+3+4
+
+# D+3,2,1,4 is from full crouch - use FC prefix with space.
+replace	fd	Special Arts	D+3,2,1,4	FC 3,2,1,4
+replace	ml	Special Arts	D+3,2,1,4	FC 3,2,1,4

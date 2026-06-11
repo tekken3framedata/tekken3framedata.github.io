@@ -49,6 +49,17 @@ def load_patches(character):
     return patches
 
 
+def strip_tag_buffer(fd_tables):
+    """Strip [~5] tag buffer notation from all FD command cells.
+
+    This runs before TSV patches so patch commands don't need to include [~5].
+    """
+    for rows in fd_tables.values():
+        for row in rows:
+            if row and row[0]:
+                row[0] = re.sub(r'\s*-?\s*\[~5\]', '', row[0]).rstrip()
+
+
 def apply_patches(fd_tables, ml_tables, patches):
     """Apply patches to parsed tables before any further processing.
 
@@ -379,7 +390,6 @@ def split_multi_hit_moves(row_dicts, prior_commands=None):
                     if n_tokens < len(parts):
                         new_row[key] = ','.join(parts[:n_tokens])
             if i > 0:
-                new_row['Speed'] = ''
                 new_row['_is_followup'] = True
             if own_parts:
                 if len(own_parts) == effective_hits:
@@ -414,6 +424,7 @@ def expand_continuations(row_dicts, prior_commands=None, character=''):
     names_by_level = {}
     damage_by_level = {}
     hitrange_by_level = {}
+    root_speed = ''
     for row in row_dicts:
         cmd = row['Command']
         name = row.get('Move Name', '')
@@ -430,6 +441,8 @@ def expand_continuations(row_dicts, prior_commands=None, character=''):
             full_cmd = parent_cmd + separator + suffix
             row['Command'] = full_cmd
             row['_is_followup'] = True
+            if not row.get('Speed'):
+                row['Speed'] = root_speed
             commands_by_level[level] = full_cmd
 
             is_phantom = full_cmd.replace('/', '').replace('<', ',') in phantom_set
@@ -470,10 +483,10 @@ def expand_continuations(row_dicts, prior_commands=None, character=''):
             names_by_level = {0: name}
             damage_by_level = {0: damage}
             hitrange_by_level = {0: hit_range}
+            root_speed = row.get('Speed', '')
             row['Command'] = cmd
             row['Hit Range'] = hit_range
     for row in row_dicts:
-        row['Command'] = re.sub(r'\s*-?\s*\[~5\]', '', row['Command']).strip()
         name = row.get('Move Name', '')
         if ' - ' in name:
             row['Move Name'] = name.replace(' - ', ' > ')
@@ -903,6 +916,9 @@ def main():
     for section in ml_sections:
         rows = parse_table(get_table_section(movelist_content, section))
         ml_tables[section] = rows
+
+    # Strip [~5] tag buffer notation before anything else
+    strip_tag_buffer(fd_tables)
 
     # Apply patches before further processing
     patches = load_patches(character)

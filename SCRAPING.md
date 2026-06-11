@@ -34,6 +34,35 @@ python3 scrape_framedata.py \
     julia_framedata_v3.xlsx
 ```
 
+## Move Patches
+
+Patchit korjaavat lähdedataa ennen matchausta ja expansionia. Tiedosto: `sources/<character>_patches.tsv`.
+
+### Formaatti
+
+TSV (tab-eroteltu). Tyhjät rivit ja `#`-alkuiset rivit ohitetaan.
+
+### Operaatiot
+
+| Operaatio | Sarakkeet | Toiminto |
+|-----------|-----------|----------|
+| `replace` | `replace <source> <section> <old_cmd> <new_cmd>` | Korvaa komennon |
+| `set` | `set <source> <section> <cmd> <column> <value>` | Asettaa yksittäisen sarakearvon |
+| `add_after` | `add_after <source> <section> <after_cmd> <col0> <col1> ...` | Lisää uuden rivin komennon jälkeen |
+| `delete` | `delete <source> <section> <cmd>` | Poistaa rivin |
+
+- `<source>`: `fd` (frame data) tai `ml` (movelist)
+- `<section>`: osion nimi täsmälleen kuten HTML:ssä (esim. `Special Arts`)
+- `<column>`: sarakkeen nimi (`Command`, `Speed`, `Block Adv`, `Hit Adv`, `CH Adv` FD:lle; `Command`, `Move Name`, `Stance`, `Damage`, `Hit Range`, `Properties` ML:lle)
+
+### Suoritusjärjestys
+
+Patchit ajetaan heti taulukoiden parsimisen jälkeen, ennen matchausta, continuation expansionia ja kaikkea muuta prosessointia. Tämä mahdollistaa lähdedatan notaatio-ongelmien korjaamisen puhtaasti.
+
+### Tyypillinen käyttötapaus
+
+FC-prefiksilliset liikkeet joissa lähde käyttää pilkkua (`FC,D/F+2`) mutta logiikka tulkitsee pilkun separaattoriksi. Patch korvaa pilkun välilyönnillä (`FC DF+2`) tai yhdistää muuten notaation oikein. Myös tilanteisiin joissa yksi lähderivi edustaa kahta eri liikettä (esim. Lingin Shady Lotus → FC vs. → Rain Dance).
+
 ## Matchaus (yhdistäminen)
 
 Frame data- ja movelist-sivujen taulukot yhdistetään Command-sarakkeen perusteella.

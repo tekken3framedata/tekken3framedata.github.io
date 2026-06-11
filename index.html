@@ -41,6 +41,7 @@
         td:nth-child(4), th:nth-child(4),
         td:nth-child(5), th:nth-child(5),
         td:nth-child(6), th:nth-child(6) { white-space: nowrap; }
+        .col-stance { width: 1%; white-space: nowrap; }
         th, td { padding: 0.5rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
         th { color: #94a3b8; font-size: 0.875rem; text-transform: uppercase; }
         .comment { color: #64748b; font-size: 0.875rem; }
@@ -97,16 +98,16 @@
         <input type="checkbox" id="toggle-move-name"> Näytä liikkeen nimi
     </label>
 
-    <table id="move-results"></table>
+    <div id="move-results"></div>
 
     <dialog id="punish-dialog">
         <button class="modal-close" id="modal-close">&times;</button>
         <h2 id="punish-title"></h2>
         <div class="filters" id="char-filters"></div>
         <div class="section-label">Tarkistetut rankaisut</div>
-        <table id="verified-table"></table>
+        <div id="verified-table"></div>
         <button class="toggle-potential" id="toggle-potential">Näytä mahdolliset rankaisut</button>
-        <table id="potential-table" hidden></table>
+        <div id="potential-table" hidden></div>
     </dialog>
 
     <script>
@@ -178,11 +179,18 @@
                 : moves;
 
             const moveCol = showMoveName ? '<th>Liike</th>' : '';
-            moveResults.innerHTML =
-                `<thead><tr><th>Hahmo</th>${moveCol}<th>Stance</th><th>Komento</th><th>Startup</th><th>Block</th></tr></thead>` +
-                '<tbody>' + matched.map(m =>
-                    `<tr class="move-list" data-id="${m.id}"><td>${m.character}</td>${showMoveName ? `<td>${m.move}</td>` : ''}<td>${m.stance === 'Default' ? '–' : m.stance}</td><td>${m.command}</td><td>${m.startup}</td><td>${m.block}</td></tr>`
-                ).join('') + '</tbody>';
+            const headerRow = `<thead><tr>${moveCol}<th class="col-stance">Stance</th><th>Komento</th><th>Startup</th><th>Block</th></tr></thead>`;
+
+            const grouped = groupByCharacter(matched);
+            let html = '';
+            for (const [char, rows] of grouped) {
+                html += `<h2>${char}</h2><table>${headerRow}<tbody>`;
+                for (const m of rows) {
+                    html += `<tr class="move-list" data-id="${m.id}">${showMoveName ? `<td>${m.move}</td>` : ''}<td class="col-stance">${(m.stance === 'Default' || m.stance === 'Crouching') ? '' : m.stance}</td><td>${m.command}</td><td>${m.startup}</td><td>${m.block}</td></tr>`;
+                }
+                html += '</tbody></table>';
+            }
+            moveResults.innerHTML = html;
         }
 
         search.addEventListener('input', renderMoveList);
@@ -246,6 +254,26 @@
             renderAll();
         });
 
+        function groupByCharacter(items) {
+            const map = new Map();
+            for (const item of items) {
+                if (!map.has(item.character)) map.set(item.character, []);
+                map.get(item.character).push(item);
+            }
+            return map;
+        }
+
+        function renderGroupedTables(items, headerRow, rowFn) {
+            const grouped = groupByCharacter(items);
+            let html = '';
+            for (const [char, rows] of grouped) {
+                html += `<h2>${char}</h2><table>${headerRow}<tbody>`;
+                for (const p of rows) html += rowFn(p);
+                html += '</tbody></table>';
+            }
+            return html;
+        }
+
         function renderAll() {
             if (!currentMoveId) return;
             const move = moves.find(m => m.id === currentMoveId);
@@ -269,6 +297,7 @@
                     if (verifiedIds.has(m.id) || m.id === currentMoveId) return false;
                     if (m.type === 'throw') return false;
                     if (!selectedCharacters.has(m.character)) return false;
+                    if (!m.startup) return false;
                     if (parseInt(m.startup) > Math.abs(blockFrames)) return false;
                     if (m.stance === 'Crouching' && !targetIsLow && !targetIsSpecial) return false;
                     if (m.stance === 'Default' && targetIsLow) return false;
@@ -277,17 +306,17 @@
                 .sort((a, b) => a.character.localeCompare(b.character) || parseInt(a.startup) - parseInt(b.startup));
 
             verifiedTable.innerHTML = verifiedCounters.length === 0 ? '' :
-                '<thead><tr><th>Hahmo</th><th>Liike</th><th>Komento</th><th>Startup</th><th>Huomio</th></tr></thead>' +
-                '<tbody>' + verifiedCounters.map(p =>
-                    `<tr><td>${p.character}</td><td>${p.move}</td><td>${p.command}</td><td>${p.startup}</td><td class="comment">${p.comment || ''}</td></tr>`
-                ).join('') + '</tbody>';
+                renderGroupedTables(verifiedCounters,
+                    '<thead><tr><th>Liike</th><th>Komento</th><th>Startup</th><th>Huomio</th></tr></thead>',
+                    p => `<tr><td>${p.move}</td><td>${p.command}</td><td>${p.startup}</td><td class="comment">${p.comment || ''}</td></tr>`
+                );
 
             togglePotential.style.display = potential.length === 0 ? 'none' : '';
             potentialTable.innerHTML = potential.length === 0 ? '' :
-                '<thead><tr><th>Hahmo</th><th>Liike</th><th>Komento</th><th>Startup</th><th></th></tr></thead>' +
-                '<tbody>' + potential.map(p =>
-                    `<tr class="unverified"><td>${p.character}</td><td>${p.move}</td><td>${p.command}</td><td>${p.startup}</td><td></td></tr>`
-                ).join('') + '</tbody>';
+                renderGroupedTables(potential,
+                    '<thead><tr><th>Liike</th><th>Komento</th><th>Startup</th><th></th></tr></thead>',
+                    p => `<tr class="unverified"><td>${p.move}</td><td>${p.command}</td><td>${p.startup}</td><td></td></tr>`
+                );
         }
     </script>
 </body>
