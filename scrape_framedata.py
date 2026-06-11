@@ -19,10 +19,102 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, numbers
 
 
+FD_COLUMNS = ['Command', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv']
+ML_COLUMNS = ['Command', 'Move Name', 'Stance', 'Damage', 'Hit Range', 'Properties']
+
+
 def read_local_html(path):
     """Read a local HTML file."""
     with open(path, 'r', encoding='utf-8') as f:
         return f.read()
+
+
+def load_patches(character):
+    """Load patches from sources/<character>_patches.tsv if it exists.
+
+    Returns list of patch tuples: (operation, source, section, *args)
+    """
+    import os
+    path = f"sources/{character}_patches.tsv"
+    if not os.path.exists(path):
+        return []
+    patches = []
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.rstrip('\n')
+            if not line or line.startswith('#'):
+                continue
+            parts = line.split('\t')
+            patches.append(parts)
+    return patches
+
+
+def apply_patches(fd_tables, ml_tables, patches):
+    """Apply patches to parsed tables before any further processing.
+
+    Operations:
+      replace <source> <section> <old_cmd> <new_cmd>
+      set     <source> <section> <cmd> <column> <value>
+      add_after <source> <section> <after_cmd> <col0> <col1> ...
+      delete  <source> <section> <cmd>
+    """
+    for parts in patches:
+        op = parts[0]
+        source = parts[1]
+        section = parts[2]
+        tables = fd_tables if source == 'fd' else ml_tables
+        rows = tables.get(section)
+        if rows is None:
+            print(f"  Patch warning: section '{section}' not found in {source}")
+            continue
+
+        columns = FD_COLUMNS if source == 'fd' else ML_COLUMNS
+
+        if op == 'replace':
+            old_cmd, new_cmd = parts[3], parts[4]
+            for row in rows:
+                if row and row[0] == old_cmd:
+                    row[0] = new_cmd
+                    break
+            else:
+                print(f"  Patch warning: '{old_cmd}' not found in {source}/{section}")
+
+        elif op == 'set':
+            cmd, col_name, value = parts[3], parts[4], parts[5]
+            if col_name not in columns:
+                print(f"  Patch warning: unknown column '{col_name}' for {source}")
+                continue
+            col_idx = columns.index(col_name)
+            for row in rows:
+                if row and row[0] == cmd:
+                    while len(row) <= col_idx + 1:  # +1 for UUID at end
+                        row.insert(-1, '')
+                    row[col_idx] = value
+                    break
+            else:
+                print(f"  Patch warning: '{cmd}' not found in {source}/{section}")
+
+        elif op == 'add_after':
+            after_cmd = parts[3]
+            new_values = parts[4:]
+            new_row = new_values + ['']  # empty UUID
+            inserted = False
+            for i, row in enumerate(rows):
+                if row and row[0] == after_cmd:
+                    rows.insert(i + 1, new_row)
+                    inserted = True
+                    break
+            if not inserted:
+                print(f"  Patch warning: '{after_cmd}' not found in {source}/{section}")
+
+        elif op == 'delete':
+            cmd = parts[3]
+            for i, row in enumerate(rows):
+                if row and row[0] == cmd:
+                    rows.pop(i)
+                    break
+            else:
+                print(f"  Patch warning: '{cmd}' not found in {source}/{section}")
 
 
 def parse_table(html_content):
@@ -379,6 +471,7 @@ def expand_continuations(row_dicts, prior_commands=None, character=''):
             damage_by_level = {0: damage}
             hitrange_by_level = {0: hit_range}
             row['Command'] = cmd
+            row['Hit Range'] = hit_range
     for row in row_dicts:
         row['Command'] = re.sub(r'\s*-?\s*\[~5\]', '', row['Command']).strip()
         name = row.get('Move Name', '')
@@ -811,6 +904,12 @@ def main():
         rows = parse_table(get_table_section(movelist_content, section))
         ml_tables[section] = rows
 
+    # Apply patches before further processing
+    patches = load_patches(character)
+    if patches:
+        print(f"Applying {len(patches)} patches...")
+        apply_patches(fd_tables, ml_tables, patches)
+
     # Parse footnotes per movelist section
     ml_footnotes = {}
     for section in ml_sections:
@@ -821,7 +920,7 @@ def main():
 
     # --- Determine stance names from section names ---
     STANCE_MAP = {
-        'Devil Jin Possession Arts': 'Devil Jin Possession',
+        'Rain Dance Art': 'Rain Dance',
     }
 
     # --- Write XLSX ---
