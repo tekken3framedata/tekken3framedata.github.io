@@ -1,0 +1,91 @@
+UUID	Stance	Command	Move Name	Damage	Hit Range	Properties	Speed	Block Adv	Hit Adv	CH Adv	Notes	Unmatched
+29200464-ee9d-4928-bf77-b9ef7b418936	Default	1					8	0	+6	+6		
+b3adfa7d-9104-453c-a576-6c48831180ed	Default	2					10	-2	+9	+9		
+15a35281-0bdd-4241-a55b-f7f7d6999063	Default	3					14	-16	KD	KD		
+23ffa8ee-d32c-4bfd-8673-c4f3d952461f	Default	4					10	-7	-7	KD		
+d4d12806-b81f-42ea-ba73-cf1fea0a3f5c	Default	F,1					8	0	+6	+6		
+dca2f570-6574-47c2-bc31-547a06adbc9d	Default	F,2					10	-2	+9	+9		
+0ac6c4f6-efaf-4676-a8c8-0ad3ec95ee88	Default	F,3					16	-16	KD	KD		
+574c1dab-1bbe-42cb-89c0-633f733fe33f	Default	F,4					10	-7	-7	KD		
+c41d3084-7da7-49d3-ab62-d14062b2fa86	Default	d+1					8	-2	+9	+9		
+4373bd3e-6939-4114-8c0a-7a65af1e1000	Default	d+2					10	-2	+9	+9		
+e7928156-401b-499e-ba2a-731c4dbbf84d	Default	d+3					16	-17	-3	-3		
+0ba9a627-0eaf-45f9-b6f9-2c480e5f0f1f	Default	d+4					20	-9	-10	-10		
+34c4eb34-71e0-4295-b4d1-5c2e801dea2b	Default	FC+1					8	-2	+9	+9		
+b3c3bc66-2201-4071-a238-1a4d5812eec3	Default	FC+2					10	-2	+9	+9		
+d56eb284-79c3-4129-bf42-5e9753ba11b8	Default	FC+3					16	-17	-3	-3		
+e3adf9c1-6b63-4f06-9a96-a5d08d0255ef	Default	FC+4					12	-8	+4	+4		
+faedeace-991b-4ab7-a398-a264342a7fcd	Default	WS+1					10	-3	+8	+8		
+7225f5bd-1dbd-473b-a87b-313a3bd8ca60	Default	WS+2					18	-11	0	0		
+9eaf4211-fa95-4897-8135-6e19e573fae6	Default	WS+3					16	-16	KD	KD		
+48435b84-9ba7-430f-85d4-3330fe1a3df1	Default	WS+4					11	-17	KD	KD		
+45deea7b-002c-4390-b6eb-8772900fe6df	Default	d/f+1					20	-15	-4	-4		
+66801742-f4a6-48f7-a652-5ae7703a851b	Default	d/f+2					16	-6	+5	+5		
+4443755f-eee0-4258-96ab-a87967245049	Default	d/f+3					14	-10	+1	+1		
+a633c742-07dd-439b-8cd7-890c186ce12b	Default	d/f+4					12	-7	+4	+4		
+1622de5c-7228-4059-aa81-e6ef83f14476	Default	1+2	Twin Arrow	25	m	GB	21	+3	KD	KD		
+09f4ac5b-ddf3-4d76-b52e-ffb1a0776f20	Default	f+1 [~5]	Flash Uppercut	15	m	JG	19	-15	KD	KD		
+3b2423ef-0cc3-4405-900d-0783d638d24c	Default	(WR_d,d/f)+1	Flash Punch	14	m		11	-8	-2	+3		
+55c48d33-7fdc-426d-ad11-47ebe057494a	Default	= <2	= Flash Elbow	21	m	FSc		-7	KD	KD		
+a3ddd105-d7a8-4da8-b3f1-c2a47e540d03	Default	1~1	G-Clef - Club Fist	10,5	hm		8	0 -15	+6 -4	+6 -4		
+72e6b516-aa7c-4544-9c06-00e129896300	Default	= 1 [~5]	= Flash Uppercut	21	m	JG		-14	KD	KD		
+a0b4a0a5-edcb-40be-bec6-8f761b5e9923	Default	= 4,3	= Bow & Arrow	12,15	Lm			-13 -12	-2 KD	-2 KD		
+bfe56bfa-d28f-43b0-a561-d2762b65d675	Default	d/f+1	Club Fist	8	m		20	-15	-4	-4		
+e42c9175-5149-4cd4-9074-4f477d912f2e	Default	= 1 [~5]	= Flash Uppercut	21	m	JG		-14	KD	KD		
+1dd20c30-4781-4d98-ad1d-226af3c34789	Default	= 4,3	= Bow & Arrow	12,15	Lm			-13 -12	-2 KD	-2 KD		
+c532d03c-4869-440c-854b-0a64295c1833	Default	1~2	G-Clef - Gut Punch	5,8	hm		8	0 -15	+6 +5	+6 +5	If the 1st hit is a counter hit, the damage of the 2nd hit will be 16. If the string is complete (1~2~1) the damage is 15.	
+ac667867-c14d-46fa-89c3-be224e2eb6aa	Default	= ~1 [~5]	= Skyscraper Cannon	21	m	CH					The 3rd only occurs if the 1st hit was a counter hit or the 2nd hit connected on the opponents side.	
+f09898e2-2cc4-482e-b833-9ed5e3fe34a0	Default	= 3	= Low Kick	10	L	RC		-17	-3	-3		
+20ea0f55-72f6-494e-8dc9-43a0f5f0ab5e	Default	= 4	= High Kick	20	h			-7	-7	KD		
+9bc8d3d3-4fa8-4411-ae07-39d37df8b9d4	Default	f,f+1	Party Crasher	10	m		11	-2	KD	KD		
+88dd376a-749d-49e4-9095-92d1d74945e5	Default	= <4	= Skyscraper Kick	15	m	JG		-11	KD	KD		
+75a0bdb3-74c3-476f-82d5-30003fccd96c	Default	f+1~2	Palm Explosion	21	m	FSc	30	-13	KD	KD		
+5e6eecc4-d7d4-4f9f-b57c-fe16325559db	Default	f+1+2 [~5]					19	-3	-1	KD		TRUE
+a3c62c0c-545d-4378-94af-35f9a3a025df	Default	1+4,3	Club Fist - Bow & Arrow	12,12,15	mLm		20	x -13 12	x -2 KD	x -2 KD		
+f105c5bb-187b-493d-8a47-50646b464d5f	Default	d/f+2	Gut Punch	10	m		16	-6	+5	+5		
+2304c8d2-0227-4fc4-b7bc-59f0ac594a72	Default	= 1 [~5]	= Skyscraper Cannon	21	m	JG					Has to hit from the front to work.	
+58f8ffd3-eb87-4c02-9523-1899d3106cf2	Default	= 3	= Low Kick	10	L	RC		-17	-3	-3		
+7433aa57-b3ee-4e4f-9d19-c4642f3dcf36	Default	= 4						-7	-7	KD		TRUE
+7f8b21a9-f837-444b-9e7a-dfe196ab2a45	Default	(d+2~N+3_2+3),1 [~5]	Ultimate Cannon	10,9,25	smm	JG	10	x -11 -8	x 0 KD	x 0 KD		
+180243f2-1d55-4115-8039-a091167e1216	Default	(WR_FC,d/f)+2	Flash Elbow	20	m	FSc	12	-20	KD	KD		
+c76cdc43-5bc3-450d-933a-5fa34d30358c	Default	SS+2					18	-6	+1	+6		TRUE
+1eeba09d-8320-4951-82b7-3c90007f9c63	Default	(b+2_2~b)	Arm Whip	12	h	OB	10	0	-1	-1	The Arm Whip needs to hit for Julia to spin around the opponent.	
+f15985ce-01d1-4b00-a134-41225ee9f908	Default	= (1+2_5)						+2	+2	+2		TRUE
+3b55ab2a-7dd6-451c-88c5-4da775216ab5	Default	(WS+2_3~2)	Tequila Sunrise	15	m		18	-11	0	-6		
+fc6141e8-9d7c-400c-aef5-b5c0b1545697	Default	= 2	= Flash Elbow	22	m			-20	KD	KD		
+ee392d43-d489-4112-a202-538c69ea8709	Default	= 1,1 [~5]	= Club Fist - Flash Uppercut	5,21	mm	JG		-15 -14	-4 KD	-4 KD		
+06cc4224-824b-428f-90fe-7ca52cf8a994	Default	= 1,4,3	= Club Fist - Bow & Arrow	5,12,15	mLm			-15 -13 -12	-4 -2 KD	-4 -2 KD		
+d218a695-8a9c-41ab-9eea-ae01e5ad6942	Default	= 4	= Razor Sweep	12	L	RC		-10	+1	+1		
+2b2fb0c6-d5fe-47f1-a45c-68f947703a42	Default	= 4	= High Kick	23	h			-19	-3	-3		
+c82aca9a-dc84-431d-91a1-20cef9ccbc93	Default	= d+4	= Low Kick	10	L	RC		-14	-8	-8		
+b7292975-a016-4da1-ada9-bcbe20ed111d	Default	= 1	= Razor's Edge	21	m	JG		-18	KD	KD		
+56a4ac52-619f-4d9c-9454-b908f9bdee37	Default	b+3					27	-33	+2	KD		TRUE
+4369c17c-794d-49a4-98a4-f2938455a480	Default	u/f+3+4	Earthquale Stomp	35	M		48	-32	KD	KD		
+3cbc8e8f-3a59-49a9-a6a9-c0a989cdbe45	Default	3+4	Counter Clockwise Spin	-	-						Chains into Spinning Razor Kick Variations. First kick will do 20 damage.	
+8be89a2b-8d6d-45e9-aa06-ddb78d4b7b73	Default	d+4	Razor Sweep	10	L	RC	20	-9	-10	-10		
+e9bb81e3-836b-4ece-afe5-3ea4b45392e1	Default	= N+4	= High Kick	23	h			-19	-3	-3		
+66fb92dc-474d-4921-b492-225e33fed018	Default	= d+4	= Low Kick	10	L	RC		-14	-8	-8		
+a1a8ba76-b72e-48cf-8823-01a486097839	Default	= 1	= Razor's Edge	21	m	JG		-18	KD	KD		
+943179c9-5f3a-4d01-8d73-74e3f5e5266f	Default	4,4	Spinning Razor Kicks	20,12	hL	RC	10	-7 -7	-7 +4	KD +4		
+cc3e5aac-5004-4608-b81a-334e0d267183	Default	= 4	= High Kick	23	h			-19	-3	-3		
+3d4406c6-e8c9-46ea-9861-9b45eca3b688	Default	= d+4	= Low Kick	10	L	RC		-14	-8	-8		
+b6935e55-19dd-499c-97a4-03fbea11856e	Default	= 1	= Razor's Edge	21	m	JG		-18	KD	KD		
+b674ef65-2087-4244-8845-da727f8d4177	Default	b+4					14	-7	+4	KD		TRUE
+a4160681-7540-4286-b676-b10d1c905741	Default	d/f+4<2<b,f+1					14	-7 -9 -15	+4 -2 KD	+4 -2 KD		TRUE
+68c166e4-e304-4e01-b4ce-db962674da70	Default	WS+4	Skyscraper Kick	15	m		11	-17	KD	KD		
+4bd241b6-69b2-4ea9-9687-ec86f66fa79e	Default	FC,d/f+4,3	Bow & Arrow	12,15	Lm		16	-14 -14	-3 KD	-3 KD		
+546f6e8e-af89-4524-bf58-cd0c1b20e6e9	Default	(FC_d)+(1+3_2+4)	Low Parry	-	-							
+3dc8ce33-b7c0-492f-bdf1-3fc2e49bb48f	Default	2+3+4	Wave Taunt	-	-							
+809b9e28-7edb-4b06-9490-a8a35afb569f	Default	f+1+4	Heaven Cannon	50	!	JG	67		KD	KD		
+ccf0a3a5-f4fa-4f4b-bfbd-48bc33e040b8	Default	1+3	Death Valley Bomb	35	Front	1	12					
+49acdbff-ce62-4d53-a697-af8ad2f6be83	Default	2+4	Fisherman Suplex	30	Front	2	12					
+13e28a3c-3378-4511-b470-6a26337bc5f7	Default	d/f+1+2	Arm Lock Suplex	37	Front	1+2	11					
+4d0f84e8-529d-4db4-8f64-90edf8a8a741	Default	d,D/B+1+3	Waist Suplex	30	Front	1	11					
+3ed7dfbd-b8fa-4be1-84d1-55c93ac1f89e	Default	FC,d/b,d,d/b+1+2	Cross Arm Lock	45	Front	1+2	12					
+96749d24-e22c-48c4-9354-27fc1e444825	Default	qcb,f+2	Mad Axes	14,14,14	Front	1+2	10					
+e20e7e32-786f-4f71-8cf3-68adbae4eb66	Default	(1+3_2+4)	Running Bulldog	40	Left	1						
+f65d320c-1b83-464a-b485-98ad5d451bbd	Default	(1+3_2+4)	Twisted Sister	45	Right	2						
+421fae54-a400-4c75-b9af-ba6cbd823d01	Default	(1+3_2+4)	German Suplex	50	Back	None						
+0cd8954e-9227-46dc-b6e7-4fe40147c7e8	Default	2,1,1,2,3,3,3,4,4,1		8,6,6,6,6,6,6,7,8,25	h"mm"hLm"hh"Lm						10 hits	
+e4b2eee2-4a92-4478-b30b-a8c27187959d	Default	2,1,1,2,3,3,2,3,2,1		8,6,6,6,6,6,7,5,5,30	h"mm"hLm"mL"m!						10 hits	
+13ad2a5d-8a37-4ea4-b24d-ba4c3fc942d4	Default	2,1,1,2,3,3,2,1,4,3		8,6,6,6,6,67,7,10,25	h"mm"hLm"mm"Lm						10 hits	

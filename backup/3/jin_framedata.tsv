@@ -1,0 +1,122 @@
+UUID	Stance	Command	Move Name	Damage	Hit Range	Properties	Speed	Block Adv	Hit Adv	CH Adv	Notes	Unmatched
+199c4af1-38c4-4336-bdf3-ba9a0577431f	Default	1					10	+3	+9	+9		
+f20ebfc4-1261-41a4-b505-e1993b8c1243	Default	3					14	-14	-3	-3		
+d3c7f37f-509c-4158-94df-19877cb11280	Default	F,1					10	+3	+9	+9		
+e7ffb676-31c0-472a-b982-2aac726717e1	Default	F,3					14	-4	-3	-3		
+da9d13c5-7249-4c09-8c10-187f30cf7593	Default	d+1					8	-2	+9	+9		
+2faf5401-0f85-479d-be02-fec2bfae8101	Default	d+3					12	-17	-3	-3		
+6fa0b7a6-48d6-4172-a6ee-259cbcf7a2d0	Default	FC+1					8	-2	+9	+9		
+18d05a54-fbc4-49d0-a2bf-91b25ca86abe	Default	FC+3					18	-14	-3	+5		
+d63f2569-a85a-42f7-84df-ce919ea620c5	Default	WS+1					13	-6	+5	+5		
+b4d747a1-07b7-45a2-b282-5ae82ade1976	Default	WS+3					16	-16	0	0		
+376c6eb7-3e1f-43bf-bbad-a2e7aae70898	Default	d/f+1					13	-2	+9	+9		
+43e60fd0-3123-474c-a9ec-a7b7d8287dae	Default	d/f+3					16	-9	+2	+2		
+51e544f2-3853-4c2b-a800-65a05a5f04a1	Default	2					10	0	+9	+9		
+179229db-8fc1-4a0c-9f92-d971eade10ff	Default	4					25	-10	KD	KD		
+a4e7d3d4-1889-417d-8e39-6f13b1ef4c47	Default	F,2					17	+2	+8	+8		
+963efbc3-54cb-4802-b4e0-494cbd00b88e	Default	F,4					25	-10	KD	KD		
+9f0fc6c8-239a-4efe-b7a1-4ee323c97da3	Default	d+2					10	-2	+9	+9		
+3c92f3c0-3278-4041-a665-4d916a5dbe7e	Default	d+4					16	-8	+3	+3		
+573724a1-8c2a-4050-b06d-5994516747b0	Default	FC+2					10	-2	+9	+9		
+e4026709-5380-414e-8283-5f5b9a57c4b8	Default	FC+4					12	-8	+3	+3		
+11da3bc3-7fbf-492f-b3d5-de5af4054653	Default	WS+2					14	-12	KD	KD		
+e56c5f14-cab6-4986-b132-8180aaf58fb2	Default	WS+4					11	-3	+8	+8		
+13770594-19a6-4569-8f25-c52911862944	Default	d/f+2					15	-2	+9	KD		
+9b1c8758-dbea-41ff-a9ca-5e28a5a37d03	Default	d/f+4					13	-9	+2	+2		
+dfe97459-99ce-4202-ad73-e34b4996055b	Default	1<2	Double Punch	6,10	hh		10	-3 -5	+9 +10	+9 +10		
+87bc35c7-5cc7-4442-9ada-7a1eb10d1582	Default	= 4	= Knee	12	m			-7	+4	+4		
+a613193a-6399-4b94-a5f6-ab92dd0d7759	Default	= ~1+4,2	= White Heron	5,10,10	shh			x -6 0	x +3 +11	x +3 +11	The White Heron cancels the Knee.	
+8a2bf9b3-139c-4ed0-80cb-0974d7ff93a3	Default	= 4	= Crescent Kick	21	m			-12	KD	KD		
+60e382f3-7956-4667-84c5-a97d4e1e0d95	Default	= d+4	= Crescent Sweep	14	L	JG		-26	KD	KD		
+770c2811-9e75-47f1-a806-a7431ed82063	Default	1,1<2	Shining Fists	6,8,18	hhm		10	+3 +1 -17	+9 +1 KD	+9 +9 KD		
+047369f1-efb0-4101-9e32-22310e5866a2	Default	1<2<2	Demon Slayer	6,10,18	hhh		10	-3 -5 -12	+9 +10 +1	+9 +10 +1		
+b9dc4a14-59b9-4955-9267-9591030ee93a	Default	WS+1,2 - [~5]	Twin Pistons	10,15	mm	JG	13	-6 -7	+5 KD	+5 KD		
+71fb1ffb-e310-4e4b-a019-292b7dfa2752	Default	(d/f+1,2_f+1+2,2_WR+1+2,2)					13	-2 -5	+9 +6	+9 +6		TRUE
+43df8416-9e51-4163-b2d0-69cfef373b9a	Default	f,N,d,d/f+1	Thunder Godfist	29	m		23	-14	(-1_KD)	(-1_KD)		
+149a04ac-2436-452b-ba53-89bca080b725	Default	= 3	= Mid Kick	20	m			-14	KD	KD		
+914ced71-353c-4893-8008-046e74ca2030	Default	= 4	= Hell Sweep	12	L	JG		-20	KD	KD		
+3264a3ed-5aa7-4eed-84fc-4d4d86cc57dc	Default	d/b+1					21	-4	KD	KD		TRUE
+de190b28-eb59-4801-ba62-5cdde00f47c4	Default	b+1					18	-2	+8	+8		TRUE
+904d1cb7-6653-44e2-81fe-e13a9d4f61ab	Default	= ~d/f										TRUE
+d0c4ca1a-ab59-4c30-bc80-7001094a7ac3	Default	= 1					23	-14	(-1_KD)	(-1_KD)		TRUE
+e29ada11-9f25-427c-8062-7c88cab55028	Default	= 3						-14	KD	KD		TRUE
+2d3b2458-8eb8-4a85-be25-31cad9febc2c	Default	= 4						-20	KD	KD		TRUE
+67a9e8e9-2337-440e-9422-dbe23c00cd98	Default	= 2 [~5]					12	-7	KD	KD		TRUE
+8907469a-f540-469c-b370-5759997e498e	Default	= 4					20	-26	(-5_KD)	KD		TRUE
+1a469540-b2d1-4be8-bcb7-deddb918cbe0	Default	= 4						-14	KD	KD		TRUE
+3b641227-d23e-4ebd-ada1-372416b11c25	Default	1<2,3	Shoot the Works	6,10,25	hhm	GB	10 x	-3 -5 +10	+9 +10 KD	+9 +10 KD		
+3571146e-957a-4a51-a55c-cc00114e2714	Default	= 4	= Axe Kick	30	m			0	+11	+11		
+02924361-ab00-4e5d-b1a6-9314f0400c9e	Default	= f+4	= Rising Kick	10	m			-5	+6	+6		
+369eb868-6104-48c5-9983-6b6f2c5cf66d	Default	1+4,2	White Heron	5,10,10	shh		12 x	x -6 0	x +3 +11	x +3 +11		
+56920e79-93ce-490e-b975-922fa16e420c	Default	= 4	= Crescent Kick	21	m			-12	KD	KD		
+ee706c7a-0580-4f5a-b1bc-5dab96080fc9	Default	= d+4	= Crescent Sweep	14	L	JG		-26	KD	KD		
+6825b7bf-9827-412c-b7b5-8fc2e08f3a15	Default	d/f+2	Upper	15	m	SH JGc	15	-2	+9	KD		
+834f1388-cc94-499c-a2f6-029a452853fe	Default	2,2	Demon Backhand Spin	10,18	hh		10	0 -13	+9 -2	+9 -2		
+be75f9af-1660-4517-a08f-8e5f4d6e04af	Default	b+2	Demon Backhand	12	h		17	-13	-2	-2		
+1c2c77d7-28c0-4446-b597-53b59a083527	Default	b+2,3					17	-13 -1	-2 +1	-2 +1		TRUE
+cee517cb-28a9-487a-9120-a68884146948	Default	f+2	Overhead Shot	18	m	GB KS	17	-2	+8	+8		
+2d29a08d-f699-40d8-8a97-3f5a4c8a0ac9	Default	= <4						-6	+5	+5		TRUE
+4cb90def-77a1-4b88-925d-893a72142c3d	Default	WS+2 - [~5]	Uppercut	18	m		14	-12	KD	KD		
+8efef7f7-51f2-4cb4-be63-61c4a0e1928e	Default	f,f+2	Demon Paw	27	m		15	-11	KD	KD		
+380928ef-8107-4461-9889-b90df46291e2	Default	SS+2 - [~5]	Tooth Fairy	16	m	JG	18	-17	KD	KD		
+f347792e-5d85-4a23-87dc-6bc6ed0d2463	Default	f,N,d,d/f+2 - [~5]	Wind Godfist	25	h	JG	12	-7	KD	KD	Knocks opponent out of combo range on a CH.	
+68f11b28-95ee-45eb-b789-ae77c3458102	Default	f,N,d,d/f,2	Stagger Wind Godfist	21	h	SH	13	-4	KD	KD		
+5a13a9b9-648d-4acd-a4ec-a8e95d388281	Default	f~N,d~d/f+2 - [~5]					11	+4	KD	KD		TRUE
+fcdadd2d-09f1-49fa-92f0-4064b04cd864	Default	b,f+2	Laser Blow	18	m	DSc						
+7ae67dc8-b4c5-425d-a016-9072edd359e1	Default	b,f+2<1<2	Laser Cannon	18,14,24	mmm	FSc	15	-7 -3 -5	-5 -1 KD	KD KD KD	The stun occurs on the 2nd hit.	
+438222a0-eac8-4404-8049-8ca2a5073af3	Default	b,f+2<1<d+2 - [~5]	Laser Scraper	18,14,15	mmm	JG FSc	15	-7 -3 -10	-5 -1 KD	KD KD KD	The stun occurs on the 2nd hit.	
+a95ecdaa-3a04-4367-a1d8-a4b177f0f477	Default	f,f+3	Split Axe Kick	23	m	JG	20	-11	KD	KD		
+40d72e7c-a6f8-4616-9f4f-bbbe1b4c5a8b	Default	f+3	Spinning Roundhouse	35	h		21	-4	KD	KD		
+c291ef95-c798-458b-b363-908eb45931e5	Default	f,N,d,d/f,f,u/f+3	Crouch Dash Slash Kick	30	m	GB	22	+17	KD	KD		
+a47c5dab-8639-4a61-82ab-5ad8d7b4487c	Default	(WR_f,f,f)+3	Leaping Slash Kick	30	m	GB	22	+17	KD	KD		
+c9bd7eba-1b61-4e09-a189-b3268e0e28d4	Default	d+3+4	Can Can	5,20	sh	JG	14	-31 -10	-19 KD	-19 KD		
+c8f385fe-69cc-4e06-887d-85f5c48d085e	Default	f+4	Knee	12	m		11	-7	+4	+4		
+819ed042-fef9-4d02-b6ef-826d1ce0d585	Default	b+4					16	-4	-2	KD		TRUE
+16b62e8f-6352-44e9-ab0c-2dcf2e596cb5	Default	d/f+4<4	Tsunami Kick	10,16	mm		13	-9 -15	+2 -4	+2 -4		
+76c727cd-244a-447d-94fd-eb490b55f7c3	Default	f,N,d,d/f,f+4,4					13	-9 -15	+2 -4	+2 -4		TRUE
+7d7bc138-3915-46b9-a068-0ebca7a476a1	Default	WS+4,4					11	-3 -15	+8 -4	+8 -4		TRUE
+83e6bf66-78da-4605-b82f-cda9c848d069	Default	f,N,d,D/F+4	Hell Sweep	18	L	JG	20	-26	(-5_KD)	KD	Delayed Hell Sweep will do 15 damage.	
+ab86065b-1367-40b3-ad2d-7c1470e262a3	Default	= 4	= Spinning Demon	15	m			-14	KD	KD		
+905eb033-ec2e-41f4-ad37-d9dd5bf55c2d	Default	u/f+4,4,4,4	Spinning Demon	25,15,12,25	hLLm		15 x	-24 -26 -26 -10	KD KD KD KD	KD KD KD KD		
+da19883a-05d4-4a4d-a9ef-9585535ff034	Default	(4~3_u/f+4~3)	Demon Scissors	25	m		37		KD	KD		
+00e957ee-1a69-4219-85e4-de52cc156eb6	Default	b+1+2	Lightning Force	0	-						Repels all attacks.	
+cce99a36-a608-45e6-9af1-dbd6b811df31	Default	b+(1+3_2+4)	High and Mid Attack Reversal	Varies	-							
+494cc041-9df3-4cf2-b485-a691f63fe4e6	Default	(u/b_u_u/f)+2+4	Corpse Splitter	24_30_34	M							
+c456b0fa-18d9-4ee8-8b97-64b7ced61a98	Devil Jin Possession	b+1+2										
+8df40874-fa3c-4058-b88a-f11766239f29	Devil Jin Possession	= 2,2,3										
+edf7f2c4-ac70-43c2-9662-adfef3520650	Devil Jin Possession	= ~2~2~3										
+75c124b4-c089-4b14-8247-4db787877fcd	Devil Jin Possession	f,f+1+2					12					
+03c434c2-432b-49c5-a4de-a08b94117a5f	Devil Jin Possession	1,2					10	+3 0	+11 +10	+11 +10		
+d068bb29-eefa-4de0-a57d-281988e0461d	Devil Jin Possession	f,N,d,d/f+1					19	-14	KD	KD		
+2916df52-c69a-4798-8277-7e95b1be895d	Devil Jin Possession	1+2					21	-12	KD	KD		
+9730f339-6ac8-4def-814a-b1f3f6d1594d	Devil Jin Possession	f,N,d,d/f+2					11	+27	KD	KD		
+d51424c3-6212-47f5-80be-f6b90e6083f6	Devil Jin Possession	f,N,d,D/F+4					16	-16	KD	KD		
+098fb390-23db-41a0-821a-333126f33598	Devil Jin Possession	= 4						-3	+8	+8		
+70ee4f7f-681a-41fe-96b9-99fa1ee0be2a	Devil Jin Possession	= 4						-16	-5	-5		
+875298fa-c0ef-4bae-99ab-023537403e47	Devil Jin Possession	1,2,2,3,2,4,3										
+43adcf18-4c71-4e7b-bb55-b4a8d3634623	Default	b+1+4	Lightning Godfist	40	!		43		KD	KD		
+18d638b4-dca9-45b1-a8e0-4371b0a011df	Default	B+1+4	Lightning Screw Godfist	80	!		63		KD	KD		
+d7bb1036-1e3a-4136-a3ce-cca9c51a472f	Default	1+3	Bitch Kicks	10,20	Front	1	12					
+b8a53211-bf91-4b66-ad0b-1e8b44f87aec	Default	2+4	Shoulder Reverse	30	Front	2	12					
+260cb666-a7ba-4224-9aa6-fb4e7e6edbdc	Default	f,f+1+2	Stone Head	33	Front	1+2					Opponent can tech roll after the throw.	
+c0affccb-d8c3-45dd-b01e-1c1fa0dfc1e0	Default	d/f+2+3	Wrist Chuck Slam	38	Front	2	11					
+2e404d97-f491-4452-9b61-1fac72973bb6	Default	qcb+1+3	Complicated Wire	35	Front	1	11					
+238ada3f-f7d5-4524-abc0-006370fddb87	Default	(FC_d/b)+1+2	Ultimate Tackle	5	Front	System						
+d091e9b9-2143-4c26-be29-0e8a02c5e7ed	Default	= 1,2,1,(2,1_1,2)	= Ultimate Punches	5,5,5,5,5		System						
+7df33e69-834c-42c1-a1ca-e9abe736acd3	Default	= 2,1,2,(1,2_2,1)	= Ultimate Punches	5,5,5,5,5		System						
+a42db283-b19c-473d-a86e-26460f64cedf	Default	= 1,2,1,1+2	= Punches - Cross Arm Lock	5,5,5,25		System						
+0ab4a7c8-bb79-4e7b-be55-8d62436e24c3	Default	= 2,1,2,1+2	= Punches - Cross Arm Lock	5,5,5,25		System						
+a20ae16c-1ce4-4f41-b56e-2fa038c4ad8a	Default	= 1+2	= Cross Arm Lock	25		System						
+82977d15-9a67-4b61-a924-4aff2718b24a	Default	(1+3_2+4)	Shoulder Flip	12,19	Left	1						
+17038537-91d4-4c4f-a4f0-ec51b683f704	Default	(1+3_2+4)	Over the Limit	40	Right	2						
+71394190-5e7d-47a1-8c60-89063b921d12	Default	(1+3_2+4)	Chicken Butcher	60	Back	None						
+dd9845b9-c305-42e1-8e70-ce62a3528c13	Default	+2,4,4,4,4,2,1+4,2,1,3		12,10,10,8,6,6,5,5,5,21,12	h"h"hL"mmlhh"mm						11 hits	
+fa7b2236-9756-4398-af1c-7f8e13a44d89	Default	b+2,4,4,4,4,2,1+4,2,1,4		12,10,10,8,6,6,5,5,5,21,20	h"h"hL"mmlhh"mL						11 hits	
+cb9c604d-37fb-4197-8b38-f4890fcbb976	Default	b+2,4,4,4,4,2,1+4,2,d+3+4		12,10,10,8,6,6,5,5,5,21,21	h"h"hL"mmlhh"lh						11 hits	
+df1793ac-b2e8-4ae9-8cee-dc0b66fbf4c7	Default	f,f,2,1,2,2,3,4,4,1,2,1		7,8,6,7,6,11,5,5,8,30	hh"hh"mm"Lhmm						10 hits	
+d88cd6dc-61e7-4b18-8624-e87e878ddaff	Default	f,f,2,1,2,2,3,4,4,3,2,1		7,8,6,7,6,11,5,5,25,30	hh"hh"mm"LL"m!						10 hits	
+6b2c305f-b488-4a9d-a4d9-6d88f101a111	Default	3,2,4,3,1+4,2,2,1,2		15,6,10,10,7,5,7,10,15,30	hh"mhlhh"mmm						10 hits	
+f4669f95-38a5-4f7b-8b0e-4a4c1ea73c1f	Default	f,f,2,1,4,4,2,4,3,2,1		7,8,7,10,5,7,5,25,30	hh"mm"lm"L"m!						9 hits	
+d5c9343f-fcd2-4ca6-ad9a-4a71aa1c65ff	Default	3,2,4,3,1+4,2,1,3		15,6,10,10,7,5,7,21,20	hh"mhlhh"mm						9 hits	
+92704e6a-04af-4ba9-b121-acc3532be040	Default	3,2,4,3,1+4,2,1,4		15,6,10,10,7,5,7,21,12	hh"mhlhh"mL						9 hits	
+0ee5ac77-8b7d-42e6-ab53-9d52c4d11b7f	Default	b+2,4,2,1,2		12,10,10,15,30	h"h"m"m"m						5 hits	
