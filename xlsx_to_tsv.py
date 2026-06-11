@@ -10,7 +10,7 @@ OUTPUT = 'framedata.tsv'
 
 
 def main():
-    files = sorted(f for f in glob.glob('*_framedata_v2.xlsx') if not os.path.basename(f).startswith('~$'))
+    files = sorted(f for f in glob.glob('*_framedata_v3.xlsx') if not os.path.basename(f).startswith('~$'))
     if not files:
         print("No *_framedata_v2.xlsx files found in current directory.")
         return
@@ -21,7 +21,7 @@ def main():
             wb = load_workbook(xlsx_path, read_only=True)
             ws = wb.active
             for row in ws.iter_rows(values_only=True):
-                uuid_cell = str(row[0]) if row[0] else ''
+                uuid_cell = str(row[-1]) if row[-1] else ''
                 if uuid_cell == 'UUID':
                     if not header_written:
                         cells = [str(cell) if cell is not None else '' for cell in row]

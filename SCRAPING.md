@@ -129,7 +129,7 @@ Command- ja Alt Commands -sarakkeista poistetaan kaikki `/`-merkit kirjoitusvaih
 Yksi yhtenäinen sarakejärjestys kaikille osioille:
 
 ```
-UUID | Character | Stance | Command | Move Name | Damage | Hit Range | Properties | Speed | Block Adv | Hit Adv | CH Adv | Alt Commands | Notes | Unmatched
+Character | Stance | Command | Move Name | Damage | Hit Range | Properties | Speed | Block Adv | Hit Adv | CH Adv | Alt Commands | Notes | Unmatched | UUID
 ```
 
 Osiot erotetaan tyhjällä rivillä ja otsikkorivillä (bold). Sarakeheaderit toistuvat jokaisen osion alussa.

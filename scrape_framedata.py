@@ -279,6 +279,13 @@ def split_multi_hit_moves(row_dicts, prior_commands=None):
             for key in ('Block Adv', 'Hit Adv', 'CH Adv'):
                 vals = frame_cols[key]
                 new_row[key] = vals[i] if i < len(vals) else ''
+            for key in ('Damage', 'Hit Range'):
+                val = new_row.get(key, '')
+                if val:
+                    parts = val.split(',')
+                    n_tokens = len(parts) - (effective_hits - 1 - i)
+                    if n_tokens < len(parts):
+                        new_row[key] = ','.join(parts[:n_tokens])
             if i > 0:
                 new_row['Speed'] = ''
                 new_row['_is_followup'] = True
@@ -300,7 +307,7 @@ def split_multi_hit_moves(row_dicts, prior_commands=None):
     return result
 
 
-def expand_continuations(row_dicts, prior_commands=None):
+def expand_continuations(row_dicts, prior_commands=None, character=''):
     """Expand '= X' continuation commands and move names into full forms.
 
     Handles indentation levels:
@@ -310,6 +317,7 @@ def expand_continuations(row_dicts, prior_commands=None):
     Commands: '(WS+2_3~2)' → '(WS+2_3~2),4' → '(WS+2_3~2),4,4'
     Names: 'Tequila Sunrise' → 'Tequila Sunrise > Razor Sweep' → 'Tequila Sunrise > Razor Sweep > High Kick'
     """
+    phantom_set = PHANTOM_MOVES.get(character.lower(), set())
     commands_by_level = {}
     names_by_level = {}
     damage_by_level = {}
@@ -323,7 +331,7 @@ def expand_continuations(row_dicts, prior_commands=None):
         leading_spaces = len(cmd) - len(stripped)
         if stripped.startswith('= '):
             suffix = stripped[2:]
-            level = 1 if leading_spaces <= 1 else 2
+            level = (leading_spaces // 2) + 1
             parent_level = level - 1
             parent_cmd = commands_by_level.get(parent_level, '')
             separator = '' if suffix.startswith(('~', '<')) else ','
@@ -331,6 +339,8 @@ def expand_continuations(row_dicts, prior_commands=None):
             row['Command'] = full_cmd
             row['_is_followup'] = True
             commands_by_level[level] = full_cmd
+
+            is_phantom = full_cmd.replace('/', '').replace('<', ',') in phantom_set
 
             own_name = name.lstrip('= ') if name.startswith('= ') else name
             parent_name = names_by_level.get(parent_level, '')
@@ -342,7 +352,7 @@ def expand_continuations(row_dicts, prior_commands=None):
                 full_name = parent_name
             row['Move Name'] = full_name
             row['_own_name'] = own_name
-            names_by_level[level] = full_name
+            names_by_level[level] = parent_name if is_phantom else full_name
 
             parent_damage = damage_by_level.get(parent_level, '')
             if parent_damage and damage:
@@ -352,7 +362,7 @@ def expand_continuations(row_dicts, prior_commands=None):
             else:
                 full_damage = parent_damage
             row['Damage'] = full_damage
-            damage_by_level[level] = full_damage
+            damage_by_level[level] = parent_damage if is_phantom else full_damage
 
             parent_hr = hitrange_by_level.get(parent_level, '')
             if parent_hr and hit_range:
@@ -362,7 +372,7 @@ def expand_continuations(row_dicts, prior_commands=None):
             else:
                 full_hr = parent_hr
             row['Hit Range'] = full_hr
-            hitrange_by_level[level] = full_hr
+            hitrange_by_level[level] = parent_hr if is_phantom else full_hr
         else:
             commands_by_level = {0: cmd}
             names_by_level = {0: name}
@@ -382,9 +392,25 @@ def expand_continuations(row_dicts, prior_commands=None):
     return row_dicts
 
 
+# Moves whose command is part of the input sequence but whose hit never connects.
+# The command is kept in the chain, but name/damage/hit range are inherited from grandparent.
+PHANTOM_MOVES = {
+    'jin': {'1,2,4'},
+}
+
 PREFERRED_COMMAND = {
     'julia': {
         'WR+1': 'd,d/f+1',
+    },
+}
+
+# FD command -> ML command for matching purposes (after normalize_cmd).
+# Use when TTT frame data has a different notation than T3 movelist.
+MATCH_ALIASES = {
+    'jin': {
+        '(d/f+1,2_f+1+2,2_WR+1+2,2)': '(d/f+1,2_f+1+2,2)',
+        'f~N,d~d/f+2': 'f,N,d~d/f+2',
+        'WS+4,4': '(f,N,d,d/f,f_WS)+4,4',
     },
 }
 
@@ -401,6 +427,9 @@ MERGE_DUPLICATES = {
 # Moves that only exist in Tekken Tag Tournament (tag button mechanics, partner moves, etc.)
 # These are completely ignored and not written to the output file.
 TAG_ONLY_MOVES = {
+    'jin': {
+        'Special Arts': ['b+1', 'b+2,3', 'f+2<4', 'b+4', 'f,N,d,df,f+4', 'db+1'],
+    },
     'julia': {
         'Special Arts': ['SS+2', 'f+1+2', 'df+4', 'b+4', 'b+3'],
     },
@@ -546,7 +575,7 @@ def lcs(seq_a, seq_b):
     return matches
 
 
-def group_match(fd_rows, ml_rows):
+def group_match(fd_rows, ml_rows, character=''):
     """Match frame data rows to movelist rows using group-based LCS.
 
     1. Group rows by parent move (non-'=' rows start groups).
@@ -558,10 +587,11 @@ def group_match(fd_rows, ml_rows):
 
     Returns dict: fd_row_index -> ml_row_index.
     """
+    aliases = MATCH_ALIASES.get(character.lower(), {})
     fd_groups = group_moves(fd_rows)
     ml_groups = group_moves(ml_rows)
 
-    fd_parent_cmds = [normalize_cmd(g[0][0]) for g in fd_groups]
+    fd_parent_cmds = [aliases.get(normalize_cmd(g[0][0]), normalize_cmd(g[0][0])) for g in fd_groups]
     ml_parent_cmds = [normalize_cmd(g[0][0]) for g in ml_groups]
 
     # LCS on parent commands
@@ -593,7 +623,7 @@ def group_match(fd_rows, ml_rows):
         row_map[fd_base] = ml_base
 
         # Match follow-ups within the group
-        fd_followups = [normalize_cmd(fd_g[i][0]) for i in range(1, len(fd_g))]
+        fd_followups = [aliases.get(normalize_cmd(fd_g[i][0]), normalize_cmd(fd_g[i][0])) for i in range(1, len(fd_g))]
         ml_followups = [normalize_cmd(ml_g[i][0]) for i in range(1, len(ml_g))]
 
         if fd_followups and ml_followups:
@@ -604,12 +634,12 @@ def group_match(fd_rows, ml_rows):
     return row_map
 
 
-def merge_special_arts(fd_rows, ml_rows, footnotes):
+def merge_special_arts(fd_rows, ml_rows, footnotes, character=''):
     """Merge frame data and movelist Special Arts rows.
 
     Returns list of dicts with merged data. Unmatched rows get [UNMATCHED] in notes.
     """
-    fd_to_ml = group_match(fd_rows, ml_rows)
+    fd_to_ml = group_match(fd_rows, ml_rows, character)
     matched_count = len(fd_to_ml)
 
     merged = []
@@ -651,9 +681,9 @@ def merge_special_arts(fd_rows, ml_rows, footnotes):
     return merged, matched_count
 
 
-UNIFIED_HEADERS = ['UUID', 'Character', 'Stance', 'Command', 'Move Name', 'Damage',
+UNIFIED_HEADERS = ['Character', 'Stance', 'Command', 'Move Name', 'Damage',
                     'Hit Range', 'Properties', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv',
-                    'Alt Commands', 'Notes', 'Unmatched']
+                    'Alt Commands', 'Notes', 'Unmatched', 'UUID']
 
 
 def merge_duplicate_commands(row_dicts, character):
@@ -734,7 +764,7 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
             'Hit Adv': row[3] if len(row) > 3 else '',
             'CH Adv': row[4] if len(row) > 4 else '',
         })
-    row_dicts = expand_continuations(row_dicts, prior_commands)
+    row_dicts = expand_continuations(row_dicts, prior_commands, character=character)
     row_dicts = merge_duplicate_commands(row_dicts, character)
     row_dicts = filter_tag_moves(row_dicts, character, section=heading.title())
     for row_dict in row_dicts:
@@ -814,7 +844,7 @@ def main():
         ml_special = ml_tables.get('Special Arts', [[]])[1:] if 'Special Arts' in ml_tables else []
         fn_special = ml_footnotes.get('Special Arts', {})
 
-        merged, matched_count = merge_special_arts(fd_special, ml_special, fn_special)
+        merged, matched_count = merge_special_arts(fd_special, ml_special, fn_special, character)
         print(f"Special Arts: matched {matched_count}/{len(fd_special)}")
 
         unmatched = [r['command'] for r in merged if r.get('unmatched')]
@@ -841,7 +871,7 @@ def main():
                 'Notes': r['notes'],
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
             })
-        special_rows = expand_continuations(special_rows, all_prior_commands)
+        special_rows = expand_continuations(special_rows, all_prior_commands, character=character)
         special_rows = filter_tag_moves(special_rows, character_name, section='Special Arts')
         for row_dict in special_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
@@ -862,7 +892,7 @@ def main():
         ml_unblock = ml_tables['Unblockable Arts'][1:]
         fn_unblock = ml_footnotes.get('Unblockable Arts', {})
 
-        merged_ub, ub_matched = merge_special_arts(fd_unblock, ml_unblock, fn_unblock)
+        merged_ub, ub_matched = merge_special_arts(fd_unblock, ml_unblock, fn_unblock, character)
         print(f"Unblockable Arts: matched {ub_matched}/{len(fd_unblock)}")
 
         row_num = write_section_header(ws, row_num, 'UNBLOCKABLE ARTS')
@@ -885,7 +915,7 @@ def main():
                 'Notes': r['notes'],
                 'Unmatched': 'TRUE' if r.get('unmatched') else '',
             })
-        ub_rows = expand_continuations(ub_rows, all_prior_commands)
+        ub_rows = expand_continuations(ub_rows, all_prior_commands, character=character)
         ub_rows = filter_tag_moves(ub_rows, character_name, section='Unblockable Arts')
         for row_dict in ub_rows:
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
@@ -971,9 +1001,6 @@ def main():
             if val:
                 max_len = max(max_len, len(str(val)))
         ws.column_dimensions[col_letter].width = max_len + 2
-
-    # Hide UUID column by default
-    ws.column_dimensions['A'].hidden = True
 
     wb.save(output_path)
     print(f"\nWritten to {output_path}")
