@@ -41,7 +41,7 @@
         td:nth-child(4), th:nth-child(4),
         td:nth-child(5), th:nth-child(5),
         td:nth-child(6), th:nth-child(6) { white-space: nowrap; }
-        .col-stance { width: 1%; white-space: nowrap; }
+        .col-stance, .col-narrow { width: 1%; white-space: nowrap; }
         th, td { padding: 0.5rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
         th { color: #94a3b8; font-size: 0.875rem; text-transform: uppercase; }
         .comment { color: #64748b; font-size: 0.875rem; }
@@ -171,22 +171,23 @@
         function renderMoveList() {
             const q = search.value.toLowerCase().trim();
 
+            const visible = moves.filter(m => m.type !== '10string' && m.type !== 'throw');
             const matched = q
-                ? moves.filter(m =>
+                ? visible.filter(m =>
                     m.move.toLowerCase().includes(q) ||
                     m.command.toLowerCase().includes(q) ||
                     m.character.toLowerCase().includes(q))
-                : moves;
+                : visible;
 
             const moveCol = showMoveName ? '<th>Liike</th>' : '';
-            const headerRow = `<thead><tr>${moveCol}<th class="col-stance">Stance</th><th>Komento</th><th>Startup</th><th>Block</th></tr></thead>`;
+            const headerRow = `<thead><tr><th class="col-stance">Stance</th><th>Komento</th>${moveCol}<th class="col-narrow">Startup</th><th class="col-narrow">Block</th></tr></thead>`;
 
             const grouped = groupByCharacter(matched);
             let html = '';
             for (const [char, rows] of grouped) {
                 html += `<h2>${char}</h2><table>${headerRow}<tbody>`;
                 for (const m of rows) {
-                    html += `<tr class="move-list" data-id="${m.id}">${showMoveName ? `<td>${m.move}</td>` : ''}<td class="col-stance">${(m.stance === 'Default' || m.stance === 'Crouching') ? '' : m.stance}</td><td>${m.command}</td><td>${m.startup}</td><td>${m.block}</td></tr>`;
+                    html += `<tr class="move-list" data-id="${m.id}"><td class="col-stance">${(m.stance === 'Default' || m.stance === 'Crouching') ? '' : m.stance}</td><td>${m.command}</td>${showMoveName ? `<td>${m.move}</td>` : ''}<td class="col-narrow">${m.startup}</td><td class="col-narrow">${m.block}</td></tr>`;
                 }
                 html += '</tbody></table>';
             }

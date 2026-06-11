@@ -1,0 +1,3 @@
+- [ ] String Hit Arts: mietittävä esitystapa (ei frame dataa, vain komento + hit count + damage + hit range), sitten näkyville
+- [ ] Grappling Arts: mietittävä esitystapa (heitot, escape-komennot), sitten näkyville
+- [ ] Jin: WS+4 ja d/f+4 pitää merkitä Special Arts (puuttuvat movelist-matchista)

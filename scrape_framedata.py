@@ -530,6 +530,11 @@ MERGE_DUPLICATES = {
     ],
 }
 
+# Entire sections that only exist in Tekken Tag Tournament.
+TAG_ONLY_SECTIONS = {
+    'jin': {'Devil Jin Possession Arts'},
+}
+
 # Moves that only exist in Tekken Tag Tournament (tag button mechanics, partner moves, etc.)
 # These are completely ignored and not written to the output file.
 TAG_ONLY_MOVES = {
@@ -995,9 +1000,11 @@ def main():
             row_num = write_unified_row_xlsx(ws, row_num, row_dict)
         row_num += 1  # blank row
 
-    # 3. Any additional FD-only sections (Devil Jin Possession Arts, etc.)
+    # 3. Any additional FD-only sections (stance-specific arts, etc.)
+    tag_only_sections = TAG_ONLY_SECTIONS.get(character, set())
     fd_only_sections = [s for s in fd_sections
-                       if s not in ('Basic Arts', 'Special Arts', 'Grappling Arts', 'Unblockable Arts')]
+                       if s not in ('Basic Arts', 'Special Arts', 'Grappling Arts', 'Unblockable Arts')
+                       and s not in tag_only_sections]
     for section in fd_only_sections:
         stance = STANCE_MAP.get(section, section.replace(' Arts', ''))
         row_num = write_fd_only_section_xlsx(ws, row_num, section.upper(), fd_tables[section],
@@ -1104,6 +1111,7 @@ def main():
                 'Character': character_name,
                 'Command': row[0] if len(row) > 0 else '',
                 'Stance': 'Default',
+                'Type': '10string',
                 'Damage': row[2] if len(row) > 2 else '',
                 'Hit Range': row[3] if len(row) > 3 else '',
                 'Notes': f"{row[1]} hits" if len(row) > 1 and row[1] else '',
