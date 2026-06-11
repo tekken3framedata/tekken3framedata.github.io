@@ -498,6 +498,15 @@ def expand_continuations(row_dicts, prior_commands=None, character=''):
     return row_dicts
 
 
+BASIC_ART_NAMES = {
+    '1': 'Left Jab (Generic i{speed})',
+    '2': 'Right Jab (Generic i{speed})',
+    '3': 'Left Kick (Generic i{speed})',
+    '4': 'Right Kick (Generic i{speed})',
+    'd+1': 'Crouching Left Jab (Generic i{speed})',
+    'd+2': 'Crouching Right Jab (Generic i{speed})',
+}
+
 # Moves whose command is part of the input sequence but whose hit never connects.
 # The command is kept in the chain, but name/damage/hit range are inherited from grandparent.
 PHANTOM_MOVES = {
@@ -868,6 +877,8 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
     row_num = write_column_headers(ws, row_num)
     row_dicts = []
     for row in rows[1:]:  # skip source header
+        if len(row) <= 2:  # skip description rows (text + UUID only)
+            continue
         row_dicts.append({
             'UUID': row[-1] if row else '',
             'Character': character,
@@ -878,6 +889,11 @@ def write_fd_only_section_xlsx(ws, row_num, heading, rows, stance='Default', cha
             'Hit Adv': row[3] if len(row) > 3 else '',
             'CH Adv': row[4] if len(row) > 4 else '',
         })
+    if stance == 'Default':
+        for row_dict in row_dicts:
+            name_template = BASIC_ART_NAMES.get(row_dict.get('Command', ''))
+            if name_template:
+                row_dict['Move Name'] = name_template.format(speed=row_dict.get('Speed', ''))
     row_dicts = expand_continuations(row_dicts, prior_commands, character=character)
     row_dicts = merge_duplicate_commands(row_dicts, character)
     row_dicts = filter_tag_moves(row_dicts, character, section=heading.title())

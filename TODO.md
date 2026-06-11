@@ -1,3 +1,5 @@
 - [ ] String Hit Arts: mietittävä esitystapa (ei frame dataa, vain komento + hit count + damage + hit range), sitten näkyville
 - [ ] Grappling Arts: mietittävä esitystapa (heitot, escape-komennot), sitten näkyville
 - [ ] Jin: WS+4 ja d/f+4 pitää merkitä Special Arts (puuttuvat movelist-matchista)
+- [ ] Basic Arts: käydä läpi kaikki liikkeet ja merkitä mitkä ovat generic (sama kaikilla hahmoilla)
+- [ ] Basic Arts: F,1 / F,2 / F,3 / F,4 piilotettu toistaiseksi — notaatio pitää miettiä uusiksi ennen näyttämistä

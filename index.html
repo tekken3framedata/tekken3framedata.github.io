@@ -45,6 +45,7 @@
         th, td { padding: 0.5rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
         th { color: #94a3b8; font-size: 0.875rem; text-transform: uppercase; }
         .comment { color: #64748b; font-size: 0.875rem; }
+        .alt-cmd { margin-left: 0.75rem; }
         .move-list { cursor: pointer; }
         .move-list:hover { background: #1e293b; }
         .result-info { color: #64748b; margin-bottom: 0.5rem; font-size: 0.875rem; }
@@ -97,6 +98,9 @@
     <label style="display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:1rem;font-size:0.875rem;color:#94a3b8;cursor:pointer">
         <input type="checkbox" id="toggle-move-name"> Näytä liikkeen nimi
     </label>
+    <label style="display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:1rem;font-size:0.875rem;color:#94a3b8;cursor:pointer">
+        <input type="checkbox" id="toggle-alt-cmd"> Näytä alt-komento
+    </label>
 
     <div id="move-results"></div>
 
@@ -134,6 +138,7 @@
                 character: m.Character || '',
                 move: m['Move Name'] || '',
                 command: m.Command || '',
+                altCommands: m['Alt Commands'] || '',
                 startup: m.Speed || '',
                 block: m['Block Adv'] || '',
                 hit: m['Hit Adv'] || '',
@@ -160,7 +165,9 @@
         const togglePotential = document.getElementById('toggle-potential');
 
         const toggleMoveName = document.getElementById('toggle-move-name');
+        const toggleAltCmd = document.getElementById('toggle-alt-cmd');
         let showMoveName = false;
+        let showAltCmd = false;
         let currentMoveId = null;
 
         toggleMoveName.addEventListener('change', () => {
@@ -168,14 +175,20 @@
             renderMoveList();
         });
 
+        toggleAltCmd.addEventListener('change', () => {
+            showAltCmd = toggleAltCmd.checked;
+            renderMoveList();
+        });
+
         function renderMoveList() {
             const q = search.value.toLowerCase().trim();
 
-            const visible = moves.filter(m => m.type !== '10string' && m.type !== 'throw');
+            const visible = moves.filter(m => m.type !== '10string' && m.type !== 'throw' && !m.command.match(/^F,[1-4]$/));
             const matched = q
                 ? visible.filter(m =>
                     m.move.toLowerCase().includes(q) ||
                     m.command.toLowerCase().includes(q) ||
+                    m.altCommands.toLowerCase().includes(q) ||
                     m.character.toLowerCase().includes(q))
                 : visible;
 
@@ -187,7 +200,8 @@
             for (const [char, rows] of grouped) {
                 html += `<h2>${char}</h2><table>${headerRow}<tbody>`;
                 for (const m of rows) {
-                    html += `<tr class="move-list" data-id="${m.id}"><td class="col-stance">${(m.stance === 'Default' || m.stance === 'Crouching') ? '' : m.stance}</td><td>${m.command}</td>${showMoveName ? `<td>${m.move}</td>` : ''}<td class="col-narrow">${m.startup}</td><td class="col-narrow">${m.block}</td></tr>`;
+                    const altHtml = showAltCmd && m.altCommands ? `<span class="comment alt-cmd">(${m.altCommands})</span>` : '';
+                    html += `<tr class="move-list" data-id="${m.id}"><td class="col-stance">${(m.stance === 'Default' || m.stance === 'Crouching') ? '' : m.stance}</td><td>${m.command}${altHtml}</td>${showMoveName ? `<td>${m.move}</td>` : ''}<td class="col-narrow">${m.startup}</td><td class="col-narrow">${m.block}</td></tr>`;
                 }
                 html += '</tbody></table>';
             }
