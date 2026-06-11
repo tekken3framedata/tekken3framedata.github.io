@@ -183,8 +183,8 @@ def expand_hit_range(hr):
     return ','.join(tokens)
 
 
-TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Alt Commands', 'Move Name', 'Stance', 'Damage',
-                'Hit Range', 'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
+TEXT_COLUMNS = {'UUID', 'Character', 'Command', 'Alt Commands', 'Move Name', 'Stance', 'Type',
+                'Damage', 'Hit Range', 'Properties', 'Block Adv', 'Hit Adv', 'CH Adv', 'Notes'}
 
 
 def find_top_level_separators(cmd):
@@ -681,7 +681,7 @@ def merge_special_arts(fd_rows, ml_rows, footnotes, character=''):
     return merged, matched_count
 
 
-UNIFIED_HEADERS = ['Character', 'Stance', 'Command', 'Move Name', 'Damage',
+UNIFIED_HEADERS = ['Character', 'Stance', 'Type', 'Command', 'Move Name', 'Damage',
                     'Hit Range', 'Properties', 'Speed', 'Block Adv', 'Hit Adv', 'CH Adv',
                     'Alt Commands', 'Notes', 'Unmatched', 'UUID']
 
@@ -733,6 +733,9 @@ def write_unified_row_xlsx(ws, row_num, row_dict):
             row_dict[key] = row_dict[key].replace('/', '')
     if row_dict.get('Hit Range'):
         row_dict['Hit Range'] = expand_hit_range(row_dict['Hit Range'])
+    cmd = row_dict.get('Command', '')
+    if cmd.startswith(('WS', 'FC')):
+        row_dict['Stance'] = 'Crouching'
     for col, h in enumerate(UNIFIED_HEADERS, 1):
         value = row_dict.get(h, '')
         cell = ws.cell(row=row_num, column=col, value=value)
@@ -966,6 +969,7 @@ def main():
                 'Command': row[0] if len(row) > 0 else '',
                 'Move Name': row[1] if len(row) > 1 else '',
                 'Stance': 'Default',
+                'Type': 'throw',
                 'Damage': row[3] if len(row) > 3 else '',
                 'Hit Range': row[2] if len(row) > 2 else '',
                 'Properties': escape_cmd,

@@ -138,6 +138,7 @@
                 hit: m['Hit Adv'] || '',
                 ch: m['CH Adv'] || '',
                 stance: m.Stance || '',
+                type: m.Type || '',
                 damage: m.Damage || '',
                 hitRange: m['Hit Range'] || '',
                 properties: m.Properties || '',
@@ -199,7 +200,7 @@
             currentMoveId = moveId;
             const blockFrames = parseInt(move.block);
 
-            punishTitle.textContent = `${move.character} ${move.move} (${move.block}) — rankaisut`;
+            punishTitle.textContent = `${move.character} ${move.move || move.command} (${move.block}) — rankaisut`;
             potentialTable.hidden = true;
             togglePotential.textContent = 'Näytä mahdolliset rankaisut';
             document.body.style.overflow = 'hidden';
@@ -259,15 +260,21 @@
                 counters.filter(c => c.move_id === currentMoveId).map(c => c.countered_by_id)
             );
 
+            const lastRange = (move.hitRange || '').split(',').pop().trim().toLowerCase();
+            const targetIsLow = lastRange === 'l';
+            const targetIsSpecial = lastRange === 's';
+
             const potential = (isNaN(blockFrames) || blockFrames >= 0) ? [] : moves
-                .filter(m =>
-                    !verifiedIds.has(m.id) &&
-                    m.id !== currentMoveId &&
-                    m.stance === 'Default' &&
-                    selectedCharacters.has(m.character) &&
-                    parseInt(m.startup) <= Math.abs(blockFrames)
-                )
-                .sort((a, b) => parseInt(a.startup) - parseInt(b.startup));
+                .filter(m => {
+                    if (verifiedIds.has(m.id) || m.id === currentMoveId) return false;
+                    if (m.type === 'throw') return false;
+                    if (!selectedCharacters.has(m.character)) return false;
+                    if (parseInt(m.startup) > Math.abs(blockFrames)) return false;
+                    if (m.stance === 'Crouching' && !targetIsLow && !targetIsSpecial) return false;
+                    if (m.stance === 'Default' && targetIsLow) return false;
+                    return true;
+                })
+                .sort((a, b) => a.character.localeCompare(b.character) || parseInt(a.startup) - parseInt(b.startup));
 
             verifiedTable.innerHTML = verifiedCounters.length === 0 ? '' :
                 '<thead><tr><th>Hahmo</th><th>Liike</th><th>Komento</th><th>Startup</th><th>Huomio</th></tr></thead>' +
