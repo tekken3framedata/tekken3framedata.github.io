@@ -1,37 +1,30 @@
 # Ling Xiaoyu - command notation patches
-# FC, prefix uses comma but FC is a stance, not a move segment.
-# Replace comma with space so split logic doesn't break on it.
 
 # FC,D/F+2 is TWO different moves in the source:
 # - FC df+2,1 = Shady Lotus to FC (low stance version, returns to neutral)
 # - FC DF+2 = Shady Lotus to Rain Dance (high version, transitions to RDS)
 # The FD source lumps both into one row with combined frame values.
-# Patch: keep FC,d/f+2,1 row (rename), rewrite FC,D/F+2 to only have RDS version frames.
+# Patch: keep FC d/f+2,1 row (rename), rewrite FC D/F+2 to only have RDS version frames.
+# (FC, → FC space is handled globally by normalize_fc_prefix)
 
 # Frame data - Shady Lotus / Lotus Twist fix
-replace	fd	Special Arts	FC,D/F+2	FC DF+2
+replace	fd	Special Arts	FC D/F+2	FC DF+2
 set	fd	Special Arts	FC DF+2	Block Adv	-4
 set	fd	Special Arts	FC DF+2	Hit Adv	+6
 set	fd	Special Arts	FC DF+2	CH Adv	+6
-replace	fd	Special Arts	FC,d/f+2,1	FC df+2,1
-
-# Frame data - other FC moves
-replace	fd	Special Arts	FC,d/f+4	FC d/f+4
-replace	fd	Special Arts	FC,d/f+4,4	FC d/f+4,4
-replace	fd	Special Arts	FC,d/b+3+4	FC d/b+3+4
+replace	fd	Special Arts	FC d/f+2,1	FC df+2,1
 
 # Movelist - Shady Lotus / Lotus Twist fix
-replace	ml	Special Arts	FC,D/F+2	FC DF+2
+replace	ml	Special Arts	FC D/F+2	FC DF+2
 set	ml	Special Arts	FC DF+2	Move Name	Shady Lotus to Rain Dance
 set	ml	Special Arts	FC DF+2	Hit Range	s
-replace	ml	Special Arts	FC,d/f+2,1	FC df+2,1
+replace	ml	Special Arts	FC d/f+2,1	FC df+2,1
 set	ml	Special Arts	FC df+2,1	Move Name	Shady Lotus to FC
 set	ml	Special Arts	FC df+2,1	Hit Range	ss
 
-# Movelist - other FC moves
-replace	ml	Special Arts	FC,d/f+4	FC d/f+4
-replace	ml	Special Arts	FC,d/f+4,4	FC d/f+4,4
-replace	ml	Special Arts	FC,d/b+3+4	FC d/b+3+4
+# FC d/f+4 has no frame data of its own; delete it so FC d/f+4,4 splits into both hits.
+delete	fd	Special Arts	FC d/f+4
+delete	ml	Special Arts	FC d/f+4
 
 # D+3,2,1,4 is from full crouch - use FC prefix with space.
 replace	fd	Special Arts	D+3,2,1,4	FC 3,2,1,4

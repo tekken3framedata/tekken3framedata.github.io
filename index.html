@@ -89,6 +89,8 @@
             outline: none;
         }
         .modal-close:hover { color: #e2e8f0; }
+        #move-details table { margin-bottom: 1.5rem; }
+        #move-details td:first-child { color: #94a3b8; padding-right: 1.5rem; white-space: nowrap; width: 1%; }
     </style>
 </head>
 <body>
@@ -107,6 +109,7 @@
     <dialog id="punish-dialog">
         <button class="modal-close" id="modal-close">&times;</button>
         <h2 id="punish-title"></h2>
+        <div id="move-details"></div>
         <div class="filters" id="char-filters"></div>
         <div class="section-label">Tarkistetut rankaisut</div>
         <div id="verified-table"></div>
@@ -180,10 +183,62 @@
             renderMoveList();
         });
 
+        function getFirstButton(cmd) {
+            const m = cmd.match(/[1-4]/);
+            return m ? parseInt(m[0]) : 5;
+        }
+
+        function buildSeriesParents(moves) {
+            const parents = new Set();
+            for (const m of moves) {
+                const cmd = m.command;
+                for (let i = 1; i < cmd.length; i++) {
+                    if (cmd[i] === ',' || cmd[i] === '<' || cmd[i] === '~') {
+                        parents.add(cmd.substring(0, i));
+                    }
+                }
+            }
+            return parents;
+        }
+
+        let seriesParents = new Set();
+
+        function isNonAttack(m) {
+            if (m.startup) return false;
+            if (seriesParents.has(m.command)) return false;
+            return true;
+        }
+
+        function isStanceMove(m) {
+            return m.stance !== 'Default' && m.stance !== 'Crouching';
+        }
+
+        function stanceOrder(m) {
+            if (m.stance === 'Default' || m.stance === 'Crouching') return '';
+            return m.stance;
+        }
+
+        function sortMoves(moves) {
+            return [...moves].sort((a, b) => {
+                const aStance = stanceOrder(a);
+                const bStance = stanceOrder(b);
+                if (aStance !== bStance) return aStance < bStance ? -1 : 1;
+                const aNon = isNonAttack(a) ? 1 : 0;
+                const bNon = isNonAttack(b) ? 1 : 0;
+                if (aNon !== bNon) return aNon - bNon;
+                const btnDiff = getFirstButton(a.command) - getFirstButton(b.command);
+                if (btnDiff !== 0) return btnDiff;
+                if (a.command < b.command) return -1;
+                if (a.command > b.command) return 1;
+                return 0;
+            });
+        }
+
         function renderMoveList() {
             const q = search.value.toLowerCase().trim();
 
             const visible = moves.filter(m => m.type !== '10string' && m.type !== 'throw' && !m.command.match(/^F,[1-4]$/));
+            seriesParents = buildSeriesParents(visible);
             const matched = q
                 ? visible.filter(m =>
                     m.move.toLowerCase().includes(q) ||
@@ -198,8 +253,9 @@
             const grouped = groupByCharacter(matched);
             let html = '';
             for (const [char, rows] of grouped) {
+                const sorted = sortMoves(rows);
                 html += `<h2>${char}</h2><table>${headerRow}<tbody>`;
-                for (const m of rows) {
+                for (const m of sorted) {
                     const altHtml = showAltCmd && m.altCommands ? `<span class="comment alt-cmd">(${m.altCommands})</span>` : '';
                     html += `<tr class="move-list" data-id="${m.id}"><td class="col-stance">${(m.stance === 'Default' || m.stance === 'Crouching') ? '' : m.stance}</td><td>${m.command}${altHtml}</td>${showMoveName ? `<td>${m.move}</td>` : ''}<td class="col-narrow">${m.startup}</td><td class="col-narrow">${m.block}</td></tr>`;
                 }
@@ -216,6 +272,28 @@
             showPunishes(row.dataset.id);
         });
 
+        const moveDetails = document.getElementById('move-details');
+
+        function renderMoveDetails(move) {
+            const fields = [
+                ['Hahmo', move.character],
+                ['Komento', move.command],
+                ['Alt-komento', move.altCommands],
+                ['Liike', move.move],
+                ['Stance', move.stance],
+                ['Startup', move.startup],
+                ['Block', move.block],
+                ['Hit', move.hit],
+                ['CH', move.ch],
+                ['Damage', move.damage],
+                ['Range', move.hitRange],
+                ['Properties', move.properties],
+                ['Notes', move.notes],
+            ];
+            const rows = fields.filter(([, v]) => v).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+            moveDetails.innerHTML = `<table>${rows}</table>`;
+        }
+
         function showPunishes(moveId) {
             const move = moves.find(m => m.id === moveId);
             if (!move) return;
@@ -223,7 +301,8 @@
             currentMoveId = moveId;
             const blockFrames = parseInt(move.block);
 
-            punishTitle.textContent = `${move.character} ${move.move || move.command} (${move.block}) — rankaisut`;
+            punishTitle.textContent = move.move || move.command;
+            renderMoveDetails(move);
             potentialTable.hidden = true;
             togglePotential.textContent = 'Näytä mahdolliset rankaisut';
             document.body.style.overflow = 'hidden';

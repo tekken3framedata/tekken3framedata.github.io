@@ -60,6 +60,17 @@ def strip_tag_buffer(fd_tables):
                 row[0] = re.sub(r'\s*-?\s*\[~5\]', '', row[0]).rstrip()
 
 
+def normalize_fc_prefix(tables):
+    """Replace 'FC,' and 'FC+' with 'FC ' in command cells. FC is a stance prefix, not a move segment."""
+    for rows in tables.values():
+        for row in rows:
+            if row and row[0]:
+                if row[0].startswith('FC,'):
+                    row[0] = 'FC ' + row[0][3:]
+                elif row[0].startswith('FC+'):
+                    row[0] = 'FC ' + row[0][3:]
+
+
 def apply_patches(fd_tables, ml_tables, patches):
     """Apply patches to parsed tables before any further processing.
 
@@ -531,12 +542,14 @@ MATCH_ALIASES = {
 
 # Commands that are duplicates of each other. The value is the preferred primary;
 # the other becomes an Alt Command and its row is removed.
+MERGE_DUPLICATES_GLOBAL = [
+    (['d+1', 'FC 1'], 'd+1'),
+    (['d+2', 'FC 2'], 'd+2'),
+    (['d+3', 'FC 3'], 'd+3'),
+    (['d+4', 'FC 4'], 'd+4'),
+]
+
 MERGE_DUPLICATES = {
-    'julia': [
-        (['d+1', 'FC+1'], 'd+1'),
-        (['d+2', 'FC+2'], 'd+2'),
-        (['d+3', 'FC+3'], 'd+3'),
-    ],
 }
 
 # Entire sections that only exist in Tekken Tag Tournament.
@@ -754,12 +767,38 @@ def group_match(fd_rows, ml_rows, character=''):
     return row_map
 
 
+def fallback_match(fd_rows, ml_rows, fd_to_ml, character=''):
+    """Try to match remaining unmatched FD rows to ML rows by normalized command."""
+    aliases = MATCH_ALIASES.get(character.lower(), {})
+    matched_ml = set(fd_to_ml.values())
+
+    ml_by_cmd = {}
+    for ml_idx, ml_row in enumerate(ml_rows):
+        if ml_idx in matched_ml:
+            continue
+        cmd = normalize_cmd(ml_row[0])
+        if cmd not in ml_by_cmd:
+            ml_by_cmd[cmd] = ml_idx
+
+    extra = {}
+    for fd_idx, fd_row in enumerate(fd_rows):
+        if fd_idx in fd_to_ml:
+            continue
+        cmd = normalize_cmd(fd_row[0])
+        cmd = aliases.get(cmd, cmd)
+        if cmd in ml_by_cmd:
+            extra[fd_idx] = ml_by_cmd[cmd]
+            del ml_by_cmd[cmd]
+    return extra
+
+
 def merge_special_arts(fd_rows, ml_rows, footnotes, character=''):
     """Merge frame data and movelist Special Arts rows.
 
     Returns list of dicts with merged data. Unmatched rows get [UNMATCHED] in notes.
     """
     fd_to_ml = group_match(fd_rows, ml_rows, character)
+    fd_to_ml.update(fallback_match(fd_rows, ml_rows, fd_to_ml, character))
     matched_count = len(fd_to_ml)
 
     merged = []
@@ -808,7 +847,7 @@ UNIFIED_HEADERS = ['Character', 'Stance', 'Type', 'Command', 'Move Name', 'Damag
 
 def merge_duplicate_commands(row_dicts, character):
     """Merge rows listed in MERGE_DUPLICATES: keep the preferred, add others as Alt Commands."""
-    merges = MERGE_DUPLICATES.get(character.lower(), [])
+    merges = MERGE_DUPLICATES_GLOBAL + MERGE_DUPLICATES.get(character.lower(), [])
     if not merges:
         return row_dicts
     for commands, primary in merges:
@@ -940,6 +979,10 @@ def main():
 
     # Strip [~5] tag buffer notation before anything else
     strip_tag_buffer(fd_tables)
+
+    # Normalize FC, prefix to FC (space) in both sources
+    normalize_fc_prefix(fd_tables)
+    normalize_fc_prefix(ml_tables)
 
     # Apply patches before further processing
     patches = load_patches(character)
