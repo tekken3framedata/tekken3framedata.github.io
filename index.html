@@ -399,17 +399,27 @@
                 })
                 .sort((a, b) => a.character.localeCompare(b.character) || parseInt(a.startup) - parseInt(b.startup));
 
+            const moveCol = showMoveName ? '<th>Liike</th>' : '';
+            const modalHeader = `<thead><tr><th class="col-stance">Stance</th><th>Komento</th>${moveCol}<th class="col-narrow">Startup</th><th class="col-narrow">Block</th><th>Huomio</th></tr></thead>`;
+            const modalHeaderPotential = `<thead><tr><th class="col-stance">Stance</th><th>Komento</th>${moveCol}<th class="col-narrow">Startup</th><th class="col-narrow">Block</th></tr></thead>`;
+
             verifiedTable.innerHTML = verifiedCounters.length === 0 ? '' :
-                renderGroupedTables(verifiedCounters,
-                    '<thead><tr><th>Liike</th><th>Komento</th><th>Startup</th><th>Huomio</th></tr></thead>',
-                    p => `<tr><td>${p.move}</td><td>${p.command}</td><td>${p.startup}</td><td class="comment">${p.comment || ''}</td></tr>`
+                renderGroupedTables(verifiedCounters, modalHeader,
+                    p => {
+                        const altHtml = showAltCmd && p.altCommands ? `<span class="comment alt-cmd">(${p.altCommands})</span>` : '';
+                        const stanceCell = (p.stance === 'Default' || p.stance === 'Crouching') ? '' : p.stance;
+                        return `<tr><td class="col-stance">${stanceCell}</td><td>${p.command}${altHtml}</td>${showMoveName ? `<td>${p.move}</td>` : ''}<td class="col-narrow">${p.startup}</td><td class="col-narrow">${p.block}</td><td class="comment">${p.comment || ''}</td></tr>`;
+                    }
                 );
 
             togglePotential.style.display = potential.length === 0 ? 'none' : '';
             potentialTable.innerHTML = potential.length === 0 ? '' :
-                renderGroupedTables(potential,
-                    '<thead><tr><th>Liike</th><th>Komento</th><th>Startup</th><th></th></tr></thead>',
-                    p => `<tr class="unverified"><td>${p.move}</td><td>${p.command}</td><td>${p.startup}</td><td></td></tr>`
+                renderGroupedTables(potential, modalHeaderPotential,
+                    p => {
+                        const altHtml = showAltCmd && p.altCommands ? `<span class="comment alt-cmd">(${p.altCommands})</span>` : '';
+                        const stanceCell = (p.stance === 'Default' || p.stance === 'Crouching') ? '' : p.stance;
+                        return `<tr class="unverified"><td class="col-stance">${stanceCell}</td><td>${p.command}${altHtml}</td>${showMoveName ? `<td>${p.move}</td>` : ''}<td class="col-narrow">${p.startup}</td><td class="col-narrow">${p.block}</td></tr>`;
+                    }
                 );
         }
     </script>
