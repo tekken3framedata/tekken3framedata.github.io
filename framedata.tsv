@@ -1,0 +1,317 @@
+Character	Stance	Type	Command	Move Name	Damage	Hit Range	Properties	Speed	Block Adv	Hit Adv	CH Adv	Alt Commands	Notes	Unmatched	UUID
+Jin	Default		1	Left Jab (Generic i10)				10	+3	+9	+9				82166fdb-2a44-4bcb-b0ba-753d6cce7c4a
+Jin	Default		3	Left Kick (Generic i14)				14	-14	-3	-3				38c9459b-2fe0-4ab9-9cb4-a2486194f021
+Jin	Default		F,1					10	+3	+9	+9				a9f520f0-58b8-4e60-9f78-27d5595a617b
+Jin	Default		F,3					14	-4	-3	-3				d6b3eba8-4155-49fa-ba71-13e4c6fb5636
+Jin	Default		d+1	Crouching Left Jab (Generic i8)				8	-2	+9	+9	FC 1			07222946-24af-4057-a300-93aa6ca41ce6
+Jin	Default		d+3					12	-17	-3	-3	FC 3			94af0de1-8e78-47b1-b7b5-ee2865249790
+Jin	Crouching		WS+1					13	-6	+5	+5				86247f1b-9e1d-498b-9a5b-72217f8ab206
+Jin	Crouching		WS+3					16	-16	0	0				fd619621-d593-402b-9112-69b10d343730
+Jin	Default		df+1					13	-2	+9	+9				65a92cdd-6fa4-4411-b0da-a4e9985fdd6a
+Jin	Default		df+3					16	-9	+2	+2				1e622c75-839a-4a54-93fb-3935ff755e32
+Jin	Default		2	Right Jab (Generic i10)				10	0	+9	+9				8e30b7f9-e55f-4c74-a968-703f1dc4bf88
+Jin	Default		4	Right Kick (Generic i25)				25	-10	KD	KD				af245faa-f7e0-419c-9ba4-f770909373c2
+Jin	Default		F,2					17	+2	+8	+8				35faf435-b77f-4020-b6fc-ea6aeb473e42
+Jin	Default		F,4					25	-10	KD	KD				323d7a12-9070-405f-9e5d-525749265824
+Jin	Default		d+2	Crouching Right Jab (Generic i10)				10	-2	+9	+9	FC 2			13389c93-cbda-4b02-9e38-950689355615
+Jin	Default		d+4					16	-8	+3	+3	FC 4			f4704da9-eb60-4981-a6ec-a3a5ec88cea4
+Jin	Crouching		WS+2					14	-12	KD	KD				350b5473-07cb-437b-a1bb-1c5ed8f074ef
+Jin	Crouching		WS+4					11	-3	+8	+8				7925ce56-b277-42e0-a764-5a5f9dd274f4
+Jin	Default		df+2					15	-2	+9	KD				250dfc7e-5b68-4f9e-9eff-30e71c6e5cff
+Jin	Default		df+4					13	-9	+2	+2				adefcb6f-c1b8-4025-b672-f28949394f52
+Jin	Default		1<2	Double Punch	6,10	h,h		10	-5	+10	+10				c48f3f3b-b0ab-446f-9737-2c5877f175cc
+Jin	Default		1<2,4	Double Punch > Knee	6,10,12	h,h,m		10	-7	+4	+4				07cbc31f-768f-4fa8-8755-c91c5b5b0a83
+Jin	Default		1<2,4~1+4	Double Punch > White Heron (First)	6,10,5,10	h,h,s,h		10	-6	+3	+3		The White Heron cancels the Knee.		1dfc26fc-84f1-41de-9ff7-d0ea4ed1d503
+Jin	Default		1<2,4~1+4,2	Double Punch > White Heron (Second)	6,10,5,10,10	h,h,s,h,h		10	0	+11	+11		The White Heron cancels the Knee.		1dfc26fc-84f1-41de-9ff7-d0ea4ed1d503
+Jin	Default		1<2,4~1+4,2,4	Double Punch > White Heron > Crescent Kick	6,10,5,10,10,21	h,h,s,h,h,m		10	-12	KD	KD				82300ce8-2928-4966-b7bc-19d9b2ff1121
+Jin	Default		1<2,4~1+4,2,d+4	Double Punch > White Heron > Crescent Sweep	6,10,5,10,10,14	h,h,s,h,h,L	JG	10	-26	KD	KD				3d4d1464-8c11-41da-a03b-82d603d33688
+Jin	Default		1,1<2	Shining Fists	6,8,18	h,h,m		10	-17	KD	KD				0ab8ca4e-16c7-4b1c-ae03-ab4d1714a081
+Jin	Default		1<2<2	Demon Slayer	6,10,18	h,h,h		10	-12	+1	+1				d074e183-c6df-4a42-a4fe-75ba3c34b47d
+Jin	Crouching		WS+1,2	Twin Pistons (Second)	10,15	m,m	JG	13	-7	KD	KD				4db31a8e-7371-42f4-9ca0-2cdd27e8487d
+Jin	Default		df+1,2	Twin Lancer	10,16	m,m		13	-5	+6	+6	f+1+2,2; WR+1+2,2			4379dc2a-51ab-481e-9663-e8b101722e16
+Jin	Default		f,N,d,df+1	Thunder Godfist	29	m		23	-14	(-1_KD)	(-1_KD)				9fae82c7-49dd-4fdd-9863-849ed6bd3409
+Jin	Default		f,N,d,df+1,3	Thunder Godfist > Mid Kick	29,20	m,m		23	-14	KD	KD				9b0f21bc-a7bc-4b91-a825-15581ac2625d
+Jin	Default		f,N,d,df+1,4	Thunder Godfist > Hell Sweep	29,12	m,L	JG	23	-20	KD	KD				50b3046b-d2fb-4fb4-84fc-d36734eadb37
+Jin	Default		1<2,3	Shoot the Works	6,10,25	h,h,m	GB	10 x	+10	KD	KD				0a473b65-0128-44df-8f26-ca25a9162432
+Jin	Default		1<2,3,4	Shoot the Works > Axe Kick	6,10,25,30	h,h,m,m		10 x	0	+11	+11				d025e75b-02e2-4837-a808-9a9b160cbd70
+Jin	Default		1<2,3,f+4	Shoot the Works > Rising Kick	6,10,25,10	h,h,m,m		10 x	-5	+6	+6				37b1b91d-75d1-4a8f-9242-4b3e3de5e96b
+Jin	Default		1+4	White Heron (First)	5,10	s,h		12 x	-6	+3	+3				a590737f-6ed0-402d-b91a-493e279cd1c2
+Jin	Default		1+4,2	White Heron (Second)	5,10,10	s,h,h		12 x	0	+11	+11				a590737f-6ed0-402d-b91a-493e279cd1c2
+Jin	Default		1+4,2,4	White Heron > Crescent Kick	5,10,10,21	s,h,h,m		12 x	-12	KD	KD				c14539b3-08f7-4267-8b8c-6820ba608224
+Jin	Default		1+4,2,d+4	White Heron > Crescent Sweep	5,10,10,14	s,h,h,L	JG	12 x	-26	KD	KD				e0fa94a1-54bf-48ea-89df-bf62e753d21f
+Jin	Default		df+2	Upper	15	m	SH JGc	15	-2	+9	KD				e5a8488a-c694-48a1-9472-d79c070d5967
+Jin	Default		2,2	Demon Backhand Spin (Second)	10,18	h,h		10	-13	-2	-2				92ca84a3-8902-4910-815e-ecfee5312bb1
+Jin	Default		b+2	Demon Backhand	12	h		17	-13	-2	-2				48c8ee70-708c-459e-b300-c9b46fe7ab8a
+Jin	Default		f+2	Overhead Shot	18	m	GB KS	17	-2	+8	+8				fb2fb66d-3972-436c-b943-2abe3b8dface
+Jin	Crouching		WS+2	Uppercut	18	m		14	-12	KD	KD				96292d09-3ebd-4ead-90d5-4520253fbda7
+Jin	Default		f,f+2	Demon Paw	27	m		15	-11	KD	KD				f61a9c02-159a-4937-8eff-9c062822ae0b
+Jin	Default		SS+2	Tooth Fairy	16	m	JG	18	-17	KD	KD				c62e1f99-d4f8-4956-a5ec-ec630b509c81
+Jin	Default		f,N,d,df+2	Wind Godfist	25	h	JG	12	-7	KD	KD		Knocks opponent out of combo range on a CH.		44582d0b-31cb-404b-a6d2-a192b51fab09
+Jin	Default		f,N,d,df,2	Stagger Wind Godfist	21	h	SH	13	-4	KD	KD				1265ad7b-191e-4d7d-a6e8-15d10d3a6b9d
+Jin	Default		f~N,d~df+2	Electric Wind Godfist	30	h	JG JGc	11	+4	KD	KD				c2c066c2-1282-457d-868d-dae450bf53c5
+Jin	Default		b,f+2	Laser Blow	18	m	DSc								1e0a5354-2d2d-46c0-bb09-7db1591639d9
+Jin	Default		b,f+2<1<2	Laser Cannon	18,14,24	m,m,m	FSc	15	-5	KD	KD		The stun occurs on the 2nd hit.		248ceefd-1299-42e3-aec0-1c4a2076a6b7
+Jin	Default		b,f+2<1<d+2	Laser Scraper	18,14,15	m,m,m	JG FSc	15	-10	KD	KD		The stun occurs on the 2nd hit.		547e0603-6962-49a4-899c-c80344688879
+Jin	Default		f,f+3	Split Axe Kick	23	m	JG	20	-11	KD	KD				597fc67c-37a4-49fd-b892-fb2874af5a75
+Jin	Default		f+3	Spinning Roundhouse	35	h		21	-4	KD	KD				b0a80d88-61df-4e4c-9c4c-4e2629b6e586
+Jin	Default		f,N,d,df,f,uf+3	Crouch Dash Slash Kick	30	m	GB	22	+17	KD	KD				83022b10-8faf-4780-af8d-c013b925aab2
+Jin	Default		WR+3	Leaping Slash Kick	30	m	GB	22	+17	KD	KD	f,f,f+3			7dd731c1-155c-4c42-b1de-cc4d3dde1844
+Jin	Default		d+3+4	Can Can	5,20	s,h	JG	14	-10	KD	KD				3e03779a-58f8-4df5-bdc5-f94bf399b8db
+Jin	Default		f+4	Knee	12	m		11	-7	+4	+4				4c626b21-a88d-4f3a-b4ce-db52ba5aeb5e
+Jin	Default		df+4<4	Tsunami Kick	10,16	m,m		13	-15	-4	-4				d2de1203-5ad7-4939-802e-c73cd2321b18
+Jin	Crouching		WS+4,4	Tsunami Kick (Second)	13,21	m,m		11	-15	-4	-4				7accf8ab-d748-4cfe-8b5c-619f0a31b395
+Jin	Default		f,N,d,DF+4	Hell Sweep	18	L	JG	20	-26	(-5_KD)	KD		Delayed Hell Sweep will do 15 damage.		e4b68c71-e641-4066-bedd-e25cf3f763f5
+Jin	Default		f,N,d,DF+4,4	Hell Sweep > Spinning Demon	18,15	L,m		20	-14	KD	KD				6606530a-d3c3-436d-b8ea-8a2c13b39bba
+Jin	Default		uf+4	Spinning Demon (First)	25	h		15 x	-24	KD	KD				34cf773f-cfd5-4f55-8080-c86e6941c645
+Jin	Default		uf+4,4	Spinning Demon (Second)	25,15	h,L		15 x	-26	KD	KD				34cf773f-cfd5-4f55-8080-c86e6941c645
+Jin	Default		uf+4,4,4	Spinning Demon (Third)	25,15,12	h,L,L		15 x	-26	KD	KD				34cf773f-cfd5-4f55-8080-c86e6941c645
+Jin	Default		uf+4,4,4,4	Spinning Demon (Fourth)	25,15,12,25	h,L,L,m		15 x	-10	KD	KD				34cf773f-cfd5-4f55-8080-c86e6941c645
+Jin	Default		4~3	Demon Scissors	25	m		37		KD	KD	uf+4~3			9b3830d0-1300-4f47-b078-979f55d7f6b6
+Jin	Default		b+1+2	Lightning Force	0	-							Repels all attacks.		56421cb1-300c-4ad5-9483-f570e84d858f
+Jin	Default		b+1+3	High and Mid Attack Reversal	Varies	-						b+2+4			e0fe5688-183b-4786-b233-3eebf4c04f7a
+Jin	Default		ub+2+4	Corpse Splitter	24_30_34	M						u+2+4; uf+2+4			74692786-9c07-405c-b0db-d0a366fd60aa
+Jin	Default		b+1+4	Lightning Godfist	40	!		43		KD	KD				ddb70382-ef4f-4d82-bbae-9944e2443f9e
+Jin	Default		B+1+4	Lightning Screw Godfist	80	!		63		KD	KD				e767ff2c-c60c-45c1-961e-5c7cdc663277
+Jin	Default	throw	1+3	Bitch Kicks	10,20	Front	1	12							2fc5fd54-83d3-49cd-b72b-49826a40cc12
+Jin	Default	throw	2+4	Shoulder Reverse	30	Front	2	12							71589ec5-c421-4a1a-af06-3dae5e95061c
+Jin	Default	throw	f,f+1+2	Stone Head	33	Front	1+2	12					Opponent can tech roll after the throw.		128bf09c-7b3d-4d40-9759-c68706c0b2e2
+Jin	Default	throw	df+2+3	Wrist Chuck Slam	38	Front	2	11							235cae57-2416-4679-8c8e-f41f168cdc41
+Jin	Default	throw	qcb+1+3	Complicated Wire	35	Front	1	11							c71be1f9-e354-4f68-b972-ef9496bf63da
+Jin	Default	throw	(FC_db)+1+2	Ultimate Tackle	5	Front	System								8887f842-2f27-4a51-ab1d-7114e68b0633
+Jin	Default	throw	 = 1,2,1,(2,1_1,2)	= Ultimate Punches	5,5,5,5,5		System								6460e2a9-02db-4015-b1d0-962fc19b6eaa
+Jin	Default	throw	 = 2,1,2,(1,2_2,1)	= Ultimate Punches	5,5,5,5,5		System								e3f9155e-9fed-4733-abbe-ce5df77c0d72
+Jin	Default	throw	 = 1,2,1,1+2	= Punches - Cross Arm Lock	5,5,5,25		System								d3dcdca9-7afe-4a0e-b7aa-030eca6325ce
+Jin	Default	throw	 = 2,1,2,1+2	= Punches - Cross Arm Lock	5,5,5,25		System								bf066990-04d2-4277-b512-706a58b1b08a
+Jin	Default	throw	 = 1+2	= Cross Arm Lock	25		System								8592fa3f-7205-4264-8975-c5e17053d76f
+Jin	Default	throw	(1+3_2+4)	Shoulder Flip	12,19	Left	1								1683c720-df9e-4dbe-b02a-aaeab72ec13a
+Jin	Default	throw	(1+3_2+4)	Over the Limit	40	Right	2								ac66b5d9-a2d8-436e-8681-e0686a242beb
+Jin	Default	throw	(1+3_2+4)	Chicken Butcher	60	Back	None								b9ee3180-b42d-43ac-ad2b-23eeb0894d56
+Jin	Default	10string	+2,4,4,4,4,2,1+4,2,1,3		12,10,10,8,6,6,5,5,5,21,12	h"h"hL"mmlhh"mm							11 hits		ba34d687-ae25-485b-9aab-a79d957868b8
+Jin	Default	10string	b+2,4,4,4,4,2,1+4,2,1,4		12,10,10,8,6,6,5,5,5,21,20	h"h"hL"mmlhh"mL							11 hits		d2789d86-195e-4b45-a9bd-9201448b1148
+Jin	Default	10string	b+2,4,4,4,4,2,1+4,2,d+3+4		12,10,10,8,6,6,5,5,5,21,21	h"h"hL"mmlhh"lh							11 hits		21fd7965-86ce-4892-89d6-fa7fec737466
+Jin	Default	10string	f,f,2,1,2,2,3,4,4,1,2,1		7,8,6,7,6,11,5,5,8,30	hh"hh"mm"Lhmm							10 hits		71b76d1d-0795-49ff-8896-dbd90b821527
+Jin	Default	10string	f,f,2,1,2,2,3,4,4,3,2,1		7,8,6,7,6,11,5,5,25,30	hh"hh"mm"LL"m!							10 hits		1ef2c2a7-b96f-473e-9639-cfa44fc57eee
+Jin	Default	10string	3,2,4,3,1+4,2,2,1,2		15,6,10,10,7,5,7,10,15,30	hh"mhlhh"mmm							10 hits		279e1c95-d9df-4db2-b5e8-4ff220b0beab
+Jin	Default	10string	f,f,2,1,4,4,2,4,3,2,1		7,8,7,10,5,7,5,25,30	hh"mm"lm"L"m!							9 hits		da8ce522-2f05-43b8-b22c-55108496c033
+Jin	Default	10string	3,2,4,3,1+4,2,1,3		15,6,10,10,7,5,7,21,20	hh"mhlhh"mm							9 hits		2b63a52b-c49d-4d92-a394-0c9cd6efbc0c
+Jin	Default	10string	3,2,4,3,1+4,2,1,4		15,6,10,10,7,5,7,21,12	hh"mhlhh"mL							9 hits		7a6c3747-e559-4f54-a928-658674db30b0
+Jin	Default	10string	b+2,4,2,1,2		12,10,10,15,30	h"h"m"m"m							5 hits		37651ad4-b277-4ccf-be56-fd260ebacfab
+Julia	Default		1	Left Jab (Generic i8)				8	0	+6	+6				fcfd0c05-3dd2-429d-ab40-36227b0c7590
+Julia	Default		2	Right Jab (Generic i10)				10	-2	+9	+9				9f921902-3f65-4e8c-9ff5-f05ae8eb359e
+Julia	Default		3	Left Kick (Generic i14)				14	-16	KD	KD				996786be-a531-4b25-bb3d-c5aacb1d0bc7
+Julia	Default		4	Right Kick (Generic i10)				10	-7	-7	KD				0459ec42-3f1a-456c-9598-21272abeb6de
+Julia	Default		F,1					8	0	+6	+6				f6175670-db0a-4fb8-9da7-5f051b2a8567
+Julia	Default		F,2					10	-2	+9	+9				b22a4404-190e-47eb-a6c9-73884d71a950
+Julia	Default		F,3					16	-16	KD	KD				09de110a-3f8d-4621-a105-31fd34ce9d20
+Julia	Default		F,4					10	-7	-7	KD				18a42e20-e9ba-4630-b7be-4768a589d81a
+Julia	Default		d+1	Crouching Left Jab (Generic i8)				8	-2	+9	+9	FC 1			f89e0638-fe30-4a6b-8942-4a1e3e2635ed
+Julia	Default		d+2	Crouching Right Jab (Generic i10)				10	-2	+9	+9	FC 2			26355b4d-95bf-4dce-86fe-39427a374ea9
+Julia	Default		d+3					16	-17	-3	-3	FC 3			5e89911f-db11-4f2b-9e3f-b2a314cd1198
+Julia	Default		d+4					20	-9	-10	-10	FC 4			4956c7a9-e91c-473c-a27a-40c7eca7bd2b
+Julia	Crouching		WS+1					10	-3	+8	+8				ce4c7d8c-f1ed-443e-b1eb-3828a914f1d6
+Julia	Crouching		WS+2					18	-11	0	0				786c09be-0167-4ee5-87dc-1421dc42b4c6
+Julia	Crouching		WS+3					16	-16	KD	KD				2aa3bb47-5860-4467-84c2-3b5e62b5689f
+Julia	Crouching		WS+4					11	-17	KD	KD				8dec061c-b5b9-4126-ad93-7c8a660965ef
+Julia	Default		df+1					20	-15	-4	-4				60588c15-fe0e-497c-93dc-82e1db1061b3
+Julia	Default		df+2					16	-6	+5	+5				14f9e3c2-923b-4548-bc99-002601fc9560
+Julia	Default		df+3					14	-10	+1	+1				609de8c5-30c0-413e-98ed-1e185e0fa1fa
+Julia	Default		df+4					12	-7	+4	+4				3cdf43f9-918f-42c3-a5a5-befcfebcb19c
+Julia	Default		1+2	Twin Arrow	25	m	GB	21	+3	KD	KD				500b0d64-9891-4454-8b8e-17df487e3ea6
+Julia	Default		f+1	Flash Uppercut	15	m	JG	19	-15	KD	KD				b18aa333-2442-4160-af5c-13f0922950af
+Julia	Default		d,df+1	Flash Punch	14	m		11	-8	-2	+3	WR+1			4693e1b2-136e-40f5-b084-9212f6b4bbbf
+Julia	Default		d,df+1<2	Flash Punch > Flash Elbow	14,21	m,m	FSc	11	-7	KD	KD				b572d252-3262-41a1-86a0-3f4d3c458573
+Julia	Default		1~1	G-Clef > Club Fist	10,5	h,m		8	-15	-4	-4				35710ab0-a560-4e78-a92c-94520190a089
+Julia	Default		1~1,1	G-Clef > Club Fist > Flash Uppercut	10,5,21	h,m,m	JG	8	-14	KD	KD				26e647fa-cfd6-4a44-ab99-1e7c86754389
+Julia	Default		1~1,4	G-Clef > Club Fist > Bow & Arrow (First)	10,5,12	h,m,L		8	-13	-2	-2				ce17ccaa-58f8-431f-abf5-ec7edcc4357e
+Julia	Default		1~1,4,3	G-Clef > Club Fist > Bow & Arrow (Second)	10,5,12,15	h,m,L,m		8	-12	KD	KD				ce17ccaa-58f8-431f-abf5-ec7edcc4357e
+Julia	Default		df+1	Club Fist	8	m		20	-15	-4	-4				06058ee5-b725-48f1-b4e0-126d1fba930f
+Julia	Default		df+1,1	Club Fist > Flash Uppercut	8,21	m,m	JG	20	-14	KD	KD				c3ab529e-61bb-4c5d-af2b-4e22d160efee
+Julia	Default		df+1,4	Club Fist > Bow & Arrow (First)	8,12	m,L		20	-13	-2	-2				178b4460-0983-4984-8a5a-e1acd0d8690a
+Julia	Default		df+1,4,3	Club Fist > Bow & Arrow (Second)	8,12,15	m,L,m		20	-12	KD	KD				178b4460-0983-4984-8a5a-e1acd0d8690a
+Julia	Default		1~2	G-Clef > Gut Punch	5,8	h,m		8	-15	+5	+5		If the 1st hit is a counter hit, the damage of the 2nd hit will be 16. If the string is complete (1~2~1) the damage is 15.		f4c49e0f-9d42-490c-b08f-228602d89f35
+Julia	Default		1~2~1	G-Clef > Gut Punch > Skyscraper Cannon	5,8,21	h,m,m	CH	8					The 3rd only occurs if the 1st hit was a counter hit or the 2nd hit connected on the opponents side.		d6146acb-2e13-473f-9d79-3d79f21afd6f
+Julia	Default		1~2,3	G-Clef > Gut Punch > Low Kick	5,8,10	h,m,L	RC	8	-17	-3	-3				18ed0191-ad5a-405b-a3fc-b0f6b3b39720
+Julia	Default		1~2,4	G-Clef > Gut Punch > High Kick	5,8,20	h,m,h		8	-7	-7	KD				cc2f1f62-9254-4475-aa31-e796aa2e996f
+Julia	Default		f,f+1	Party Crasher	10	m		11	-2	KD	KD				382453a7-1360-48dc-a4ea-2eb2991e5dc3
+Julia	Default		f,f+1<4	Party Crasher > Skyscraper Kick	10,15	m,m	JG	11	-11	KD	KD				d4f9fba1-f3d6-4838-bd31-e31046130e3e
+Julia	Default		f+1~2	Palm Explosion	21	m	FSc	30	-13	KD	KD				8c3f7a5e-8055-46b5-ab31-adec7d8e90b5
+Julia	Default		1+4	Club Fist	12,12	m,L		20	-13	-2	-2				d5c490e6-b9aa-46b6-badf-e0b41273081c
+Julia	Default		1+4,3	Club Fist > Bow & Arrow	12,12,15	m,L,m		20	12	KD	KD				d5c490e6-b9aa-46b6-badf-e0b41273081c
+Julia	Default		df+2	Gut Punch	10	m		16	-6	+5	+5				b87156d7-3dac-434a-86d6-2d2bba5f3947
+Julia	Default		df+2,1	Gut Punch > Skyscraper Cannon	10,21	m,m	JG	16					Has to hit from the front to work.		5cbd7253-2f0c-46a4-a9e9-ddaa5215530c
+Julia	Default		df+2,3	Gut Punch > Low Kick	10,10	m,L	RC	16	-17	-3	-3				8faf58f6-555c-451d-9d33-3e3562224b59
+Julia	Default		df+2,4	Gut Punch > High Kick	10,20	m,h		16	-7	-7	KD				b2c655e0-0d86-48c4-967c-20f831962f5b
+Julia	Default		d+2~N+3	Ultimate Cannon (First)	10,9	s,m	JG	10	-11	0	0	2+3			58f0c77e-896b-48d1-bee1-1d4c9f9396e5
+Julia	Default		d+2~N+3,1	Ultimate Cannon (Second)	10,9,25	s,m,m	JG	10	-8	KD	KD				58f0c77e-896b-48d1-bee1-1d4c9f9396e5
+Julia	Default		WR+2	Flash Elbow	20	m	FSc	12	-20	KD	KD	FC,df+2			fa48ca00-a54f-4441-bd44-679aea30159c
+Julia	Default		b+2	Arm Whip	12	h	OB	10	0	-1	-1	2~b	The Arm Whip needs to hit for Julia to spin around the opponent.		046410d5-bbc3-4bd3-9a12-93a46af44b65
+Julia	Default		b+2,1+2	Arm Whip	12	h		10	+2	+2	+2			TRUE	ffb25eb0-c85d-440c-9697-b8e27eb5b375
+Julia	Crouching		WS+2	Tequila Sunrise	15	m		18	-11	0	-6	3~2			0037b2a2-501a-4ad5-aa2c-afb3f5d46909
+Julia	Crouching		WS+2,2	Tequila Sunrise > Flash Elbow	15,22	m,m		18	-20	KD	KD				df05ea0f-bb69-470d-ad9e-eeb4f9f793bc
+Julia	Crouching		WS+2,1	Tequila Sunrise > Club Fist	15,5	m,m	JG	18	-15	-4	-4				8ed3e3a1-7912-4bab-88ed-0091577b4fba
+Julia	Crouching		WS+2,1,1	Tequila Sunrise > Club Fist > Flash Uppercut	15,5,21	m,m,m	JG	18	-14	KD	KD				8ed3e3a1-7912-4bab-88ed-0091577b4fba
+Julia	Crouching		WS+2,1	Tequila Sunrise > Club Fist	15,5	m,m		18	-15	-4	-4				8459def0-6afe-4b42-ae05-3d1d6f4725a9
+Julia	Crouching		WS+2,1,4	Tequila Sunrise > Club Fist > Bow & Arrow (First)	15,5,12	m,m,L		18	-13	-2	-2				8459def0-6afe-4b42-ae05-3d1d6f4725a9
+Julia	Crouching		WS+2,1,4,3	Tequila Sunrise > Club Fist > Bow & Arrow (Second)	15,5,12,15	m,m,L,m		18	-12	KD	KD				8459def0-6afe-4b42-ae05-3d1d6f4725a9
+Julia	Crouching		WS+2,4	Tequila Sunrise > Razor Sweep	15,12	m,L	RC	18	-10	+1	+1				a2513e7a-699a-43b9-918f-dbc8c9eff62c
+Julia	Crouching		WS+2,4,4	Tequila Sunrise > Razor Sweep > High Kick	15,12,23	m,L,h		18	-19	-3	-3				9413f2b5-4982-49c7-9551-38b74f5e5994
+Julia	Crouching		WS+2,4,d+4	Tequila Sunrise > Razor Sweep > Low Kick	15,12,10	m,L,L	RC	18	-14	-8	-8				01a5e104-7c4f-46cf-bb6d-9e1f99f32192
+Julia	Crouching		WS+2,4,1	Tequila Sunrise > Razor Sweep > Razor's Edge	15,12,21	m,L,m	JG	18	-18	KD	KD				b67b1958-899f-440d-81ef-fd3cf09dd51c
+Julia	Default		uf+3+4	Earthquale Stomp	35	M		48	-32	KD	KD				59928bfb-4beb-42a3-a6f1-48df7624abfd
+Julia	Default		3+4	Counter Clockwise Spin	-	-							Chains into Spinning Razor Kick Variations. First kick will do 20 damage.		1dc06bad-9af7-4b6b-8e24-97374041d691
+Julia	Default		d+4	Razor Sweep	10	L	RC	20	-9	-10	-10				3bca7870-8165-4875-9d9c-6864ca74281f
+Julia	Default		d+4,N+4	Razor Sweep > High Kick	10,23	L,h		20	-19	-3	-3				b1b6237a-be13-47e5-9773-75c70bb553ce
+Julia	Default		d+4,d+4	Razor Sweep > Low Kick	10,10	L,L	RC	20	-14	-8	-8				2cf2367e-0010-4be3-8881-a3cdca64ab22
+Julia	Default		d+4,1	Razor Sweep > Razor's Edge	10,21	L,m	JG	20	-18	KD	KD				d6601db0-f866-49cb-9363-41fa22774e5b
+Julia	Default		4,4	Spinning Razor Kicks (Second)	20,12	h,L	RC	10	-7	+4	+4				9cedce07-a30c-4f87-9657-4bc994b3285f
+Julia	Default		4,4,4	Spinning Razor Kicks > High Kick	20,12,23	h,L,h		10	-19	-3	-3				ad75bd53-98ec-4d06-bfb9-7ef8eb967ec1
+Julia	Default		4,4,d+4	Spinning Razor Kicks > Low Kick	20,12,10	h,L,L	RC	10	-14	-8	-8				6037ad7a-2940-4121-be82-82ee10e80616
+Julia	Default		4,4,1	Spinning Razor Kicks > Razor's Edge	20,12,21	h,L,m	JG	10	-18	KD	KD				ca0f1987-b5c8-48a7-bdd0-7b0c0705ecf6
+Julia	Crouching		WS+4	Skyscraper Kick	15	m		11	-17	KD	KD				64e40921-dd7d-471e-ba26-935c1a67d9f1
+Julia	Crouching		FC df+4	Bow & Arrow (First)	12	L		16	-14	-3	-3				008e985a-af41-49f1-b7cd-7cbf6df530c9
+Julia	Crouching		FC df+4,3	Bow & Arrow (Second)	12,15	L,m		16	-14	KD	KD				008e985a-af41-49f1-b7cd-7cbf6df530c9
+Julia	Crouching		FC+1+3	Low Parry	-	-						FC+2+4; d+1+3; d+2+4			b40b6460-e7fd-4bef-bd6e-ca79521c396c
+Julia	Default		2+3+4	Wave Taunt	-	-									fa995e30-6d41-49b5-b4c6-69bcc4336ef5
+Julia	Default		f+1+4	Heaven Cannon	50	!	JG	67		KD	KD				2162efdb-35cc-4c7b-93d6-8e916e2f2f72
+Julia	Default	throw	1+3	Death Valley Bomb	35	Front	1	12							f76962d3-8434-402d-8613-508f987a154c
+Julia	Default	throw	2+4	Fisherman Suplex	30	Front	2	12							ef5757e9-51b7-473b-bb57-1df917f2c6f6
+Julia	Default	throw	df+1+2	Arm Lock Suplex	37	Front	1+2	11							b49d4428-9cda-4b01-b70b-91e278c4293d
+Julia	Default	throw	d,DB+1+3	Waist Suplex	30	Front	1	11							65e372e9-f6fe-436f-8490-53d1f66103e2
+Julia	Crouching	throw	FC db,d,db+1+2	Cross Arm Lock	45	Front	1+2	12							dca816e7-f73b-40d5-bad9-a55ccf146d97
+Julia	Default	throw	qcb,f+2	Mad Axes	14,14,14	Front	1+2	10							d8282c64-e48f-4db2-978e-1bc3748e76f5
+Julia	Default	throw	(1+3_2+4)	Running Bulldog	40	Left	1								2f9f0bd0-be60-4e4d-8294-d78069d80df7
+Julia	Default	throw	(1+3_2+4)	Twisted Sister	45	Right	2								ce63da7a-f0f4-4fda-89e3-6a2618e29ba0
+Julia	Default	throw	(1+3_2+4)	German Suplex	50	Back	None								5f4926be-d1ee-480b-93f4-c75c9b579f1f
+Julia	Default	10string	2,1,1,2,3,3,3,4,4,1		8,6,6,6,6,6,6,7,8,25	h"mm"hLm"hh"Lm							10 hits		7a3959ae-5e29-42ea-8207-de2543f68a20
+Julia	Default	10string	2,1,1,2,3,3,2,3,2,1		8,6,6,6,6,6,7,5,5,30	h"mm"hLm"mL"m!							10 hits		5ca9cfed-a777-40f5-8357-bbef843e0d33
+Julia	Default	10string	2,1,1,2,3,3,2,1,4,3		8,6,6,6,6,67,7,10,25	h"mm"hLm"mm"Lm							10 hits		7dcd29ff-dd18-4e8d-971f-977250a1888d
+Ling	Default		1	Left Jab (Generic i8)				8	+1	+7	+7				365ad059-f0ba-4788-94cb-2ca4f30ab7d9
+Ling	Default		2	Right Jab (Generic i10)				10	-2	+9	+9				ed731256-8ddc-42fc-b741-8291857becdc
+Ling	Default		3	Left Kick (Generic i14)				14	-16	KD	KD				7638beda-f6e1-4aa2-8d6e-8824de038132
+Ling	Default		4	Right Kick (Generic i10)				10	-4	+7	KD				617dd17e-a252-48f6-8c3e-e166ca7e0c69
+Ling	Default		F,1					8	0	+7	+7				8f454b96-4c9e-49dd-9519-ae3147906c73
+Ling	Default		F,2					10	-2	+9	+9				21b5e6c4-fe7f-4345-a9cb-5b9f91146009
+Ling	Default		F,3					15	-15	KD	KD				93bccb6a-b165-4301-9b16-1dbb7602f811
+Ling	Default		F,4					10	-7	+7	KD				923640d0-3d78-4239-bd1a-81771958329b
+Ling	Default		d+1	Crouching Left Jab (Generic i17)				17	-7	+3	+3	FC 1			7caa9d95-1f1c-440b-99bd-967d94b52c54
+Ling	Default		d+2	Crouching Right Jab (Generic i10)				10	-2	+9	+9	FC 2			15c6b2fa-158a-4f99-8199-9b5858a4f131
+Ling	Default		d+3					16	-16	-5	-5	FC 3			db2cddf7-f482-42c5-b505-db9be478183c
+Ling	Default		d+4					12	-8	+3	+3	FC 4			ec047e63-cbaa-4498-818d-1fabfc401780
+Ling	Crouching		WS+1					10	-3	+8	+8				8ebdccf4-dd5a-438a-9399-83e9c3fd68db
+Ling	Crouching		WS+2					14	-3	+8	KD				33fc887f-7aee-4c62-8b2e-170e2716edcd
+Ling	Crouching		WS+3					16	-16	KD	KD				9798e457-b0e9-4d84-9399-538183faf0bb
+Ling	Crouching		WS+4					11	-11	KD	KD				56b3bb19-9a12-493f-bfc3-8d35122a9643
+Ling	Default		df+1					14	-1	+10	+10				7009c91d-049b-46dc-b37b-46543aae9922
+Ling	Default		df+2					14	-8	+24	+24				969a1353-90ff-4420-ae82-39b63274fb17
+Ling	Default		df+3					14	-10	+6	+6				1f7bba9d-a8a4-4f82-913b-e1f3973972f7
+Ling	Default		df+4					12	-4	+7	+7				e8f157a2-8fe1-44dc-b271-9541445ee92c
+Ling	Default		1,2	Bayonet (Second)	4,7	h,h		8	0	+6	+5				9b175309-8211-4cd4-af63-f296910021a4
+Ling	Default		1,d+2	Bayonet Mc Twist (Second)	4,10	h,m		8	-3	+8	+8				1d72d363-b5ed-4979-b93d-cb45522a42e8
+Ling	Default		df+1	Belly Chop	10	m		14	-1	+10	+10				b4967595-b87c-46ae-b96e-c796b81165d2
+Ling	Default		DF+1	Alternate Belly Chop	10	m		14	-3	+8	+8				7cf0f827-4ea2-4d56-a737-92a94cca22be
+Ling	Default		db+1	Storming Flower	25	m		18	-8	KD	KD		On a counter hit Ling will do an automatic 1+3+4 taunt.		c03eb11f-3e0f-4e67-b69f-d2bbe5f074d2
+Ling	Default		u+1	Single Fan	5	m		16	-3	-3	+8				309e8169-8fbf-42b8-a753-61e568199002
+Ling	Default		U+1	Alternate Single Fan	5	m		16	-10	-10	+1				7d298154-06eb-4be0-8423-199a1f3fd8c0
+Ling	Default		b+1	Great Wall	10	m		6	-14	+1	+1	b+2			47089267-64c4-4b12-9274-c92ae0ac73dc
+Ling	Default		B+1					6	-14	-3	-3	B+2		TRUE	297f7f23-a5d4-41bf-b5af-0da5ffc3689f
+Ling	Default		d+1	Flappng Wings	7,7,7	m,M,M	RC	17	-7	+3	+3				a71bf9e2-4522-4397-9254-d47536c54508
+Ling	Default		D+1	Alternate Flapping Wings	7,7,7	m,M,M		17	-7	+3	+3				a385807a-5835-4920-96bf-514a2ea77e5b
+Ling	Default		f+1+2	Cartwheel Dodge	-	-									b138832a-e720-455a-9f5a-cbf1cabd5511
+Ling	Default		u+1+2	Double Fan	5,8	m,m	RC GB	15	-2	-6	-6				f5928381-094e-4c8d-8833-a5035aa9aae9
+Ling	Default		u+1+2,2	Double Fan > Hydrangea	5,8,12	m,m,m		15	-4	+5	+5				a635c8d5-0260-4893-a4a8-f9844768f725
+Ling	Default		u+1+2,2,1	Double Fan > Fortune Cookie (Second)	5,8,12,25	m,m,m,m		15	-7	KD	KD				b9c21584-fdbb-4b9d-994d-1cb65becfa17
+Ling	Default		u+1+2,3+4	Double Fan > Ginger Snap	5,8,-	m,m,-		15	-6	+4	+4				618c53db-499b-490a-b252-a02468f104d0
+Ling	Default		f,f+1+2	X Marks the Spot (First)	12	m	BNc GB	14	-2	+5	+6		Bounce will occur only when the last hit is a counter hit.		bf3cbb63-72ab-4334-bfbd-f271f018cc9f
+Ling	Default		f,f+1+2,1+2	X Marks the Spot (Second)	12,27	m,m	BNc GB	14	-2	+3	KD		Bounce will occur only when the last hit is a counter hit.		bf3cbb63-72ab-4334-bfbd-f271f018cc9f
+Ling	Default		1+2					20	-5	KD	KD			TRUE	949f68a6-efc6-4f6b-84dd-96283525d485
+Ling	Default		2,1	April Shower > Belly Chop	8,10	h,m		10	-5	+6	+6				648173fb-4066-41f6-a58d-45cd1fcf2fb5
+Ling	Default		2,DF+1	April Shower > Alternare Belly Chop	8,10	h,m		10	-3	+4	+4				f306dde6-4c60-48ed-a878-9ec1f096f17e
+Ling	Crouching		WS+2	Sun Flower [tag]	12	m	JG	14	-3	+8	KD				b328a672-35de-4996-83cd-134d990477c1
+Ling	Crouching		WS+2~F	Sun Flower	12	m	JG	14	-3	+8	KD				26d80f36-0d71-4124-a820-d8af971860b4
+Ling	Default		df+2	Butter the Bread	15	m	SH	14	-8	+24	+24				c8d95c54-fb2f-46c0-aaf3-e9310dbf1166
+Ling	Crouching		FC DF+2	Shady Lotus to Rain Dance	10	s		17	-4	+6	+6				3133c2a5-a792-48b5-b2cf-6c16c5cf1081
+Ling	Crouching		FC df+2	Shady Lotus to FC (First)	10	s	RC	17	-22	-11	-11				f0f1774c-3281-4101-829b-463200a8f781
+Ling	Crouching		FC df+2,1	Shady Lotus to FC (Second)	10,15	s,s	RC	17	-10	+6	+6				f0f1774c-3281-4101-829b-463200a8f781
+Ling	Default		df+2,1					14	-18	KD	KD			TRUE	99d4dc2d-28df-4f54-b25c-d909354c47c6
+Ling	Default		df+3	Punt Kick	17	m		14	-10	+6	+6				fb729c35-d6ed-4608-88b3-0153b22e3c53
+Ling	Default		f+3	Cloud Kick	25	h		15	-15	KD	KD				7175b3c5-8156-45c5-b3e2-bbc6323aae78
+Ling	Default		db+3	Guard Breaker	0	!	GB	15	+13	+13	+13				61b5a324-a54d-4ee2-bb71-60bc7917af05
+Ling	Default		f,f+3	Raccoon Swing	13	m		14	-5	+6	+12				1334bfd5-e992-47a3-b2a0-23a42cea625d
+Ling	Crouching		FC 3,2	Fire Dance (Second)	8,6	L,h	JG	15	0	+8	+8				ed8b8409-4554-472b-933f-698c18bf5454
+Ling	Crouching		FC 3,2,1	Fire Dance (Third)	8,6,6	L,h,h	JG	15	0	+5	+5				ed8b8409-4554-472b-933f-698c18bf5454
+Ling	Crouching		FC 3,2,1,4	Fire Dance (Fourth)	8,6,6,12	L,h,h,m	JG	15	-18	KD	KD				ed8b8409-4554-472b-933f-698c18bf5454
+Ling	Default		3+4	Spinner Dodge	-	-						d+3+4			db3a5461-dedc-443c-8744-35db6dcb45e0
+Ling	Default		f+3+4	Dive Roll	-	-							Depending on your opponents position before the move Ling can end up in RDS.		4a908fdd-668c-446d-b87b-326d4714e23f
+Ling	Default		f,f+3+4	Front Layout	25	M		41	-3	+13	+13		Depending on your opponents position before the move Ling can end up in RDS.		64dfa1c4-2f49-4862-96cb-404d98bfa445
+Ling	Default		f,f+4	Step Kick	25	m	MSc	24	+1	KD	+13				02aad3de-7fa6-4ec9-a0a5-1aeca644f888
+Ling	Default		db+4	Nut Cracker	10	L	KS SLDc	18	-12	+7	KD				9cbff602-5433-448d-bab9-07a2e0f10ece
+Ling	Default		df+4	Toe Kick	11	m		12	-4	+7	+7				4ab7f2b9-10bb-4367-a792-b3cc5aaf01ba
+Ling	Crouching		WS+4	Sky Scraper Kick	14	m		11	-11	KD	KD				19fedd64-c421-4a37-b48e-a8be3ab65676
+Ling	Default		uf+4	Cyanide	25	m	JGc	25	-5	+6	KD				e0837b81-25a7-445c-ab15-cb03b452efb0
+Ling	Crouching		FC df+4	Flower Garden (First)	6	L	RC	16	-7	+4	+4				2ff12d2e-c149-4d6b-8463-b15195d8d088
+Ling	Crouching		FC df+4,4	Flower Garden (Second)	6,16	L,L	RC	16	-6	+6	+6				2ff12d2e-c149-4d6b-8463-b15195d8d088
+Ling	Default		SS+4 [~B]					14	-10	0	0	b+4 [~B]		TRUE	d2c67106-91db-41d9-8a92-a7712837f961
+Ling	Default		b+1+2	Hypnotist Walk	-	-									ab23e069-ae7f-4f16-868f-0a9230a01bdb
+Ling	Default		b+1+2,2	Hypnotist Walk > Spin Sticker	-,25	-,m		42	(+1_+5_+24)	KD	KD		Damage increases to 30 then 35 as you Hypnotist Walk longer. Clean Hit damage will be 37,45 or 52.		f72ae684-2655-462f-af45-9ddb725a2f56
+Ling	Default		b+1+2,5	Hypnotist Walk	-	-								TRUE	b20d363f-384c-4a65-bd56-3b84025e1784
+Ling	Crouching		FC db+3+4	Crouching Rain Dance Starter	-	-									697e3a85-73b6-41e7-a103-d5bc5e6387a2
+Ling	Default		d+1+2	Phoenix Stance Starter	-	-									a963625c-2bbf-4d8c-92b8-8196ac8a6282
+Ling	Default		b+3+4	Rain Dance Starter	-	-									34e2377f-f53e-47cd-90ff-4ddf39b9abca
+Ling	Default		u,ub	Evasive Backflip	-	-									885fa41a-1065-4873-8999-d9df682a63c8
+Ling	Default		1+4	High Parry	-	-									5d00bea0-1a4a-4ab3-a7a0-994b83ed1ebc
+Ling	Default		d+1+4	Low Parry	-	-						db+1+4			e3746e1d-5c61-43b9-85d4-8631e1745bb0
+Ling	Default		1+3+4	False Salute Taunt	0	!									554ab2fa-7b34-4fb5-b44e-1ea631fdcdf5
+Ling	Default		2+3+4	Greetings Taunt	-	-		25	+17	+17	+17				6895e18d-d678-4aa0-9edc-d0917e4ed341
+Ling	Rain Dance		d+1+2												82f6edc7-896c-48aa-a6da-be8613a31a55
+Ling	Rain Dance		2												0b495256-ea38-4129-b8bb-e5cd17d8236b
+Ling	Rain Dance		2,1					12	0	+5	+5				bf090116-af5f-4601-a4ce-5751a3b06057
+Ling	Rain Dance		2,1,4					12	-15	KD	KD				bf090116-af5f-4601-a4ce-5751a3b06057
+Ling	Rain Dance		f,f+3					16	-5	KD	KD				2a63616e-1c04-498b-af43-adf52b2b6bfc
+Ling	Rain Dance		d+3					17	-12	+7	KD				e50ca6d3-9ee0-4770-b0f7-1452fa88187d
+Ling	Rain Dance		D+3					17	-13	+6	KD				1c47f6af-4da4-45f5-aaa9-24be052a72d2
+Ling	Rain Dance		f,f+3+4					42	-2	+4	+4				8fd6d2bb-0c0c-4744-bf98-5d3616cf2b93
+Ling	Rain Dance		3+4									d+3+4			51e8c128-e890-47b1-b8db-dfd4dcd2feec
+Ling	Rain Dance		u+3+4												1acaa6ca-175c-4803-a4a5-417165e7e1ad
+Ling	Rain Dance		f+3+4												65a30179-cd6f-499a-84fc-5bfedb78035b
+Ling	Rain Dance		f+3+4~3+4					23	-11	KD	KD				98a9b4b3-6c9d-487e-b744-ed3f90a13d80
+Ling	Rain Dance		d+4												b3b1c3ab-b92e-4b08-9802-45a0a4b2954b
+Ling	Rain Dance		4					14	-16	KD	KD				7e76ac95-3e16-4dc5-a622-30a4460d721f
+Ling	Rain Dance		1+3+4												86fdde1e-35e2-47e4-af0d-6b8e64d16d22
+Ling	Rain Dance		2+3+4												e1f3790a-f334-4345-b6f7-1668e559a78d
+Ling	Art Of Phoenix		d												218858bc-696c-47a7-8b75-db6ef79d63ad
+Ling	Art Of Phoenix		1					14	-5	+6	+6				6ae83bfa-dda5-43d3-ac92-4a6c22e1f7b1
+Ling	Art Of Phoenix		2					12	-14	-3	-3				82d74f5a-323a-469e-8d74-d86b0cfb822b
+Ling	Art Of Phoenix		~1+2					21	-13	KD	KD				df22b9a6-959b-4710-9ad6-3bbc932f2cf8
+Ling	Art Of Phoenix		d+1+2					26	-4	KD	KD				e13f6e08-7770-41ad-b168-57f475ce9eda
+Ling	Art Of Phoenix		1+2					23	-11	KD	KD				1c624b85-fd8d-4647-83f2-dd97babc711a
+Ling	Art Of Phoenix		f+1+2												22f5fecb-c00a-469e-b5fa-1a44f9786e9d
+Ling	Art Of Phoenix		3					21	-14	-3	-3				30dd4c06-5db1-49cb-9e52-091cb4094619
+Ling	Art Of Phoenix		ub+3									u+3; uf+3			187743b8-30bd-4b7f-9744-52fcb6ddaeed
+Ling	Art Of Phoenix		ub+3,3					14	-11	0	0				4dec6740-8d83-46b5-ace0-d12508f9d9bd
+Ling	Art Of Phoenix		ub+3,4					14	-15	0	0				e064e59f-5954-4b0d-ac7a-d3cb982a06bc
+Ling	Art Of Phoenix		ub,3					41	-18	KD	KD	u,3; uf,3			7985cad7-37e3-4514-b979-55fc62f22326
+Ling	Art Of Phoenix		UB+3					26	-21	+7	+7	U+3; UF+3			dc7d21f3-3899-419e-a4f7-877f0be368a4
+Ling	Art Of Phoenix		f+3+4												3736f584-34b0-43d7-bbe3-114b177a3b60
+Ling	Art Of Phoenix		4 [~B]					20	-13	KD	KD				4f803688-4ffc-43a9-b37f-3c178d5a21b3
+Ling	Art Of Phoenix		4~3 [u_d]					22		KD	KD				25bb97c7-8444-411c-9790-28532850af30
+Ling	Art Of Phoenix		f+4												b74f74fb-d681-474e-93be-0cb8cec6f1a5
+Ling	Art Of Phoenix		f+4,4					18	-5	+6	+6				ec98ba33-91e3-47c3-8d1a-9d04094a8a1f
+Ling	Art Of Phoenix		ub,4					40	-8	+6	+6	u,4; uf,4			d9b87f82-6c5f-4580-a989-3ccbf463e090
+Ling	Art Of Phoenix		UB+4					23	-8	KD	KD	U+4; UF+4			f657ff67-7b6b-4bb7-8865-d562d7dacd1a
+Ling	Art Of Phoenix		u+4					16	-10	-1	-1				d6c8ac11-98fd-495d-86f2-653e8a577358
+Ling	Art Of Phoenix		u+4,4					16	-11	-3	-3				d6c8ac11-98fd-495d-86f2-653e8a577358
+Ling	Art Of Phoenix		U+4					16	-20	-11	-11				9ae0f7b8-026d-4b28-9ee1-8c63880a1187
+Ling	Default		b+1+2<1+2	Phoenix Strike	40	[,!,]		81		KD	KD		Damage increases to 50 then 80 as you Hypnotist Walk longer.		3ef82806-ad82-4a7a-b9e2-cb869f5321e8
+Ling	Default		b+1+2<1+2,b,b	Phoenix Strike > Cancel	40,-	[,!,],-		81							9194a186-21fb-42ba-9af8-6c21e9f6240b
+Ling	Default	throw	1+3	Jade	10,20	Front	1	12							1cac442c-8ba1-4890-ac76-1c3264883ba2
+Ling	Default	throw	2+4	Ruby	30	Front	2	12							09783a79-5ff0-42c9-8365-ee015f6653e2
+Ling	Default	throw	qcb+2	Dislocator	35	Front	2	11							41c27761-f0d9-4b4e-a6e2-247ad7ecb2c7
+Ling	Default	throw	f+2~1	Human Hurdle	4	Front	1+2	12					RDS; Opponent can tap f,f to cancel the stagger after the throw and fall to the ground.		c2724d5e-8668-40d7-8954-318c18889e5f
+Ling	Default	throw	RDS f,f+3+4	Neck Squeeze Slap	17,30	A,n,y	None	42					Requires about a third screen distance.		8b0f1a15-f605-49c7-b627-c54eaa2fcabc
+Ling	Default	throw	RDS f,f+(1+3_2+4)	Hop 'n Throw	Varies	A,n,y	1_2	31					Which throw is done depends on the position. Use the proper escape command depending on the throw.		535e5eea-d199-46d7-9c67-87f0059cb02c
+Ling	Default	throw	AOP (1+3_2+4) [~D]	Cradle Throw [Cancel]	Varies	Front	1_2						Which throw is done depends on the position. Use the proper escape command depending on the throw.		e008f19d-31b9-4291-9690-9fdfe77e4ca2
+Ling	Default	throw	(1+3_2+4)	Arm Flip	45	Left	1								0587ba7a-17c6-410a-acbf-cb79844ab199
+Ling	Default	throw	(1+3_2+4)	Dump the Bucket	38	Right	2								34d4dc13-24a5-41d3-916f-005fe83ab8d5
+Ling	Default	throw	(1+3_2+4)	Crank Up	50	Back	None								36017989-69bd-4cf3-bade-4a79fe998a5c
+Ling	Default	10string	u+4,1,2,1+2,1,3,4,4,4,1		20,4,7,12,10,15,6,10,14,20	m"hh"mmM"L"Lmm							10 hits		81936996-7f37-43b1-abce-a4ef243fdc14
+Ling	Default	10string	u+4,1,2,4,4,2,1+2,1,4,2		20,4,7,6,10,12,12,10,16,21	m"hh"LL"mm"llmm							10 hits		93d45589-4b3b-4dc9-a670-6b12e18e251f

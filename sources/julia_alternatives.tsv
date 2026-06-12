@@ -1,0 +1,16 @@
+source	uuid	alt_commands
+fd	4693e1b2-136e-40f5-b084-9212f6b4bbbf	d,df+1
+fd	58f0c77e-896b-48d1-bee1-1d4c9f9396e5	2+3,1
+fd	fa48ca00-a54f-4441-bd44-679aea30159c	FC,df+2
+fd	046410d5-bbc3-4bd3-9a12-93a46af44b65	2~b
+fd	0037b2a2-501a-4ad5-aa2c-afb3f5d46909	3~2
+fd	b40b6460-e7fd-4bef-bd6e-ca79521c396c	FC+2+4; d+1+3; d+2+4
+ml	2f9f0bd0-be60-4e4d-8294-d78069d80df7	2+4
+ml	ce63da7a-f0f4-4fda-89e3-6a2618e29ba0	2+4
+ml	5f4926be-d1ee-480b-93f4-c75c9b579f1f	2+4
+ml	22ba698f-c13f-480f-8de4-584011ad91f6	d,df+1
+ml	f705024e-cec6-4a4d-92c7-163e66a8a7a1	2+3,1
+ml	0528547e-8411-4225-acbf-7d33a807c212	FC,df+2
+ml	562e7f96-58c4-433e-b8ab-e4daf989f8dd	2~b
+ml	b0a7497a-fe40-43b6-823c-6a407d417a98	3~2
+ml	1827f19a-385d-4ec5-9f17-afa919fcef0d	FC+2+4; d+1+3; d+2+4

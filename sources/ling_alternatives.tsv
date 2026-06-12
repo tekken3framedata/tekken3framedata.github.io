@@ -1,0 +1,31 @@
+source	uuid	alt_commands
+fd	0ad509f6-e21d-4e10-a54d-f6734a32913c	RDSf,f+2+4
+fd	47089267-64c4-4b12-9274-c92ae0ac73dc	b+2
+fd	297f7f23-a5d4-41bf-b5af-0da5ffc3689f	B+2
+fd	db3a5461-dedc-443c-8744-35db6dcb45e0	d+3+4
+fd	d2c67106-91db-41d9-8a92-a7712837f961	b+4[~B]
+fd	e3746e1d-5c61-43b9-85d4-8631e1745bb0	db+1+4
+fd	51e8c128-e890-47b1-b8db-dfd4dcd2feec	d+3+4
+fd	187743b8-30bd-4b7f-9744-52fcb6ddaeed	u+3; uf+3
+fd	4dec6740-8d83-46b5-ace0-d12508f9d9bd	u+3,3; uf+3,3
+fd	e064e59f-5954-4b0d-ac7a-d3cb982a06bc	u+3,4; uf+3,4
+fd	7985cad7-37e3-4514-b979-55fc62f22326	u,3; uf,3
+fd	dc7d21f3-3899-419e-a4f7-877f0be368a4	U+3; UF+3
+fd	d9b87f82-6c5f-4580-a989-3ccbf463e090	u,4; uf,4
+fd	f657ff67-7b6b-4bb7-8865-d562d7dacd1a	U+4; UF+4
+ml	535e5eea-d199-46d7-9c67-87f0059cb02c	RDSf,f+2+4
+ml	e008f19d-31b9-4291-9690-9fdfe77e4ca2	AOP2+4[~D]
+ml	0587ba7a-17c6-410a-acbf-cb79844ab199	2+4
+ml	34d4dc13-24a5-41d3-916f-005fe83ab8d5	2+4
+ml	36017989-69bd-4cf3-bade-4a79fe998a5c	2+4
+ml	63d4ab60-ef4b-4552-8208-b757c0c45779	b+2
+ml	61840ce2-e8df-4374-9e96-aba068aa3679	d+3+4
+ml	5b42f2a2-cc49-4183-9503-7ddd221a2588	db+1+4
+ml	dd7e254b-f698-4fdb-afc9-3206a915bd0d	d+3+4
+ml	3051db09-19f2-480c-aa6e-0367f6ecafb2	u+3; uf+3
+ml	eeea5ef8-0028-4c2f-9464-76a33b75ecc1	u+3,3; uf+3,3
+ml	1a327f3d-76b3-448f-a8f1-6f2305261b42	u+3,4; uf+3,4
+ml	8f35583d-9f9b-4506-8e51-494ae48ccabb	u,3; uf,3
+ml	1225e32c-3aa4-4c12-becd-47477937d972	U+3; UF+3
+ml	844be1be-9f8f-44fc-a50f-e8a89b5f91ef	u,4; uf,4
+ml	a3369219-03ed-4a7b-921b-799381568236	U+4; UF+4

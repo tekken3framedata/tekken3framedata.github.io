@@ -172,6 +172,33 @@ Osiot erotetaan tyhjällä rivillä ja otsikkorivillä (bold). Sarakeheaderit to
 5. **GRAPPLING ARTS** — ML primary, FD:stä Speed. Escape-tieto Properties-sarakkeessa.
 6. **STRING HIT ARTS** — ML only (Damage, Hit Range, hits-lukumäärä Notes-sarakkeessa)
 
+## Datan käsittelystepsit (scrape_framedata.py)
+
+### Lähde-tason normalisoinnit (yksinkertaiset muunnokset)
+
+1. `strip_tag_buffer()` — poistaa `[~5]` tag buffer -merkinnät FD-komennoista
+2. `normalize_fc_prefix()` — `FC,` / `FC+` → `FC ` (välilyönti)
+3. HTML-entiteettien purkaminen `parse_table()`:ssa — `&nbsp;`, `&lt;`, `&gt;` jne.
+4. Kauttaviivan poisto `write_unified_row_xlsx()`:ssä — `d/f` → `df`
+
+### Datan yhdistely ja rakennelogiikka (vaatii kontekstia)
+
+5. `apply_patches()` — manuaaliset korjaukset (replace, set, add_after, delete)
+6. `expand_continuations()` — `= X` jatko-komennot → täydet muodot, yhdistää parent-tietoja
+7. `split_multi_hit_moves()` — pilkkoo moni-osumaiset liikkeet erillisiksi riveiksi
+8. `split_alternatives()` — `(A_B)` notaatio → primary + Alt Commands
+9. `expand_hit_range()` — `mhL` → `m,h,L`
+10. `filter_tag_moves()` — poistaa TTT-only liikkeet
+11. `merge_duplicate_commands()` — yhdistää duplikaatit (d+1 / FC 1)
+12. `expand_properties()` — korvaa #N viitteet alaviiteteksteillä
+13. Stance-asetus WS/FC-komennoille
+
+### Siirtäminen fetch_sources-vaiheeseen
+
+Kauttaviivan poisto (`d/f` → `df`) olisi periaatteessa puhdas siirto, mutta `MATCH_ALIASES`, `TAG_ONLY_MOVES`, ja `sources/*_patches.tsv` viittaavat komentoihin kauttaviivalla (esim. `d/f+1,2`). Jos poiston siirtää fetch-vaiheeseen, kaikki nuo pitää päivittää myös.
+
+`fetch_sources.py` on one-shot lataaja jota ei ajeta uudelleen. Stepit ovat selkeästi nimetty ja järjestyksessä scrape-scriptissä.
+
 ## Huomioita
 
 - TTT-spesifiset liikkeet suodatetaan pois `TAG_ONLY_MOVES`-dictin perusteella

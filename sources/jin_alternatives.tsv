@@ -1,0 +1,18 @@
+source	uuid	alt_commands
+fd	4379dc2a-51ab-481e-9663-e8b101722e16	f+1+2,2; WR+1+2,2
+fd	7dd731c1-155c-4c42-b1de-cc4d3dde1844	f,f,f+3
+fd	9b3830d0-1300-4f47-b078-979f55d7f6b6	uf+4~3
+fd	e0fe5688-183b-4786-b233-3eebf4c04f7a	b+2+4
+fd	74692786-9c07-405c-b0db-d0a366fd60aa	u+2+4; uf+2+4
+ml	8887f842-2f27-4a51-ab1d-7114e68b0633	db+1+2
+ml	6460e2a9-02db-4015-b1d0-962fc19b6eaa	=1,2,1,1,2
+ml	e3f9155e-9fed-4733-abbe-ce5df77c0d72	=2,1,2,2,1
+ml	1683c720-df9e-4dbe-b02a-aaeab72ec13a	2+4
+ml	ac66b5d9-a2d8-436e-8681-e0686a242beb	2+4
+ml	b9ee3180-b42d-43ac-ad2b-23eeb0894d56	2+4
+ml	7f4f2f2c-8618-49de-8658-0eb6bb704f03	f+1+2,2
+ml	a3ff66b0-e614-4ee4-940e-1bda0e3ae8b3	f,f,f+3
+ml	d4ac9b5e-a25f-49ee-9ada-f242495bd6d0	WS+4,4
+ml	650abe57-a550-4516-8313-a66586433781	uf+4~3
+ml	56fdc8b9-2045-40b5-a1f8-02795820efd3	b+2+4
+ml	50bd8e32-96a6-4364-ae9a-a0714d3966f1	u+2+4; uf+2+4
