@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 """
-Step 5: Normalize command notation.
+Step 5: Normalize command notation and add Damage Sum column.
 
 Reads sources/<character>_step4.xlsx and applies notation transformations:
-  - FC prefix: "FC+" and "FC " → "FC " (space, no plus)
+  - FC prefix: "FC " → "FC+" (plus, no space)
+  - WR prefix: "WR " → "WR+" (plus, no space)
+  - WS prefix: "WS " → "WS+" (plus, no space)
+  - SS prefix: "SS " → "SS+" (plus, no space)
   - Slash removal: d/f → df, u/b → ub, etc.
-  - WR prefix: "WR+" → "WR " (space, no plus)
 
 Applies to both Command and Alt Commands columns.
+
+Adds a Damage Sum column (after Damage):
+  - Comma-separated numeric values are summed (e.g. "7,7,7" → "21")
+  - Non-numeric values (e.g. "Varies", "-") are copied as-is
 
 Output: sources/<character>_step5.xlsx
 
@@ -25,13 +31,35 @@ from openpyxl.styles import Font
 
 def normalize_command(cmd):
     """Apply all notation transformations to a command string."""
-    cmd = re.sub(r'\bFC\+', 'FC ', cmd)
-    cmd = re.sub(r'\bFC ', 'FC ', cmd)
-    cmd = re.sub(r'\bWR\+', 'WR ', cmd)
-    cmd = re.sub(r'\bWS\+', 'WS ', cmd)
-    cmd = re.sub(r'\bSS\+', 'SS ', cmd)
+    cmd = re.sub(r'\bFC[, ]', 'FC+', cmd)
+    cmd = re.sub(r'\bWR[, ]', 'WR+', cmd)
+    cmd = re.sub(r'\bWS[, ]', 'WS+', cmd)
+    cmd = re.sub(r'\bSS[, ]', 'SS+', cmd)
+    cmd = re.sub(r'\b([FBDU]),([1-4])', lambda m: m.group(1).lower() + '+' + m.group(2), cmd)
     cmd = cmd.replace('/', '')
     return cmd
+
+
+def compute_damage_sum(value):
+    """Sum comma-separated damage values. Non-numeric values pass through as-is."""
+    if not value:
+        return ''
+    parts = str(value).split(',')
+    total = 0
+    for part in parts:
+        part = part.strip()
+        try:
+            total += int(part)
+        except ValueError:
+            return str(value)
+    return str(total)
+
+
+def strip_x_values(value):
+    if not value:
+        return ''
+    parts = [p for p in str(value).split() if p != 'x']
+    return ' '.join(parts)
 
 
 def parse_sections(ws):
@@ -120,6 +148,9 @@ def main():
         sections = parse_sections(ws_in)
 
         for _, header_cells, rows in sections:
+            if 'Damage' in header_cells and 'Damage Sum' not in header_cells:
+                damage_idx = header_cells.index('Damage')
+                header_cells.insert(damage_idx + 1, 'Damage Sum')
             for row in rows:
                 cmd = row.get('Command', '')
                 if cmd:
@@ -129,6 +160,12 @@ def main():
                     row['Alt Commands'] = '; '.join(
                         normalize_command(a) for a in alt.split('; ')
                     )
+                damage = row.get('Damage', '')
+                row['Damage Sum'] = compute_damage_sum(damage)
+                # for col_name in ('Block Adv', 'Hit Adv', 'Counter Hit Adv'):
+                #     val = row.get(col_name, '')
+                #     if val:
+                #         row[col_name] = strip_x_values(val)
 
         wb_out = Workbook()
         ws = wb_out.active

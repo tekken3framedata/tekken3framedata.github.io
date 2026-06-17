@@ -22,11 +22,13 @@ from openpyxl.styles import Font
 
 # Canonical column order per sheet type.
 # All sections in a sheet will have these columns (even if empty for that section).
-FD_COLUMNS = ['Command', 'Hit', 'Block Adv', 'Hit Adv', 'Counter Hit Adv', 'Notes', 'UUID', 'Parent UUID']
-ML_COLUMNS = ['Command', 'Move Name', 'Stance', 'Damage', 'Hit Range', 'Throw Type', 'Throw Escape', 'Properties', 'Notes', 'UUID', 'Parent UUID']
+FD_COLUMNS = ['Command', 'Speed', 'Block Adv', 'Hit Adv', 'Counter Hit Adv', 'Notes', 'UUID', 'Parent UUID']
+ML_COLUMNS = ['Command', 'Move Name', 'To Stance', 'Damage', 'Hit Range', 'Throw Type', 'Throw Escape', 'Properties', 'Notes', 'UUID', 'Parent UUID']
 
 HEADER_ALIASES = {
+    'Hit': 'Speed',
     'Throw Name': 'Move Name',
+    'Stance': 'To Stance',
     'Type': 'Throw Type',
     'Escape': 'Throw Escape',
 }

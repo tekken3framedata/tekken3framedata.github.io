@@ -6,3 +6,18 @@
 - [ ] d+x / FC+x duplikaattimerkinnät: käydä läpi kaikki hahmot ja varmistaa että mergeys toimii oikein
 - [ ] Ling: Flower Garden (First) on oikealta nimeltään Flower Bed
 - [ ] Merkitä "natural combo" liikkeet dataan; mahdolliset rankaisut näytetään tämän tiedon pohjalta
+- [ ] Jin: 1<2,4~1+4,2 (Double Punch – Knee – White Heron) — continuation-ketju jossa block adv kuvaa vain tämän rivin iskuja mutta command sisältää parent-datan. Step 9 split ei pysty käsittelemään tätä automaattisesti.
+- [ ] Julia: 1~2~1 (G-Clef - Gut Punch – Skyscraper Cannon) — tilde-ketju jossa pressejä on enemmän kuin block-arvoja. Pitää miettiä miten käsitellään.
+- [ ] Ling: Shady Lotus (FC+DF+2) — frame data väärä (2 arvoa vaikka 1 liike, ei multi-hit). Korjaa step 9:ssä.
+- [ ] Ling: Flower Power (u+4,4) — Hit Range "mmmm" väärä (4 iskua 2 liikkeelle ilman multi-hit -selitystä). Korjaa step 9:ssä.
+- [ ] Ling: Trick Flower (U+4) — Hit Range "mm" väärä (2 iskua 1 liikkeelle ilman multi-hit -selitystä). Korjaa step 9:ssä.
+- [ ] Jin: b+1+2 (Lightning Force) — tarkista onko 0 vai 1 isku. Hit Range datassa "-".
+- [ ] Julia: 2+3+4 (Wave Taunt) — tarkista onko 0 vai 1 isku.
+- [x] Ling: 2+3+4 (Greetings Taunt) — 1 hit, 0 damage. Hit Range korjattu "-" → "m".
+- [x] Ling: 1+3+4 (False Salute Taunt) — 0 hit.
+- [ ] Ling: 2+3+4 (Greetings Taunt) — Hit Range korjattu "-" → "m" step 9:ssä (molemmat versiot), tarkista pelissä.
+- [ ] Ling: AOP f+1+2 (Rain Dance Stance siirtymä) — tarkista onko 0 vai 1 isku.
+- [ ] Ling: ,3+4 -tyyppiset "recovery modifier" -pressit — pitää merkitä eksplisiittisesti dataan.
+- [ ] Jin: b+1~df (Parting Wave – Crouch Dash) — tarkista hits per move. Onko ~df 0 iskua vai osa b+1:n iskua?
+- [ ] Ling: b+1+2,5 (Hypnotist Walk – Tag) — tarkista hits per move.
+- [ ] Ling: b+1+2 <1+2,b,b (Phoenix Strike – Cancel) — tarkista hits per move.

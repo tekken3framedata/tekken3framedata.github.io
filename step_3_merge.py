@@ -20,7 +20,7 @@ from openpyxl.styles import Font
 
 
 MERGED_COLUMNS = [
-    'Command', 'Move Name', 'Stance', 'Hit', 'Block Adv', 'Hit Adv', 'Counter Hit Adv',
+    'Command', 'Move Name', 'To Stance', 'Speed', 'Block Adv', 'Hit Adv', 'Counter Hit Adv',
     'Damage', 'Hit Range', 'Throw Type', 'Throw Escape', 'Properties', 'Notes',
     'UUID', 'ML UUID', 'Parent UUID', 'Unmatched',
 ]
@@ -107,7 +107,7 @@ def merge_section(fd_rows, ml_rows):
         if ml_match:
             matched_count += 1
             row['Move Name'] = ml_match.get('Move Name', '')
-            row['Stance'] = ml_match.get('Stance', '')
+            row['To Stance'] = ml_match.get('To Stance', '')
             row['Damage'] = ml_match.get('Damage', '')
             row['Hit Range'] = ml_match.get('Hit Range', '')
             row['Throw Type'] = ml_match.get('Throw Type', '')
@@ -132,7 +132,7 @@ def merge_section(fd_rows, ml_rows):
             row = {
                 'Command': cmd,
                 'Move Name': ml_row.get('Move Name', ''),
-                'Stance': ml_row.get('Stance', ''),
+                'To Stance': ml_row.get('To Stance', ''),
                 'Damage': ml_row.get('Damage', ''),
                 'Hit Range': ml_row.get('Hit Range', ''),
                 'Throw Type': ml_row.get('Throw Type', ''),
@@ -214,7 +214,7 @@ def main():
                 row = {
                     'Command': ml_row.get('Command', ''),
                     'Move Name': ml_row.get('Move Name', ''),
-                    'Stance': ml_row.get('Stance', ''),
+                    'To Stance': ml_row.get('To Stance', ''),
                     'Damage': ml_row.get('Damage', ''),
                     'Hit Range': ml_row.get('Hit Range', ''),
                     'Throw Type': ml_row.get('Throw Type', ''),

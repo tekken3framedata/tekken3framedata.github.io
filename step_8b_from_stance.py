@@ -1,88 +1,36 @@
 #!/usr/bin/env python3
 """
-Step 4: Split (A_B) alternative notation into primary command and alternatives.
+Step 8b: Add From Stance column based on section name.
 
-Reads sources/<character>_step3.xlsx:
-  - Resolves (A_B) groups to a primary command
-  - Generates Alt Commands column with remaining combinations
-  - Follow-up moves (Parent UUID set) get resolved but no Alt Commands
+Reads sources/<character>_step8.xlsx. Adds a From Stance column derived
+from the section heading:
+  - Rain Dance Art → RDS
+  - Art Of Phoenix → AOP
+  - Devil Jin Possession Arts → DJP
 
-Output: sources/<character>_step4.xlsx
+All other sections get an empty From Stance value.
+
+Output: sources/<character>_step8b.xlsx
 
 Usage:
-    python3 step_4_alternatives.py
+    python3 step_8b_from_stance.py
 """
 
 import glob
 import os
-import re
-from itertools import product
 
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font
 
 
-PREFERRED_COMMAND = {
-    'julia': {
-        'WR+1': 'd,d/f+1',
-    },
+SECTION_TO_STANCE = {
+    'Rain Dance Art': 'RDS',
+    'Art Of Phoenix': 'AOP',
+    'Devil Jin Possession Arts': 'DJP',
 }
-
-OUTPUT_COLUMNS = [
-    'Command', 'Alt Commands', 'Move Name', 'To Stance', 'Speed', 'Block Adv', 'Hit Adv',
-    'Counter Hit Adv', 'Damage', 'Hit Range', 'Throw Type', 'Throw Escape', 'Properties', 'Notes',
-    'UUID', 'ML UUID', 'Parent UUID', 'Unmatched',
-]
-
-ALT_PATTERN = re.compile(r'\(([^)]*_[^)]*)\)')
-
-
-def split_alternatives(row_dicts, character):
-    """Split (A_B) alternative notation into primary command and alternatives."""
-    char_prefs = PREFERRED_COMMAND.get(character.lower(), {})
-
-    for row in row_dicts:
-        cmd = row.get('Command', '')
-        is_followup = bool(row.get('Parent UUID'))
-
-        alt_groups = ALT_PATTERN.findall(cmd)
-        if not alt_groups:
-            row['Alt Commands'] = ''
-            continue
-
-        parts = ALT_PATTERN.split(cmd)
-        groups = [g.split('_') for g in alt_groups]
-
-        chosen = [g[0] for g in groups]
-
-        primary = parts[0]
-        for i, opt in enumerate(chosen):
-            primary += opt + parts[2 * i + 2]
-        row['Command'] = primary
-
-        all_commands = []
-        for combo in product(*groups):
-            built = parts[0]
-            for i, opt in enumerate(combo):
-                built += opt + parts[2 * i + 2]
-            all_commands.append(built)
-
-        if char_prefs and primary in char_prefs:
-            preferred = char_prefs[primary]
-            if preferred in all_commands:
-                primary = preferred
-                row['Command'] = primary
-
-        if is_followup or all(len(g) == 1 for g in groups):
-            row['Alt Commands'] = ''
-            continue
-
-        alts = [c for c in all_commands if c != primary]
-        row['Alt Commands'] = '; '.join(alts)
 
 
 def parse_sections(ws):
-    """Parse a merged worksheet into sections."""
     sections = []
     row = 1
     while row <= ws.max_row:
@@ -128,11 +76,48 @@ def parse_sections(ws):
     return sections
 
 
-def autofit_columns(ws):
-    """Auto-fit all column widths based on cell content."""
+def process_sections(sections):
+    count = 0
+    for i, (section_name, rows) in enumerate(sections):
+        stance = SECTION_TO_STANCE.get(section_name, '')
+        filtered = [
+            row for row in rows
+            if not str(row.get('Command Full', '') or '').startswith('Moves starting from')
+        ]
+        sections[i] = (section_name, filtered)
+        for row in filtered:
+            row['From Stance'] = stance
+            if stance:
+                count += 1
+    return count
+
+
+OUTPUT_COLUMNS = [
+    'From Stance',
+    'Command', 'Command Full', 'Alt Commands', 'Move Name', 'Move Name Full', 'To Stance',
+    'Speed', 'Speed Full', 'Block Adv', 'Block Adv Full', 'Hit Adv', 'Hit Adv Full',
+    'Counter Hit Adv', 'Counter Hit Adv Full', 'Damage', 'Damage Sum', 'Damage Full',
+    'Hit Range', 'Hit Range Full', 'Throw Type', 'Throw Escape', 'Properties', 'Notes',
+    'Taggable', 'UUID', 'ML UUID', 'Parent UUID', 'Unmatched',
+]
+
+HIDDEN_COLUMNS = {'Command', 'Move Name', 'Damage Sum', 'Hit Range',
+                  'Block Adv', 'Hit Adv', 'Counter Hit Adv', 'Speed'}
+
+
+def autofit_columns(ws, header_row_numbers):
     for col in ws.columns:
-        max_len = 0
         col_letter = col[0].column_letter
+        header_value = None
+        for cell in col:
+            if cell.row in header_row_numbers and cell.value:
+                header_value = cell.value
+                break
+        if header_value in HIDDEN_COLUMNS:
+            ws.column_dimensions[col_letter].width = 0
+            ws.column_dimensions[col_letter].hidden = True
+            continue
+        max_len = 0
         for cell in col:
             if cell.value:
                 max_len = max(max_len, len(str(cell.value)))
@@ -140,10 +125,9 @@ def autofit_columns(ws):
 
 
 def find_characters():
-    """Find all characters that have step3 xlsx files."""
-    files = glob.glob('sources/*_step3.xlsx')
+    files = glob.glob('sources/*_step8.xlsx')
     return sorted(
-        os.path.basename(f).replace('_step3.xlsx', '')
+        os.path.basename(f).replace('_step8.xlsx', '')
         for f in files
         if not os.path.basename(f).startswith('~$')
     )
@@ -152,31 +136,28 @@ def find_characters():
 def main():
     characters = find_characters()
     if not characters:
-        print("No step3 files found in sources/")
+        print("No step8 files found in sources/")
         return
     print(f"Found characters: {characters}")
 
     for char in characters:
-        input_path = f"sources/{char}_step3.xlsx"
-        output_path = f"sources/{char}_step4.xlsx"
+        input_path = f"sources/{char}_step8.xlsx"
+        output_path = f"sources/{char}_step8b.xlsx"
 
         print(f"\n=== {char.capitalize()} ===")
         wb_in = load_workbook(input_path)
         ws_in = wb_in.active
 
         sections = parse_sections(ws_in)
+        count = process_sections(sections)
 
-        alt_count = 0
-        for _, rows in sections:
-            split_alternatives(rows, char)
-            alt_count += sum(1 for r in rows if r.get('Alt Commands'))
-
-        print(f"  {alt_count} rows with alternatives")
+        print(f"  {count} rows with From Stance")
 
         wb_out = Workbook()
         ws = wb_out.active
         ws.title = "Merged"
         row_num = 1
+        header_row_numbers = set()
 
         for section_name, rows in sections:
             cell = ws.cell(row=row_num, column=1, value=section_name)
@@ -186,6 +167,7 @@ def main():
             for col, h in enumerate(OUTPUT_COLUMNS, 1):
                 cell = ws.cell(row=row_num, column=col, value=h)
                 cell.font = Font(bold=True)
+            header_row_numbers.add(row_num)
             row_num += 1
 
             for row_dict in rows:
@@ -197,7 +179,7 @@ def main():
 
             row_num += 1
 
-        autofit_columns(ws)
+        autofit_columns(ws, header_row_numbers)
         wb_out.save(output_path)
         print(f"  Written to {output_path}")
 
