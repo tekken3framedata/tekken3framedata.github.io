@@ -56,7 +56,8 @@ def add_spaces(cmd):
             rest = cmd_clean[i+1:]
             next_sep = re.search(r'[,<~]', rest)
             next_part = rest[:next_sep.start()] if next_sep else rest
-            if token_has_button(next_part):
+            before = ''.join(result).split(' ')[-1] if result else ''
+            if token_has_button(next_part) and token_has_button(before):
                 result.append(' ')
             result.append(ch)
         elif ch == ',':

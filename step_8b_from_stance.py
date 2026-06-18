@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Step 8b: Add From Stance column based on section name.
+Step 8b: Add From Stance column based on section name and command prefix.
 
-Reads sources/<character>_step8.xlsx. Adds a From Stance column derived
-from the section heading:
-  - Rain Dance Art → RDS
-  - Art Of Phoenix → AOP
-  - Devil Jin Possession Arts → DJP
-
-All other sections get an empty From Stance value.
+Reads sources/<character>_step8.xlsx. Adds a From Stance column derived from:
+  1. Stance prefix in Command Full (e.g. "BT 1 ,2" → From Stance="BT", Command Full="1 ,2")
+     Recognized prefixes: AOP, BT, FCD, LFS, PLD, RDS, RFS
+  2. Section heading (for moves without a command prefix):
+     - Rain Dance Art → RDS
+     - Art Of Phoenix → AOP
+     - Devil Jin Possession Arts → DJP
 
 Output: sources/<character>_step8b.xlsx
 
@@ -22,6 +22,8 @@ import os
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font
 
+
+STANCE_PREFIXES = ('AOP', 'BT', 'FCD', 'LFS', 'PLD', 'RDS', 'RFS')
 
 SECTION_TO_STANCE = {
     'Rain Dance Art': 'RDS',
@@ -76,8 +78,17 @@ def parse_sections(ws):
     return sections
 
 
+def extract_stance_prefix(cmd):
+    """Extract stance prefix from command. Returns (stance, remaining_cmd)."""
+    for stance in STANCE_PREFIXES:
+        if cmd.startswith(stance + ' '):
+            return stance, cmd[len(stance) + 1:]
+    return '', cmd
+
+
 def process_sections(sections):
     count = 0
+    prefix_count = 0
     for i, (section_name, rows) in enumerate(sections):
         stance = SECTION_TO_STANCE.get(section_name, '')
         filtered = [
@@ -86,10 +97,21 @@ def process_sections(sections):
         ]
         sections[i] = (section_name, filtered)
         for row in filtered:
-            row['From Stance'] = stance
-            if stance:
-                count += 1
-    return count
+            cmd_full = str(row.get('Command Full', '') or '')
+            prefix, remaining = extract_stance_prefix(cmd_full)
+            if prefix:
+                row['From Stance'] = prefix
+                row['Command Full'] = remaining
+                cmd = str(row.get('Command', '') or '')
+                cmd_prefix, cmd_remaining = extract_stance_prefix(cmd)
+                if cmd_prefix:
+                    row['Command'] = cmd_remaining
+                prefix_count += 1
+            elif not row.get('From Stance'):
+                row['From Stance'] = stance
+                if stance:
+                    count += 1
+    return count, prefix_count
 
 
 OUTPUT_COLUMNS = [
@@ -149,9 +171,9 @@ def main():
         ws_in = wb_in.active
 
         sections = parse_sections(ws_in)
-        count = process_sections(sections)
+        count, prefix_count = process_sections(sections)
 
-        print(f"  {count} rows with From Stance")
+        print(f"  {count} rows from section, {prefix_count} rows from command prefix")
 
         wb_out = Workbook()
         ws = wb_out.active

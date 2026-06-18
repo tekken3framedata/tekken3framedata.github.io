@@ -21,3 +21,6 @@
 - [ ] Jin: b+1~df (Parting Wave – Crouch Dash) — tarkista hits per move. Onko ~df 0 iskua vai osa b+1:n iskua?
 - [ ] Ling: b+1+2,5 (Hypnotist Walk – Tag) — tarkista hits per move.
 - [ ] Ling: b+1+2 <1+2,b,b (Phoenix Strike – Cancel) — tarkista hits per move.
+- [ ] "Alternative recovery stance" -notaatiot (esim. [~B], [u_d]) pitää suunnitella ja käsitellä. Hakasulkeissa olevat pressit eivät ole varsinaisia iskuja.
+- [ ] Ling: b+1+2 (Hypnotist Walk) — pitäisikö olla stance-merkintänä?
+- [ ] "Cancellable" pitäisi merkitä eksplisiittisesti dataan.

@@ -41,8 +41,28 @@ HITS_PER_MOVE = {
     '16c7aa83-e339-43c8-a2f8-aa7ab167725f': {0: 2},
     # d+3+4 (Can Can)
     'd5bd8f24-b46e-46c4-b044-d58438dfe3be': {0: 2},
+    # WS+1 ,2 - (Twin Pistons -)
+    '92abbd98-841a-40a6-9f2c-f893c21e340e': {2: 0},
+    # WS+2 - (Uppercut -)
+    'b5c3b733-3b05-4b65-8aa7-137cfd48bec5': {1: 0},
+    # SS+2 - (Tooth Fairy -)
+    'c6e4830e-a3cb-460d-9b03-0c4fe13b1861': {1: 0},
+    # f,N,d,df+2 - (Wind Godfist -)
+    '770ef824-eb8e-49ff-828c-c73385a322d8': {1: 0},
+    # f~N,d~df+2 - (Electric Wind Godfist -)
+    'ae1401a6-1714-44f2-8821-a0baa135dd79': {1: 0},
+    # b,f+2 <1 <d+2 - (Laser Scraper -)
+    '99c069f9-a4c3-4982-9d97-b5409dcd7cdd': {3: 0},
+    # 4 ~3 (Demon Scissors)
+    '198d48e3-fb8e-4387-b90f-d12b4dbd87ad': {0: 0},
 
     # --- Julia ---
+    # 1 ~2 ~1 (G-Clef - Gut Punch – Skyscraper Cannon)
+    '6275a354-d231-4442-8af8-0fc378c274f5': {2: 0},
+    # f+1 ~2 (Palm Explosion)
+    'a4c9455c-b3f7-445f-bb03-bc9714978245': {0: 0},
+    # df+2 ,1 (Gut Punch – Skyscraper Cannon)
+    'c672c34b-05e9-4636-968c-72c907a897d8': {1: 0},
     # 3+4 (Counter Clockwise Spin)
     'ad154462-6148-4f1a-8a02-ea05b3eeb7b2': {0: 0},
     # FC+1+3 (Low Parry)
@@ -65,6 +85,10 @@ HITS_PER_MOVE = {
     '4fb4d6e5-1428-47b8-84f7-b084a82d6f57': {0: 0},
     # b+1+2,5 (Hypnotist Walk – Tag)
     'cde3cbb6-39e4-4bbd-8d1e-59d63f6766a9': {0: 0},
+    # SS+4 [~B] (Twin Phoenix [Basic Stance])
+    '575f73c7-dbfa-4d31-8a40-4db2663c3a4d': {0: 2},
+    # AOP 4 ~3 [u_d] (Fire Cracker - [Roll up or down])
+    'eba52a6a-4354-422e-bcd5-c23c11453761': {1: 0},
     # FC+db+3+4 (Crouching Rain Dance Starter)
     '9cd78cfe-f850-44ec-8cbc-c1744ce20f54': {0: 0},
     # d+1+2 (Phoenix Stance Starter)
@@ -96,6 +120,8 @@ HITS_PER_MOVE = {
     # 2+3+4 (Greetings Taunt) — 1 hit, 0 damage (default 1 is correct)
     # RDS 1+3+4 (False Salute Taunt)
     '07193dd0-f923-4b9e-bcdf-cfe43c6d0073': {0: 0},
+    # b+1+2 <1+2 (Phoenix Strike)
+    '25f9b418-8f7d-4dca-b2a8-04c676fbd4aa': {0: 0},
     # b+1+2 <1+2,b,b (Phoenix Strike – Cancel)
     '26909f52-7512-44a5-9bc0-0b5669dd6609': {1: 0},
     # d+1 (Flapping Wings)
@@ -129,6 +155,8 @@ def compute_hits_per_move(cmd_full, uuid=None):
     for i, press in enumerate(presses):
         if i in overrides:
             hits.append(str(overrides[i]))
+        elif press.startswith('[') and press.endswith(']'):
+            hits.append('0')
         else:
             hits.append('1')
 
