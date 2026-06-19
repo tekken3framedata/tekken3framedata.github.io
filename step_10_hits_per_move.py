@@ -56,6 +56,10 @@ HITS_PER_MOVE = {
     # 4 ~3 (Demon Scissors)
     '198d48e3-fb8e-4387-b90f-d12b4dbd87ad': {0: 0},
 
+    # --- Lee ---
+    # b+3 ~3 (Feint Mist Wolf)
+    'a1226d52-19ca-4e28-a360-74af905c7295': {0: 0},
+
     # --- Julia ---
     # 1 ~2 ~1 (G-Clef - Gut Punch – Skyscraper Cannon)
     '6275a354-d231-4442-8af8-0fc378c274f5': {2: 0},

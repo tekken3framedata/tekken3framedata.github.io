@@ -8,6 +8,7 @@ python3 step_4_alternatives.py
 python3 step_5_notation.py
 python3 step_5b_hit_markers.py
 python3 step_6_prepare_for_expansion.py
+python3 step_6b_bracket_notations.py
 python3 step_7_expand_continuations.py
 python3 step_8_extract_tags.py
 python3 step_8b_from_stance.py

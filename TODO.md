@@ -1,3 +1,4 @@
+- [ ] Anna: String Hit Arts 1,2-rivi (UUID d61c2d77) pitää korjata — d/f+1,2 ja BT-variantit poistettu step 1b:ssä, mutta jäljelle jääneen rivin data on silti väärää (alkaa 4,10 eikä vain 1,2:n damage)
 - [ ] String Hit Arts: mietittävä esitystapa (ei frame dataa, vain komento + hit count + damage + hit range), sitten näkyville
 - [ ] Grappling Arts: mietittävä esitystapa (heitot, escape-komennot), sitten näkyville
 - [ ] Jin: WS+4 ja d/f+4 pitää merkitä Special Arts (puuttuvat movelist-matchista)
@@ -24,3 +25,4 @@
 - [ ] "Alternative recovery stance" -notaatiot (esim. [~B], [u_d]) pitää suunnitella ja käsitellä. Hakasulkeissa olevat pressit eivät ole varsinaisia iskuja.
 - [ ] Ling: b+1+2 (Hypnotist Walk) — pitäisikö olla stance-merkintänä?
 - [ ] "Cancellable" pitäisi merkitä eksplisiittisesti dataan.
+- [ ] Lee: b+3 ~3 (Feint Mist Wolf) — framedata on luultavasti väärin

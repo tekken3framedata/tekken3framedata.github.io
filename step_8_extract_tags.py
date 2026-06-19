@@ -95,8 +95,6 @@ def process_sections(sections):
                 move_name_full = str(row.get('Move Name Full', ''))
                 row['Move Name'] = NAME_TAG_PATTERN.sub('', move_name).strip()
                 row['Move Name Full'] = NAME_TAG_PATTERN.sub('', move_name_full).strip()
-            else:
-                row['Taggable'] = ''
 
     return tag_count
 

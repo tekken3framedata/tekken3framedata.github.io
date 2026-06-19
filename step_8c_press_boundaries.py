@@ -49,12 +49,15 @@ def add_spaces(cmd):
     i = 0
     while i < len(cmd_clean):
         ch = cmd_clean[i]
-        if ch == '<':
+        if ch == ':':
+            result.append(' ')
+            result.append(ch)
+        elif ch == '<':
             result.append(' ')
             result.append(ch)
         elif ch == '~':
             rest = cmd_clean[i+1:]
-            next_sep = re.search(r'[,<~]', rest)
+            next_sep = re.search(r'[,<~:]', rest)
             next_part = rest[:next_sep.start()] if next_sep else rest
             before = ''.join(result).split(' ')[-1] if result else ''
             if token_has_button(next_part) and token_has_button(before):
@@ -63,7 +66,7 @@ def add_spaces(cmd):
         elif ch == ',':
             before = ''.join(result).split(' ')[-1] if result else ''
             rest = cmd_clean[i+1:]
-            next_sep = re.search(r'[,<~]', rest)
+            next_sep = re.search(r'[,<~:]', rest)
             next_part = rest[:next_sep.start()] if next_sep else rest
             prev_has_btn = token_has_button(before)
             prev_ends_dir = False

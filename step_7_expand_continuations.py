@@ -2,7 +2,7 @@
 """
 Step 7: Expand continuation moves into full command and name forms.
 
-Reads sources/<character>_step6.xlsx. Adds seven new columns:
+Reads sources/<character>_step6b.xlsx. Adds seven new columns:
   - Command Full: parent command + separator + own command for the full chain
   - Move Name Full: parent name – own name chain
   - Damage Full: parent Damage Sum + own Damage Sum chain (comma-separated)
@@ -200,7 +200,7 @@ OUTPUT_COLUMNS = [
     'Speed', 'Speed Full', 'Block Adv', 'Block Adv Full', 'Hit Adv', 'Hit Adv Full',
     'Counter Hit Adv', 'Counter Hit Adv Full', 'Damage', 'Damage Sum', 'Damage Full',
     'Hit Range', 'Hit Range Full', 'Throw Type', 'Throw Escape', 'Properties', 'Notes',
-    'UUID', 'ML UUID', 'Parent UUID', 'Unmatched',
+    'Taggable', 'UUID', 'ML UUID', 'Parent UUID', 'Unmatched',
 ]
 
 
@@ -217,9 +217,9 @@ def autofit_columns(ws):
 
 def find_characters():
     """Find all characters that have step6 xlsx files."""
-    files = glob.glob('sources/*_step6.xlsx')
+    files = glob.glob('sources/*_step6b.xlsx')
     return sorted(
-        os.path.basename(f).replace('_step6.xlsx', '')
+        os.path.basename(f).replace('_step6b.xlsx', '')
         for f in files
         if not os.path.basename(f).startswith('~$')
     )
@@ -233,7 +233,7 @@ def main():
     print(f"Found characters: {characters}")
 
     for char in characters:
-        input_path = f"sources/{char}_step6.xlsx"
+        input_path = f"sources/{char}_step6b.xlsx"
         output_path = f"sources/{char}_step7.xlsx"
 
         print(f"\n=== {char.capitalize()} ===")

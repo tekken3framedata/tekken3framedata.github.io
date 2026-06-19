@@ -28,6 +28,7 @@ STANCE_PREFIXES = ('AOP', 'BT', 'FCD', 'LFS', 'PLD', 'RDS', 'RFS')
 SECTION_TO_STANCE = {
     'Rain Dance Art': 'RDS',
     'Art Of Phoenix': 'AOP',
+    'Art of Phoenix Illusion': 'AOP',
     'Devil Jin Possession Arts': 'DJP',
 }
 

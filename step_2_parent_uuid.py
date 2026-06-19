@@ -164,6 +164,14 @@ def get_columns_for_sheet(sheet_title):
     return ML_COLUMNS
 
 
+def get_input_path(char):
+    """Return the latest step1 variant for a character (step1b if exists, else step1)."""
+    path_1b = f"sources/{char}_step1b.xlsx"
+    if os.path.exists(path_1b):
+        return path_1b
+    return f"sources/{char}_step1.xlsx"
+
+
 def find_characters():
     """Find all characters that have step1 xlsx files."""
     files = glob.glob('sources/*_step1.xlsx')
@@ -182,7 +190,7 @@ def main():
     print(f"Found characters: {characters}")
 
     for char in characters:
-        input_path = f"sources/{char}_step1.xlsx"
+        input_path = get_input_path(char)
         output_path = f"sources/{char}_step2.xlsx"
 
         print(f"\n=== {char.capitalize()} ===")
