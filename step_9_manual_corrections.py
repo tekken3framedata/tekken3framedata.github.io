@@ -68,6 +68,33 @@ CORRECTIONS = {
                 'uuid': '087533d3-7b32-4028-9903-882f53af94af',
                 'set': {'Hit Range Full': 'm', 'Hit Range': 'm'},
             },
+            # Shady Lotus to Rain Dance (FC DF+2) — source lumps two moves'
+            # frame values together; keep only the single-hit RDS version
+            {
+                'uuid': 'c86a461d-9853-409e-8dbf-c140f78957bc',
+                'set': {
+                    'Block Adv': '-4',
+                    'Block Adv Full': '-4',
+                    'Hit Adv': '+6',
+                    'Hit Adv Full': '+6',
+                    'Counter Hit Adv': '+6',
+                    'Counter Hit Adv Full': '+6',
+                    'Hit Range': 's',
+                    'Hit Range Full': 's',
+                    'Move Name': 'Shady Lotus to Rain Dance',
+                    'Move Name Full': 'Shady Lotus to Rain Dance',
+                },
+            },
+            # Shady Lotus to FC (FC df+2,1) — fix move name and hit range
+            {
+                'uuid': 'a2d0c94a-e4f1-4b84-867d-a8aacd632dde',
+                'set': {
+                    'Move Name': 'Shady Lotus to FC',
+                    'Move Name Full': 'Shady Lotus to FC',
+                    'Hit Range': 'ss',
+                    'Hit Range Full': 'ss',
+                },
+            },
         ],
         'insert_after': [],
         'delete': [],
