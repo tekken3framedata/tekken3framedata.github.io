@@ -97,10 +97,11 @@ def main():
 
         for _section_name, rows in sections:
             for row in rows:
-                cmd = str(row.get('Command', '') or '')
-                matches = BRACKET_PATTERN.findall(cmd)
-                for match in matches:
-                    notations[match].append((char, cmd))
+                for col_name, val in row.items():
+                    val_str = str(val or '')
+                    matches = BRACKET_PATTERN.findall(val_str)
+                    for match in matches:
+                        notations[match].append((char, col_name, val_str))
 
     print(f"Found {len(notations)} unique bracket notations across {len(characters)} characters\n")
     print("=" * 80)
@@ -108,18 +109,20 @@ def main():
     for notation in sorted(notations.keys()):
         examples = notations[notation]
         chars_with = sorted(set(ex[0] for ex in examples))
+        cols_with = sorted(set(ex[1] for ex in examples))
         print(f"\n{notation}  ({len(examples)} occurrences, {len(chars_with)} characters)")
+        print(f"  Columns: {', '.join(cols_with)}")
         print(f"  Characters: {', '.join(chars_with)}")
         print(f"  Examples:")
         seen = set()
-        for char, cmd in examples:
+        for char, col, val in examples:
             if len(seen) >= 5:
                 print(f"    ...")
                 break
-            key = (char, cmd)
+            key = (char, col, val)
             if key not in seen:
                 seen.add(key)
-                print(f"    {char}: {cmd}")
+                print(f"    {char} [{col}]: {val}")
 
 
 if __name__ == '__main__':

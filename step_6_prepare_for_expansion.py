@@ -19,6 +19,149 @@ from openpyxl.styles import Font
 
 
 CORRECTIONS = {
+    'eddy': {
+        'modify': [
+            {
+                'uuid': 'be01039c-a6a4-4ef1-ab05-29ec1676d5b2',
+                'set': {'Command': '–– 4'},
+            },
+            {
+                'uuid': '0f5c0eb7-d105-4c6d-9baa-b93ca74ce569',
+                'set': {'Command': '– 4 [~B]'},
+            },
+            {
+                'uuid': '5a2504e0-d445-49f8-ac00-40815f5d7b10',
+                'set': {'Command': 'f+1+2 [~B]'},
+            },
+        ],
+        'insert_after': [],
+        'delete': [],
+        'replace': [
+            {
+                'uuid': '1f33d2bc-9841-4057-9510-bae5bf5e46f4',
+                'rows': [
+                    {
+                        'Command': '3+4 [~B]',
+                        'Move Name': 'Back Handspring [HSP]',
+                        'Speed': '35',
+                        'Block Adv': '-8',
+                        'Hit Adv': 'KD',
+                        'Counter Hit Adv': 'KD',
+                        'Damage': '25',
+                        'Damage Sum': '25',
+                        'Hit Range': 'M',
+                        'UUID': '1f33d2bc-9841-4057-9510-bae5bf5e46f4',
+                        'ML UUID': '60efbe64-fb4d-4a96-906d-1bd1b8484c71',
+                    },
+                    {
+                        'Command': '3+4~3',
+                        'Move Name': 'Back Handspring Cancel Into Mid Kick',
+                        'Speed': 'x',
+                        'Block Adv': 'x',
+                        'Hit Adv': 'x',
+                        'Counter Hit Adv': 'x',
+                        'Damage': '15',
+                        'Damage Sum': '15',
+                        'Hit Range': 'm',
+                        'To Stance': 'HSP',
+                        'UUID': '6925d173-ef73-401d-a3d6-8170fb61abd5',
+                        'ML UUID': '60efbe64-fb4d-4a96-906d-1bd1b8484c71',
+                    },
+                ],
+            },
+            {
+                'uuid': '3f5cac11-0d1d-42c1-a09e-34f6a66ecdcf',
+                'rows': [
+                    {
+                        'Command': '4,3+4 [~B]',
+                        'Move Name': 'Mid Kick - Back Handspring [HSP]',
+                        'Speed': '18',
+                        'Block Adv': '-30',
+                        'Hit Adv': '+7',
+                        'Counter Hit Adv': '+7',
+                        'Damage': '10,25',
+                        'Damage Sum': '35',
+                        'Hit Range': 'mM',
+                        'UUID': '3f5cac11-0d1d-42c1-a09e-34f6a66ecdcf',
+                        'ML UUID': '78d3dd69-5c28-4ca9-bfaa-ffa8bd44c236',
+                    },
+                    {
+                        'Command': '4,3+4~3',
+                        'Move Name': 'Mid Kick - Back Handspring Cancel Into Mid Kick',
+                        'Speed': 'x',
+                        'Block Adv': 'x',
+                        'Hit Adv': 'x',
+                        'Counter Hit Adv': 'x',
+                        'Damage': '15',
+                        'Damage Sum': '15',
+                        'Hit Range': 'm',
+                        'To Stance': 'HSP',
+                        'UUID': '299aa8c7-44e8-4970-9bf9-34bd859ffdfc',
+                        'ML UUID': '78d3dd69-5c28-4ca9-bfaa-ffa8bd44c236',
+                    },
+                ],
+            },
+            {
+                'uuid': '6e361000-d4f0-4731-978c-ef27d00d1a84',
+                'rows': [
+                    {
+                        'Command': 'db+4',
+                        'Move Name': 'Barbed Wire',
+                        'Speed': '17',
+                        'Block Adv': '-12',
+                        'Hit Adv': 'KD',
+                        'Counter Hit Adv': 'KD',
+                        'Damage': '15',
+                        'Damage Sum': '15',
+                        'Hit Range': 'h',
+                        'UUID': '6e361000-d4f0-4731-978c-ef27d00d1a84',
+                        'ML UUID': '84fbd428-9800-49bd-8ba0-d56663d712bc',
+                    },
+                    {
+                        'Command': 'db+4,b+4',
+                        'Move Name': 'Barbed Wire',
+                        'Speed': '17',
+                        'Block Adv': '-12 -17',
+                        'Hit Adv': 'KD -1',
+                        'Counter Hit Adv': 'KD -1',
+                        'Damage': '15,12',
+                        'Damage Sum': '27',
+                        'Hit Range': 'hm',
+                        'To Stance': 'HSP',
+                        'UUID': '4f07880c-ce7b-476f-a3fa-8dd3dc28476c',
+                        'ML UUID': '84fbd428-9800-49bd-8ba0-d56663d712bc',
+                    },
+                    {
+                        'Command': 'db+4,4(repeat)',
+                        'Move Name': 'Barbed Wire',
+                        'Speed': '17',
+                        'Block Adv': '-12 -7',
+                        'Hit Adv': 'KD KD',
+                        'Counter Hit Adv': 'KD KD',
+                        'Damage': '15,30',
+                        'Damage Sum': '45',
+                        'Hit Range': 'hh',
+                        'UUID': '5dfafb7e-bc6e-4aa5-be9d-cf4cd62598d3',
+                        'ML UUID': '84fbd428-9800-49bd-8ba0-d56663d712bc',
+                    },
+                    {
+                        'Command': 'db+4,4(repeat),b+4',
+                        'Move Name': 'Barbed Wire',
+                        'Speed': '17',
+                        'Block Adv': '-12 -7 -17',
+                        'Hit Adv': 'KD KD -1',
+                        'Counter Hit Adv': 'KD KD -1',
+                        'Damage': '15,30,12',
+                        'Damage Sum': '57',
+                        'Hit Range': 'hhm',
+                        'To Stance': 'HSP',
+                        'UUID': '7e9692bb-f6f0-44b7-9a34-37045ad20f25',
+                        'ML UUID': '84fbd428-9800-49bd-8ba0-d56663d712bc',
+                    },
+                ],
+            },
+        ],
+    },
     'gunjack': {
         'modify': [],
         'insert_after': [],
@@ -179,6 +322,18 @@ CORRECTIONS = {
     'lei': {
         'modify': [
             {
+                'uuid': '9d7a2eec-7454-4a25-be57-f2a98c62ad45',
+                'set': {'Move Name': 'Drunken Tiger Lash [DRU]'},
+            },
+            {
+                'uuid': '90d6b24a-6358-4cfa-96a0-2c845188c0e2',
+                'set': {'Move Name': 'Dragon Spark [TGR]'},
+            },
+            {
+                'uuid': '19abb193-8632-4667-8ed2-91fa0c2246ad',
+                'set': {'Move Name': 'Dragon Roar [TGR]'},
+            },
+            {
                 'uuid': 'b32879a4-27c9-469a-9ab0-bff47e50f029',
                 'set': {
                     'Command': 'b+4 [d]',
@@ -269,6 +424,36 @@ CORRECTIONS = {
                 },
             ],
         },
+    },
+    'ling': {
+        'modify': [
+            {
+                'uuid': 'eba52a6a-4354-422e-bcd5-c23c11453761',
+                'set': {'Move Name': 'Fire Cracker [Roll up or down]'},
+            },
+        ],
+        'insert_after': [],
+        'delete': [],
+    },
+    'michelle': {
+        'modify': [
+            {
+                'uuid': 'a1e053c3-59d7-4967-8041-f699d59f3a5f',
+                'set': {'Move Name': 'Launching Shuttle [Tag]'},
+            },
+        ],
+        'insert_after': [],
+        'delete': [],
+    },
+    'wang': {
+        'modify': [
+            {
+                'uuid': '8bb67630-56a3-463d-be98-304a6de9af66',
+                'set': {'Command': '1~1,1 [~5]'},
+            },
+        ],
+        'insert_after': [],
+        'delete': [],
     },
 }
 

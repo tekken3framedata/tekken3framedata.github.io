@@ -26,3 +26,13 @@
 - [ ] Ling: b+1+2 (Hypnotist Walk) — pitäisikö olla stance-merkintänä?
 - [ ] "Cancellable" pitäisi merkitä eksplisiittisesti dataan.
 - [ ] Lee: b+3 ~3 (Feint Mist Wolf) — framedata on luultavasti väärin
+- [ ] Heihachi: – ~1+2 (Demon Executioner) — tarkista voiko [~u_~d] SS-cancelin tehdä painamalla ~U / ~D
+- [ ] Identtiset liikkeet liikesarjojen sisällä pitää merkitä. Ensimmäinen tapaus: eddy "Weed Whacker – Shin Cutter" (6352e0bb) ja "Leg Whip Series – Weed Whacker – Shin Cutter" (c89588be) — sama liike eri sarjoissa.
+- [ ] Eddy: Barbed Wire (6e361000) — move name pitää korjata
+- [ ] Eddy: Hot Plate (a70b9e10) — liikettä voi canceloida monella tapaa
+- [ ] Recovery takaisin default stanceen — merkintätapaa ei vielä ole. Eddy: Handstand Position / Fake Out (5a2504e0) ~B→RC, myös FC+df+1+2 (0f5c0eb7). Fake Out voi tehdä B tai DB. Ling: Twin Phoenix (575f73c7) ~B→standing
+- [ ] Ling: AOP Flower Kick (fea0d91f) — tarkista onko framet erilaiset eri stance recoveryllä
+- [ ] Grappling Arts: heitoille pitää saada UUID:t
+- [ ] Kunimitsu: Tornado (right side throw) — pitää merkitä taggable, [tag] bracketissa
+- [ ] Lei: 3~4,2 Tornado Kick – Tornado Upper ja muut Tornado Upper -versiot — onko tätä liikettä olemassa ollenkaan?
+- [ ] Eddy: f,f+4,3 Black Summy – Fire Kick — nimi erikoinen, Fire Kick on yleensä uf+3+4
