@@ -23,14 +23,74 @@ from openpyxl.styles import Font
 
 
 CORRECTIONS = {
+    'lee': {
+        'modify': [],
+        'insert_after': [],
+        'delete': [
+            # Fang Rush – Hit Man Stance (b+1,1,3+4): alternative stance
+            # recovery, to stance info goes on parent row instead
+            '3ca6233d-6896-42c6-a780-d5112744e6d8',
+            # Alternate Fang Rush – Hit Man Stance (b+1,N+1,3+4)
+            'a9627d79-0bb4-4abf-9fca-4e78a13b0bb0',
+        ],
+    },
+    'hwoarang': {
+        'modify': [
+            # Cheap Shot – Retreat (f+3~b): alternative stance recovery,
+            # not a cancel — single hit with BT recovery
+            {
+                'uuid': '86748328-3934-4013-bb61-5f21c8a678d1',
+                'set': {
+                    'To Stance': 'BT',
+                    'Block Adv': '-16',
+                    'Block Adv Full': '-16',
+                    'Hit Adv': '-5',
+                    'Hit Adv Full': '-5',
+                    'Counter Hit Adv': '-5',
+                    'Counter Hit Adv Full': '-5',
+                    'Damage': '25',
+                    'Damage Full': '25',
+                    'Damage Sum': '25',
+                    'Hit Range': 'h',
+                    'Hit Range Full': 'h',
+                },
+            },
+        ],
+        'insert_after': [],
+        'delete': [],
+    },
     'jin': {
         'modify': [],
         'insert_after': [],
         'delete': [],
     },
     'julia': {
-        'modify': [],
-        'insert_after': [],
+        'modify': [
+            # Arm Whip – Back Push (b+2,1+2): source had (1+2_5) meaning
+            # two separate follow-ups, not alternatives. Remove cancel
+            # signature — 1+2 is a real hit.
+            {
+                'uuid': 'a2a00b1a-1750-4988-9b6c-606239b6a0c6',
+                'set': {
+                    'Alt Commands': '',
+                },
+            },
+        ],
+        'insert_after': [
+            # Arm Whip – Tag (b+2,5): the _5 follow-up lost by step 4
+            {
+                'after_uuid': 'a2a00b1a-1750-4988-9b6c-606239b6a0c6',
+                'row': {
+                    'Command': '– 5',
+                    'Move Name': '– Tag',
+                    'Damage': '24',
+                    'Damage Sum': '24',
+                    'Notes': 'Only with Michelle.',
+                    'UUID': 'b10b068c-ac9e-49e7-81b0-86920d0c34af',
+                    'Parent UUID': 'a72aa904-1124-409f-a75b-cb6b7a95fa1f',
+                },
+            },
+        ],
         'delete': [],
     },
     'ling': {

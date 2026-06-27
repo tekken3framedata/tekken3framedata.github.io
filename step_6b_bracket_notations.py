@@ -20,7 +20,7 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font
 
 
-TAG_PATTERN = re.compile(r'\s*\[~5\]')
+TAG_PATTERN = re.compile(r'\s*\[~5\]|\s*\[tag\]', re.IGNORECASE)
 NAME_TAG_PATTERN = re.compile(r'\s*\[Tag\]')
 
 STANCE_RECOVERY = {

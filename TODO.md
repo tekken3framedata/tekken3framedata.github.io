@@ -1,3 +1,10 @@
+- [x] Ling: Shady Lotus (FC+DF+2) — frame data väärä (2 arvoa vaikka 1 liike, ei multi-hit). Korjaa step 9:ssä.
+- [x] Ling: 2+3+4 (Greetings Taunt) — 1 hit, 0 damage. Hit Range korjattu "-" → "m".
+- [x] Ling: 1+3+4 (False Salute Taunt) — 0 hit.
+- [x] Ling: ,3+4 -tyyppiset "recovery modifier" -pressit — pitää merkitä eksplisiittisesti dataan.
+- [x] "Alternative recovery stance" -notaatiot (esim. [~B], [u_d]) pitää suunnitella ja käsitellä. Hakasulkeissa olevat pressit eivät ole varsinaisia iskuja.
+- [x] Kunimitsu: Tornado (right side throw) — pitää merkitä taggable, [tag] bracketissa
+
 - [ ] Anna: String Hit Arts 1,2-rivi (UUID d61c2d77) pitää korjata — d/f+1,2 ja BT-variantit poistettu step 1b:ssä, mutta jäljelle jääneen rivin data on silti väärää (alkaa 4,10 eikä vain 1,2:n damage)
 - [ ] String Hit Arts: mietittävä esitystapa (ei frame dataa, vain komento + hit count + damage + hit range), sitten näkyville
 - [ ] Grappling Arts: mietittävä esitystapa (heitot, escape-komennot), sitten näkyville
@@ -9,20 +16,15 @@
 - [ ] Merkitä "natural combo" liikkeet dataan; mahdolliset rankaisut näytetään tämän tiedon pohjalta
 - [ ] Jin: 1<2,4~1+4,2 (Double Punch – Knee – White Heron) — continuation-ketju jossa block adv kuvaa vain tämän rivin iskuja mutta command sisältää parent-datan. Step 9 split ei pysty käsittelemään tätä automaattisesti.
 - [ ] Julia: 1~2~1 (G-Clef - Gut Punch – Skyscraper Cannon) — tilde-ketju jossa pressejä on enemmän kuin block-arvoja. Pitää miettiä miten käsitellään.
-- [ ] Ling: Shady Lotus (FC+DF+2) — frame data väärä (2 arvoa vaikka 1 liike, ei multi-hit). Korjaa step 9:ssä.
 - [ ] Ling: Flower Power (u+4,4) — Hit Range "mmmm" väärä (4 iskua 2 liikkeelle ilman multi-hit -selitystä). Korjaa step 9:ssä.
 - [ ] Ling: Trick Flower (U+4) — Hit Range "mm" väärä (2 iskua 1 liikkeelle ilman multi-hit -selitystä). Korjaa step 9:ssä.
 - [ ] Jin: b+1+2 (Lightning Force) — tarkista onko 0 vai 1 isku. Hit Range datassa "-".
 - [ ] Julia: 2+3+4 (Wave Taunt) — tarkista onko 0 vai 1 isku.
-- [x] Ling: 2+3+4 (Greetings Taunt) — 1 hit, 0 damage. Hit Range korjattu "-" → "m".
-- [x] Ling: 1+3+4 (False Salute Taunt) — 0 hit.
 - [ ] Ling: 2+3+4 (Greetings Taunt) — Hit Range korjattu "-" → "m" step 9:ssä (molemmat versiot), tarkista pelissä.
 - [ ] Ling: AOP f+1+2 (Rain Dance Stance siirtymä) — tarkista onko 0 vai 1 isku.
-- [ ] Ling: ,3+4 -tyyppiset "recovery modifier" -pressit — pitää merkitä eksplisiittisesti dataan.
 - [ ] Jin: b+1~df (Parting Wave – Crouch Dash) — tarkista hits per move. Onko ~df 0 iskua vai osa b+1:n iskua?
 - [ ] Ling: b+1+2,5 (Hypnotist Walk – Tag) — tarkista hits per move.
 - [ ] Ling: b+1+2 <1+2,b,b (Phoenix Strike – Cancel) — tarkista hits per move.
-- [ ] "Alternative recovery stance" -notaatiot (esim. [~B], [u_d]) pitää suunnitella ja käsitellä. Hakasulkeissa olevat pressit eivät ole varsinaisia iskuja.
 - [ ] Ling: b+1+2 (Hypnotist Walk) — pitäisikö olla stance-merkintänä?
 - [ ] "Cancellable" pitäisi merkitä eksplisiittisesti dataan.
 - [ ] Lee: b+3 ~3 (Feint Mist Wolf) — framedata on luultavasti väärin
@@ -33,6 +35,8 @@
 - [ ] Recovery takaisin default stanceen — merkintätapaa ei vielä ole. Eddy: Handstand Position / Fake Out (5a2504e0) ~B→RC, myös FC+df+1+2 (0f5c0eb7). Fake Out voi tehdä B tai DB. Ling: Twin Phoenix (575f73c7) ~B→standing
 - [ ] Ling: AOP Flower Kick (fea0d91f) — tarkista onko framet erilaiset eri stance recoveryllä
 - [ ] Grappling Arts: heitoille pitää saada UUID:t
-- [ ] Kunimitsu: Tornado (right side throw) — pitää merkitä taggable, [tag] bracketissa
 - [ ] Lei: 3~4,2 Tornado Kick – Tornado Upper ja muut Tornado Upper -versiot — onko tätä liikettä olemassa ollenkaan?
 - [ ] Eddy: f,f+4,3 Black Summy – Fire Kick — nimi erikoinen, Fire Kick on yleensä uf+3+4
+- [ ] Properties-sarake: käydä järjestelmällisesti läpi. Mm. BT-merkinnät pitää siirtää To Stance -sarakkeeseen.
+- [ ] Jin: DJP-osio tarvitsee korjauksia — stanceen siirtymistapa pitää ottaa osion ulkopuolelle.
+- [ ] Lee: Fang Rush (b+1,1) to stance (~3+4)HMS ja Alternate Fang Rush (b+1,N+1) to stance (~3+4)HMS — ei voida merkitä vielä koska rivien automaattista jakamista ei olla tehty step10:ssä.
