@@ -241,6 +241,17 @@ CORRECTIONS = {
                 },
             },
             {
+                'uuid': '674f6841-5fbb-4b15-865f-9ab351c1a0f0',
+                'set': {
+                    'Block Adv': '-20 -22 -20 -22 -20 -22',
+                    'Block Adv Full': '-20 -22 -20 -22 -20 -22',
+                    'Hit Adv': '-9 -11 -9 -11 -9 -11',
+                    'Hit Adv Full': '-9 -11 -9 -11 -9 -11',
+                    'Counter Hit Adv': '-9 -11 -9 -11 -9 -11',
+                    'Counter Hit Adv Full': '-9 -11 -9 -11 -9 -11',
+                },
+            },
+            {
                 'uuid': 'eb9bbfe4-68c3-4e58-baf7-821687138e91',
                 'set': {
                     'Properties': 'JGc RC',

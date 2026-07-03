@@ -16,6 +16,9 @@ import sys
 
 from openpyxl import load_workbook
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from step_10_hits_per_move import HITS_PER_MOVE
+
 
 def count_space_separated(field):
     if field is None or str(field).strip() == '':
@@ -48,6 +51,12 @@ def validate_file(path):
         'Counter Hit Adv Full': headers.index('Counter Hit Adv Full'),
     }
 
+    essential_cols = {
+        'Speed': headers.index('Speed'),
+        'Damage': headers.index('Damage'),
+        'Block Adv': headers.index('Block Adv'),
+    }
+
     mismatches = []
 
     for row_idx, row in enumerate(ws.iter_rows(min_row=3, values_only=True), start=3):
@@ -57,17 +66,23 @@ def validate_file(path):
 
         hpm = row[hpm_idx]
         total_hits = expected_hits(hpm)
-        if total_hits == 0:
-            continue
 
         issues = []
-        for col_name, col_idx in per_hit_cols.items():
-            val = row[col_idx]
-            if val is None or str(val).strip() == '':
-                continue
-            actual = count_space_separated(val)
-            if actual != total_hits:
-                issues.append(f'{col_name}: {actual} values')
+
+        missing = [name for name, idx in essential_cols.items()
+                   if not row[idx] or str(row[idx]).strip() in ('', '-')]
+        uuid = row[uuid_idx] or ''
+        has_override = uuid in HITS_PER_MOVE
+        if len(missing) == len(essential_cols) and not has_override:
+            issues.append(f'missing data: {", ".join(missing)}')
+        elif total_hits > 0:
+            for col_name, col_idx in per_hit_cols.items():
+                val = row[col_idx]
+                if val is None or str(val).strip() == '':
+                    continue
+                actual = count_space_separated(val)
+                if actual != total_hits:
+                    issues.append(f'{col_name}: {actual} values')
 
         if issues:
             fs = row[from_stance_idx] or ''
@@ -105,7 +120,8 @@ def main():
                 print(f'  Row {row_idx}: "{move_name}"')
                 print(f'    UUID: {uuid}')
                 print(f'    Command: {prefix}{cmd_full}')
-                print(f'    Expected {total_hits} hits (Hits Per Move: {hpm})')
+                if total_hits:
+                    print(f'    Expected {total_hits} hits (Hits Per Move: {hpm})')
                 for issue in issues:
                     print(f'    - {issue}')
             total_issues += len(mismatches)

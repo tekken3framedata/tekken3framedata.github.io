@@ -138,6 +138,13 @@ HITS_PER_MOVE = {
     'aadbdd07-dac3-4f6e-9230-207fed9671ef': {0: 2},
     # u+1+2 ,2 ,1 (Double Fan – Fortune Cookie)
     '1fe5e046-832f-40fb-bc3f-b47d5d1f9f82': {0: 2},
+    # --- Jack-2 ---
+    # 3+4 (Sit Down) — stance transition, no hit
+    '3f1586e3-7d70-40ce-a201-943ab9917e0a': {0: 0},
+    # 3+4 ~3+4 (Sit Down – Hop Hip Press) — first press is Sit Down
+    '421087d9-77e4-4344-95d3-0ffee0325022': {0: 0},
+    # 3+4 ,1 ,2 ,1 ,2 (Sit Down – Sitting Punches) — first press is Sit Down
+    '1e575213-1523-40b8-9492-0a92235d1799': {0: 0},
 }
 
 
