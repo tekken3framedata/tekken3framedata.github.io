@@ -112,6 +112,7 @@ def expand_section(rows):
 
         if level == 0:
             row['Command Full'] = cmd
+            row['Alt Commands Full'] = row.get('Alt Commands', '')
             row['Move Name Full'] = row.get('Move Name', '')
             row['Speed Full'] = row.get('Speed', '')
             row['Damage Full'] = row.get('Damage', '')
@@ -186,6 +187,15 @@ def expand_section(rows):
             return o or p
 
         row['Command Full'] = full_cmd
+        alt_cmds = row.get('Alt Commands', '')
+        if alt_cmds and parent_cmd:
+            alt_full = []
+            for alt in alt_cmds.split('; '):
+                sep = '' if alt.startswith(('~', '<')) else ','
+                alt_full.append(parent_cmd + sep + alt)
+            row['Alt Commands Full'] = '; '.join(alt_full)
+        else:
+            row['Alt Commands Full'] = alt_cmds
         row['Move Name Full'] = full_name
         row['Speed Full'] = parent_speed
         row['Damage Full'] = full_damage
@@ -196,7 +206,7 @@ def expand_section(rows):
 
 
 OUTPUT_COLUMNS = [
-    'Command', 'Command Full', 'Alt Commands', 'Move Name', 'Move Name Full', 'To Stance',
+    'Command', 'Command Full', 'Alt Commands', 'Alt Commands Full', 'Move Name', 'Move Name Full', 'To Stance',
     'Speed', 'Speed Full', 'Block Adv', 'Block Adv Full', 'Hit Adv', 'Hit Adv Full',
     'Counter Hit Adv', 'Counter Hit Adv Full', 'Damage', 'Damage Sum', 'Damage Full',
     'Hit Range', 'Hit Range Full', 'Throw Type', 'Throw Escape', 'Properties', 'Notes',

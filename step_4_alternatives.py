@@ -73,11 +73,15 @@ def split_alternatives(row_dicts, character):
                 primary = preferred
                 row['Command'] = primary
 
-        if is_followup or all(len(g) == 1 for g in groups):
+        if all(len(g) == 1 for g in groups):
             row['Alt Commands'] = ''
             continue
 
         alts = [c for c in all_commands if c != primary]
+        if is_followup:
+            prefix = re.match(r'^–+ ', primary)
+            if prefix:
+                alts = [a[len(prefix.group()):] if a.startswith(prefix.group()) else a for a in alts]
         row['Alt Commands'] = '; '.join(alts)
 
 

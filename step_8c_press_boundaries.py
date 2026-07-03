@@ -189,7 +189,7 @@ def autofit_columns(ws, header_row_numbers, hidden_columns):
 
 OUTPUT_COLUMNS = [
     'From Stance',
-    'Command', 'Command Full', 'Alt Commands', 'Move Name', 'Move Name Full', 'To Stance',
+    'Command', 'Command Full', 'Alt Commands', 'Alt Commands Full', 'Move Name', 'Move Name Full', 'To Stance',
     'Speed', 'Speed Full', 'Block Adv', 'Block Adv Full', 'Hit Adv', 'Hit Adv Full',
     'Counter Hit Adv', 'Counter Hit Adv Full', 'Damage', 'Damage Sum', 'Damage Full',
     'Hit Range', 'Hit Range Full', 'Throw Type', 'Throw Escape', 'Properties', 'Notes',

@@ -232,6 +232,55 @@ CORRECTIONS = {
         'insert_after': [],
         'delete': [],
     },
+    'jack2': {
+        'modify': [
+            {
+                'uuid': '3be14565-e783-4db3-9168-bf98e290f21d',
+                'set': {
+                    'To Stance': '(~B)Roll back; (~F)Roll forward',
+                },
+            },
+            {
+                'uuid': 'eb9bbfe4-68c3-4e58-baf7-821687138e91',
+                'set': {
+                    'Properties': 'JGc RC',
+                    'Notes': 'Juggles on the last hit if the first hit was a counter hit.',
+                },
+            },
+            {
+                'uuid': 'eb0c424e-d4b0-438e-bfb7-164bbca1894a',
+                'set': {
+                    'To Stance': '(~B)Roll back; (~F)Roll forward',
+                },
+            },
+            {
+                'uuid': '1e575213-1523-40b8-9492-0a92235d1799',
+                'set': {
+                    'To Stance': '(~B)Roll back; (~F)Roll forward',
+                },
+            },
+            {
+                'uuid': '421087d9-77e4-4344-95d3-0ffee0325022',
+                'set': {
+                    'To Stance': '(~B)Roll back; (~F)Roll forward',
+                },
+            },
+            {
+                'uuid': '3f1586e3-7d70-40ce-a201-943ab9917e0a',
+                'set': {
+                    'To Stance': '(~B)Roll back; (~F)Roll forward; (~U)Hop up',
+                },
+            },
+        ],
+        'insert_after': [],
+        'delete': [
+            # Sit Down – Roll Back/Forward: to-stance data, not moves
+            'a96a391b-b0cf-493d-a205-6511f1e34903',
+            'df8e44d6-d84c-4ee6-8117-15cb0b65ceb6',
+            # Quick Upper Rush: duplicate of Medium Hammer Rush continuations
+            '7507a693-7948-45eb-a05e-3707d923e16d',
+        ],
+    },
 }
 
 

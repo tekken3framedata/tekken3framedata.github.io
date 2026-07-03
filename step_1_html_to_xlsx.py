@@ -84,7 +84,7 @@ def replace_continuation_marker(cell_text):
 
     Non-continuation cells are stripped normally.
     """
-    match = re.match(r'^(&nbsp;)*=(&nbsp;)', cell_text)
+    match = re.match(r'^(&nbsp;)*=(?=~|&nbsp;)(&nbsp;)?', cell_text)
     if not match:
         cell_text = cell_text.replace('&nbsp;', ' ')
         return cell_text.strip()

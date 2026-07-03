@@ -35,8 +35,8 @@ def normalize_command(cmd):
     cmd = re.sub(r'\bWR[, ]', 'WR+', cmd)
     cmd = re.sub(r'\bWS[, ]', 'WS+', cmd)
     cmd = re.sub(r'\bSS[, ]', 'SS+', cmd)
-    cmd = re.sub(r'\b([FBDU]),([1-4])', lambda m: m.group(1).lower() + '+' + m.group(2), cmd)
     cmd = cmd.replace('/', '')
+    cmd = re.sub(r'\b([FBDU]),([1-4])', lambda m: m.group(1).lower() + '+' + m.group(2), cmd)
     return cmd
 
 
