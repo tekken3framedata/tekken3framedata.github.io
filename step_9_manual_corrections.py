@@ -73,18 +73,27 @@ CORRECTIONS = {
                 'uuid': 'a2a00b1a-1750-4988-9b6c-606239b6a0c6',
                 'set': {
                     'Alt Commands': '',
+                    'Notes': '',
                 },
             },
         ],
         'insert_after': [
+
             # Arm Whip – Tag (b+2,5): the _5 follow-up lost by step 4
             {
                 'after_uuid': 'a2a00b1a-1750-4988-9b6c-606239b6a0c6',
                 'row': {
                     'Command': '– 5',
-                    'Move Name': '– Tag',
+                    'Command Full': 'b+2 ,5',
+                    'Move Name': '– Back Push into Michelle\'s Lariat',
+                    'Move Name Full': 'Arm Whip – Back Push into Michelle\'s Lariat',
                     'Damage': '24',
                     'Damage Sum': '24',
+                    'Damage Full': '12,24',
+                    'Hit Range': '!',
+                    'Hit Range Full': 'h!',
+                    'Speed Full': '10',
+                    'Taggable': 'TRUE',
                     'Notes': 'Only with Michelle.',
                     'UUID': 'b10b068c-ac9e-49e7-81b0-86920d0c34af',
                     'Parent UUID': 'a72aa904-1124-409f-a75b-cb6b7a95fa1f',
@@ -92,6 +101,70 @@ CORRECTIONS = {
             },
         ],
         'delete': [],
+        'delete_by_ml_uuid': [
+            # Arm Whip (b+2) in Grappling Arts: this is a hit throw,
+            # not a standalone throw — belongs with Special Arts b+2 rows
+            '1b569aeb-dd63-4db9-bfe2-caa3a868a11d',
+        ],
+    },
+    'michelle': {
+        'modify': [
+            {
+                'uuid': '8045d9f7-3789-4f1b-b9c6-3335bf7f87f4',
+                'set': {
+                    'Notes': '',
+                },
+            },
+        ],
+        'insert_after': [
+            # Arm Whip – Rear Suplex: move from Grappling Arts, fix Parent UUID
+            {
+                'after_uuid': '8045d9f7-3789-4f1b-b9c6-3335bf7f87f4',
+                'row': {
+                    'Command': '– d+1+2',
+                    'Command Full': 'b+2 ,d+1+2',
+                    'Move Name': '– Rear Suplex',
+                    'Move Name Full': 'Arm Whip – Rear Suplex',
+                    'Speed Full': '10',
+                    'Damage': '45',
+                    'Damage Sum': '45',
+                    'Damage Full': '12,45',
+                    'Hit Range': '!',
+                    'Hit Range Full': 'h!',
+                    'UUID': 'f1c6a2cd-8f86-45e2-8020-1482f8fb6c52',
+                    'ML UUID': 'f1c6a2cd-8f86-45e2-8020-1482f8fb6c52',
+                    'Parent UUID': '65aaecf4-ea4f-4d97-b0ed-4df6be392720',
+                },
+            },
+            # Arm Whip – Tag Throw (b+2,5): the _5 follow-up lost by step 4
+            {
+                'after_uuid': 'f1c6a2cd-8f86-45e2-8020-1482f8fb6c52',
+                'row': {
+                    'Command': '– 5',
+                    'Command Full': 'b+2 ,5',
+                    'Move Name': '– Back Push into Julia\'s Running Bulldog',
+                    'Move Name Full': 'Arm Whip – Back Push into Julia\'s Running Bulldog',
+                    'Damage': '24',
+                    'Damage Sum': '24',
+                    'Damage Full': '12,24',
+                    'Hit Range': '!',
+                    'Hit Range Full': 'h!',
+                    'Speed Full': '10',
+                    'Taggable': 'TRUE',
+                    'Notes': 'Only with Julia.',
+                    'UUID': '1929ca31-425b-4548-b294-f29693b8fe20',
+                    'Parent UUID': '65aaecf4-ea4f-4d97-b0ed-4df6be392720',
+                },
+            },
+        ],
+        'delete': [
+            # Rear Suplex from Grappling Arts (re-inserted in Special Arts)
+            'f1c6a2cd-8f86-45e2-8020-1482f8fb6c52',
+        ],
+        'delete_by_ml_uuid': [
+            # Arm Whip (b+2) in Grappling Arts: hit throw, not standalone
+            '151f3bbe-77de-4044-9738-f8670c4da698',
+        ],
     },
     'ling': {
         'modify': [
@@ -237,6 +310,32 @@ def apply_corrections(sections, corrections):
             if col_name not in header_cells:
                 header_cells.append(col_name)
 
+    for delete_uuid in corrections.get('delete', []):
+        found = False
+        for _, _, rows in sections:
+            for i, row in enumerate(rows):
+                if row.get(uuid_col) == delete_uuid:
+                    rows.pop(i)
+                    found = True
+                    break
+            if found:
+                break
+        if not found:
+            print(f"  WARNING: UUID {delete_uuid} not found for delete")
+
+    for delete_ml_uuid in corrections.get('delete_by_ml_uuid', []):
+        found = False
+        for _, _, rows in sections:
+            for i, row in enumerate(rows):
+                if row.get('ML UUID') == delete_ml_uuid:
+                    rows.pop(i)
+                    found = True
+                    break
+            if found:
+                break
+        if not found:
+            print(f"  WARNING: ML UUID {delete_ml_uuid} not found for delete_by_ml_uuid")
+
     for ins in corrections.get('insert_after', []):
         after_uuid = ins['after_uuid']
         new_row = ins['row']
@@ -253,19 +352,6 @@ def apply_corrections(sections, corrections):
                 break
         if not found:
             print(f"  WARNING: UUID {after_uuid} not found for insert_after")
-
-    for delete_uuid in corrections.get('delete', []):
-        found = False
-        for _, _, rows in sections:
-            for i, row in enumerate(rows):
-                if row.get(uuid_col) == delete_uuid:
-                    rows.pop(i)
-                    found = True
-                    break
-            if found:
-                break
-        if not found:
-            print(f"  WARNING: UUID {delete_uuid} not found for delete")
 
     return sections
 

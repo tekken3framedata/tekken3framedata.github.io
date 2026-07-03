@@ -37,6 +37,8 @@
 - [ ] Grappling Arts: heitoille pitää saada UUID:t
 - [ ] Lei: 3~4,2 Tornado Kick – Tornado Upper ja muut Tornado Upper -versiot — onko tätä liikettä olemassa ollenkaan?
 - [ ] Eddy: f,f+4,3 Black Summy – Fire Kick — nimi erikoinen, Fire Kick on yleensä uf+3+4
+- [ ] True Ogre: Tail Spin (df+3+4) framet pitää tarkistaa ja korjata. df+3+4,d1. trade with heihachi 4, ogre f+2, kuma 3, jack 3. noi on kai kaikki i18, eli block -8. df+3+4~DF,BTd1. trade with jack b+2 (i19?), jin b+1 (i18?), heihachi f+2 (i17?). pitää selvittää lisää tätä true ogre bt recoverya.
 - [ ] Properties-sarake: käydä järjestelmällisesti läpi. Mm. BT-merkinnät pitää siirtää To Stance -sarakkeeseen.
+- [ ] Alternative stance recovery -rivit: pitää merkitä järjestelmällisesti siinä stepissä missä niitä käsitellään. Tunnistetut tapaukset: Hwoarang f+3~b (BT), Kuma 1+2~f (HBS), Kuma WS+1+2<1+2~f (HBS), Lee b+1,1,3+4 (HMS), Lee b+1,N+1,3+4 (HMS), Ling u+1+2,3+4.
 - [ ] Jin: DJP-osio tarvitsee korjauksia — stanceen siirtymistapa pitää ottaa osion ulkopuolelle.
-- [ ] Lee: Fang Rush (b+1,1) to stance (~3+4)HMS ja Alternate Fang Rush (b+1,N+1) to stance (~3+4)HMS — ei voida merkitä vielä koska rivien automaattista jakamista ei olla tehty step10:ssä.
+- [ ] Lee: Fang Rush (b+1,1) to stance (~3+4)HMS ja Alternate Fang Rush (b+1,N+1) to stance (~3+4)HMS. Kuma: Bear Knuckle (1+2) to stance (~f)HBS, Claw Upper – Bear Knuckle (WS+1+2<1+2) to stance (~f)HBS, Deadly Claw (b+1+2) to stance (,3+4)HBS. — ei voida merkitä vielä koska rivien automaattista jakamista ei olla tehty step10:ssä.

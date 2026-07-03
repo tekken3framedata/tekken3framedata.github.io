@@ -40,16 +40,9 @@ Data source: `sources/<character>_step10.xlsx`
 | Ganryu | 2fd36c6a | | b+1+2,D | Sumo Tackle – Splits | ,D | | frame data (!-) |
 | Jack-2 | a96a391b | | =~3+4,B | Hop Hip Press – Roll Back | ,B | | frame data (M-) |
 | Jack-2 | df8e44d6 | | =~3+4,F | Hop Hip Press – Roll Forward | ,F | | frame data (M-) |
-| Jun | b5c67ae7 | | f+2 | Charging Strike | ~d (Strike Cancel) | crouching | name |
 | Jun | bf03ba4f | | f+3 | Spinning Roundhouse | ,d (Hit Cancel) | crouching | name |
-| Kuma | 90ce6d1b | | 1+2~f | Bear Knuckle – Hunting Bear Stance | ~f | HBS | frame data (m-) |
-| Kuma | aae54c5e | | WS+1+2<1+2~f | Claw Upper – Bear Knuckle – HBS | ~f | HBS | frame data (mm-) |
-| Kuma | 3080d799 | | b+1+2,3+4 | Deadly Claw – Hunting Bear Stance | ,3+4 | HBS | frame data (!-) |
 | Kunimitsu | 8a1ad63b | | f,f+3+4,3+4 | Shark Attack – Ninja Flying Shadow | ,3+4 | | frame data (m-) |
 | Lei | 087e74b1 | | b+3+4 | Turn Around | ~f | standing | name |
-| Ling | b929cc95 | | u+1+2,3+4 | Double Fan – Ginger Snap | ,3+4 | | frame data (mm-) |
-| Michelle | 8045d9f7 | | b+2,1+2 | Arm Whip – Back Push | ,1+2 | | frame data (h-) |
-| Nina | 3f312a21 | | db+1+2 | Hunting Swan | ,u,u | standing | name |
 | Nina | e95ede68 | | SS+1~F | Snake Shot – Crouch Dash | ~F | | frame data (m-) |
 | Nina | d03a4da5 | | SS+1~B | Snake Shot – Sway | ~B | | frame data (m-) |
 | Prototype Jack | 3b432f29 | | b+1+2 | Clock Up | ~f | standing | name |
@@ -64,7 +57,6 @@ Data source: `sources/<character>_step10.xlsx`
 | Roger | 25704ef5 | | b+3+4,1,3,4,1 | Lunge AK – RA – AKR – Rolling Animal | ,1 | | frame data (m-mm-) |
 | Roger | a32c1ee8 | | b+3+4,1,3,4,1,3,4~B | Lunge AK – RA – AKR – RA – AKR – Roll Back | ~B | | frame data (m-mm-mm-) |
 | True Ogre | 9eefea67 | | df+3+4~DF | Tail Spin – Back Turned Position | ~DF | | frame data (m-) |
-| Wang | 9c67a8d1 | | b,b+1 | Heaven Cannon | ~B | standing | name |
 | Yoshimitsu | bf02113c | | b+1,1,1,1,1,1,3+4 | Stone Fists – Evasive Side Spin | ,3+4 | | frame data (hhhhhh-) |
 | Yoshimitsu | 7dd15930 | | f,f+2,d+3+4 | Ninja Blade Slice – Indian Sit | ,d+3+4 | | frame data (m-) |
 | Yoshimitsu | f0840bfe | | 1+2,d+3+4 | Flea – Indian Sit | ,d+3+4 | | frame data (!-) |
@@ -81,6 +73,9 @@ Data source: `sources/<character>_step10.xlsx`
 | Hwoarang | f2e6a842 | LFS | 1+4 | Power Blast | ,b,b | standing | name | |
 | Lee | ad99b613 | | db+1+2 | Silver Fang | ,u,u | standing | name | |
 | Ling | 25f9b418 | | b+1+2<1+2 | Phoenix Strike | ,b,b | RDS | name | ub can be canceled only when 1+2 is inputted at the very beginning of hypnotist walk. if ub is delayed, it can't be canceled. |
+| Nina | 3f312a21 | | db+1+2 | Hunting Swan | ,u,u | standing | name | |
+| Jun | b5c67ae7 | | f+2 | Charging Strike | ~DF; ~D; ~DB | crouching | name | cancel works with DF, D, or DB |
+| Wang | 9c67a8d1 | | b,b+1 | Heaven Cannon | ~B | standing | name | |
 
 ## Ignoroidut
 
@@ -90,6 +85,11 @@ Data source: `sources/<character>_step10.xlsx`
 | Jin | 1ac36d3f | | b+1~df | Parting Wave – Crouch Dash | ~df | | frame data (m-) |
 | Lee | 3ca6233d | | b+1,1,3+4 | Fang Rush – Hit Man Stance | ,3+4 | HMS | frame data (hm-) |
 | Julia | a2a00b1a | | b+2,1+2 | Arm Whip – Back Push | ,1+2 | | frame data (h-) |
+| Kuma | 90ce6d1b | | 1+2~f | Bear Knuckle – Hunting Bear Stance | ~f | HBS | frame data (m-) |
+| Kuma | aae54c5e | | WS+1+2<1+2~f | Claw Upper – Bear Knuckle – HBS | ~f | HBS | frame data (mm-) |
+| Kuma | 3080d799 | | b+1+2,3+4 | Deadly Claw – Hunting Bear Stance | ,3+4 | HBS | frame data (!-) |
+| Michelle | 8045d9f7 | | b+2,1+2 | Arm Whip – Back Push | ,1+2 | | frame data (h-) |
+| Ling | b929cc95 | | u+1+2,3+4 | Double Fan – Ginger Snap | ,3+4 | | frame data (mm-) |
 
 ## Nämä pitää testata
 
