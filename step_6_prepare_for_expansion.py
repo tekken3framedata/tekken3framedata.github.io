@@ -211,9 +211,135 @@ CORRECTIONS = {
         ],
     },
     'jack2': {
-        'modify': [],
-        'insert_after': [],
-        'delete': [],
+        'modify': [
+            {
+                # Add alt command from Wind Up – Debugger
+                'uuid': '85158165-351f-41d2-8735-2ab0b63af148',
+                'set': {'Alt Commands': 'hcf,DF+1'},
+            },
+            {
+                'uuid': 'c03fb65b-aaac-4006-8e2b-0a9f8c08fd8f',
+                'set': {'Move Name': 'Wind Up (1 Rotation)', 'Damage': '', 'Hit Range': ''},
+            },
+            {
+                'uuid': '2003590c-d918-44b9-ba39-ae204bd6ae62',
+                'set': {'Move Name': '– Gigaton Punch (1 Rotation)'},
+            },
+        ],
+        'insert_after': [
+            {
+                'after_uuid': '2003590c-d918-44b9-ba39-ae204bd6ae62',
+                'row': {
+                    'Command': 'ccw,db,d',
+                    'Move Name': 'Wind Up (2 Rotations)',
+                    'Notes': 'With b,b+1 input, full 2nd rotation command is b,b+1,b,db,d,df',
+                    'UUID': '1f65d946-be2a-4bb4-9a27-18e4ad27b7a8',
+                },
+            },
+            {
+                'after_uuid': '1f65d946-be2a-4bb4-9a27-18e4ad27b7a8',
+                'row': {
+                    'Command': '– 1',
+                    'Move Name': '– Gigaton Punch (2 Rotations)',
+                    'Block Adv': 'KD',
+                    'Hit Adv': 'KD',
+                    'Counter Hit Adv': 'KD',
+                    'Damage': '40',
+                    'Damage Sum': '40',
+                    'Hit Range': '!',
+                    'UUID': '5effdb03-d23f-4671-8daa-b173c35d0ee4',
+                    'Parent UUID': '1f65d946-be2a-4bb4-9a27-18e4ad27b7a8',
+                },
+            },
+            {
+                'after_uuid': '5effdb03-d23f-4671-8daa-b173c35d0ee4',
+                'row': {
+                    'Command': 'ccw,ccw,db,d',
+                    'Move Name': 'Wind Up (3 Rotations)',
+                    'Notes': 'With b,b+1 input, full 3rd rotation command is b,b+1,ccw,b,db,d',
+                    'UUID': 'f6c85458-dd91-4d88-91f1-9a557e0c3420',
+                },
+            },
+            {
+                'after_uuid': 'f6c85458-dd91-4d88-91f1-9a557e0c3420',
+                'row': {
+                    'Command': '– 1',
+                    'Move Name': '– Gigaton Punch (3 Rotations)',
+                    'Block Adv': 'KD',
+                    'Hit Adv': 'KD',
+                    'Counter Hit Adv': 'KD',
+                    'Damage': '60',
+                    'Damage Sum': '60',
+                    'Hit Range': '!',
+                    'UUID': 'e63a69f8-5fec-47ed-a05a-1068334010ce',
+                    'Parent UUID': 'f6c85458-dd91-4d88-91f1-9a557e0c3420',
+                },
+            },
+            {
+                'after_uuid': 'e63a69f8-5fec-47ed-a05a-1068334010ce',
+                'row': {
+                    'Command': 'ccw,ccw,ccw,db,d',
+                    'Move Name': 'Wind Up (4 Rotations)',
+                    'UUID': 'c0f65cc6-5cf3-4384-bf35-b9b00543eb08',
+                },
+            },
+            {
+                'after_uuid': 'c0f65cc6-5cf3-4384-bf35-b9b00543eb08',
+                'row': {
+                    'Command': '– 1',
+                    'Move Name': '– Gigaton Punch (4 Rotations)',
+                    'Block Adv': 'KD',
+                    'Hit Adv': 'KD',
+                    'Counter Hit Adv': 'KD',
+                    'Damage': '80',
+                    'Damage Sum': '80',
+                    'Hit Range': '!',
+                    'UUID': '0b650a95-0538-44cb-a60f-505df7041965',
+                    'Parent UUID': 'c0f65cc6-5cf3-4384-bf35-b9b00543eb08',
+                },
+            },
+            {
+                'after_uuid': '0b650a95-0538-44cb-a60f-505df7041965',
+                'row': {
+                    'Command': 'ccw,ccw,ccw,ccw,db,d',
+                    'Move Name': 'Wind Up (5 Rotations)',
+                    'UUID': '27d20b09-dd03-41a8-a3e5-9fb3bbc279ad',
+                },
+            },
+            {
+                'after_uuid': '27d20b09-dd03-41a8-a3e5-9fb3bbc279ad',
+                'row': {
+                    'Command': '– 1',
+                    'Move Name': '– Gigaton Punch (5 Rotations)',
+                    'Block Adv': 'KD',
+                    'Hit Adv': 'KD',
+                    'Counter Hit Adv': 'KD',
+                    'Damage': '199',
+                    'Damage Sum': '199',
+                    'Hit Range': '!',
+                    'UUID': 'e17fd2d9-47bc-4541-8a57-8d670b1585de',
+                    'Parent UUID': '27d20b09-dd03-41a8-a3e5-9fb3bbc279ad',
+                },
+            },
+            {
+                'after_uuid': 'e17fd2d9-47bc-4541-8a57-8d670b1585de',
+                'row': {
+                    'Command': 'ccw,ccw,ccw,ccw,ccw,db,d',
+                    'Move Name': 'Wind Up (8 Rotations)',
+                    'Notes': 'Completes 8 rotations automatically. No Gigaton Punch follow-up.',
+                    'UUID': '15f7632c-c216-4131-a173-898bf20c3023',
+                },
+            },
+        ],
+        'delete': [
+            # Wind Up – Debugger (alt command moved to standalone Debugger)
+            'bfcd8070-9fe9-4f68-b19e-bddec360b30a',
+            # Gigaton Start Up (duplicate, merged into Wind Up)
+            'd1938783-b653-4c21-91d7-5303ce4b61cb',
+            # Original Wind Up and Gigaton Punch from Unblockable Arts
+            '1f65d946-be2a-4bb4-9a27-18e4ad27b7a8',
+            '5effdb03-d23f-4671-8daa-b173c35d0ee4',
+        ],
         'replace': [
             {
                 'uuid': '4cf7be1b-11d0-4c05-8424-e597df98603b',
@@ -524,6 +650,19 @@ def apply_corrections(sections, corrections):
         if not found:
             print(f"  WARNING: UUID {target_uuid} not found for modify")
 
+    for delete_uuid in corrections.get('delete', []):
+        found = False
+        for _, _, rows in sections:
+            for i, row in enumerate(rows):
+                if row.get(uuid_col) == delete_uuid:
+                    rows.pop(i)
+                    found = True
+                    break
+            if found:
+                break
+        if not found:
+            print(f"  WARNING: UUID {delete_uuid} not found for delete")
+
     for ins in corrections.get('insert_after', []):
         after_uuid = ins['after_uuid']
         new_row = ins['row']
@@ -540,19 +679,6 @@ def apply_corrections(sections, corrections):
                 break
         if not found:
             print(f"  WARNING: UUID {after_uuid} not found for insert_after")
-
-    for delete_uuid in corrections.get('delete', []):
-        found = False
-        for _, _, rows in sections:
-            for i, row in enumerate(rows):
-                if row.get(uuid_col) == delete_uuid:
-                    rows.pop(i)
-                    found = True
-                    break
-            if found:
-                break
-        if not found:
-            print(f"  WARNING: UUID {delete_uuid} not found for delete")
 
     for repl in corrections.get('replace', []):
         target_uuid = repl['uuid']

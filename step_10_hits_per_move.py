@@ -145,6 +145,18 @@ HITS_PER_MOVE = {
     '421087d9-77e4-4344-95d3-0ffee0325022': {0: 0},
     # 3+4 ,1 ,2 ,1 ,2 (Sit Down – Sitting Punches) — first press is Sit Down
     '1e575213-1523-40b8-9492-0a92235d1799': {0: 0},
+    # hcf (Wind Up 1 Rotation) — no hit
+    'c03fb65b-aaac-4006-8e2b-0a9f8c08fd8f': {0: 0},
+    # Wind Up (2 Rotations) — no hit
+    '1f65d946-be2a-4bb4-9a27-18e4ad27b7a8': {0: 0},
+    # Wind Up (3 Rotations) — no hit
+    'f6c85458-dd91-4d88-91f1-9a557e0c3420': {0: 0},
+    # Wind Up (4 Rotations) — no hit
+    'c0f65cc6-5cf3-4384-bf35-b9b00543eb08': {0: 0},
+    # Wind Up (5 Rotations) — no hit
+    '27d20b09-dd03-41a8-a3e5-9fb3bbc279ad': {0: 0},
+    # Wind Up (8 Rotations) — no hit
+    '15f7632c-c216-4131-a173-898bf20c3023': {0: 0},
 }
 
 
